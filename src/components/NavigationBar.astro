@@ -1,4 +1,9 @@
 ---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
+import computerIcon from "../assets/computer.svg";
+import calendarIcon from "../assets/calendar.png";
+
 const { pathname } = Astro.url;
 const links = [
   { href: "/", label: "Accueil", internal: true },
@@ -22,11 +27,7 @@ const links = [
   <input type="checkbox" id="burger" />
 
   <nav class="navigation">
-    <img
-      class="navigation__image"
-      src="/src/assets/logo.png"
-      alt="Logo Scan&Stock"
-    />
+    <Image class="navigation__image" src={logo} alt="Logo Scan&Stock" />
     <label for="burger" class="burger__btn" aria-label="menu">
       <i class="fa-solid fa-bars"></i>
     </label>
@@ -65,11 +66,7 @@ const links = [
 
 <!-- DESKTOP navigation bar -->
 <nav class="desktop-nav">
-  <img
-    class="navigation__image"
-    src="/src/assets/logo.png"
-    alt="Logo Scan&Stock"
-  />
+  <Image class="navigation__image" src={logo} alt="Logo Scan&Stock" />
 
   <ul class="navigation__list desktop-nav__list">
     {
@@ -82,7 +79,7 @@ const links = [
               target={link.internal ? undefined : "_blank"}
             >
               {link.label === "Mon logiciel" ? (
-                <img src="/src/assets/computer.svg" alt="icone d'ordinateur" />
+                <Image src={computerIcon} alt="icone d'ordinateur" />
               ) : (
                 ""
               )}
@@ -100,7 +97,7 @@ const links = [
     type="button"
     onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
   >
-    <img src="/src/assets/calendar.png" alt="icone de calendrier" />
+    <Image src={calendarIcon} alt="icone de calendrier" />
     Prendre un RDV
   </button>
 </nav>
@@ -124,6 +121,7 @@ const links = [
 
   .navigation__image {
     max-height: 50px;
+    max-width: 150px;
   }
 
   .navigation__list {
