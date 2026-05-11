@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.svg";
 import computerIcon from "../assets/computer.svg";
 import calendarIcon from "../assets/calendar.png";
 
@@ -27,7 +27,13 @@ const links = [
   <input type="checkbox" id="burger" />
 
   <nav class="navigation">
-    <Image class="navigation__image" src={logo} alt="Logo Scan&Stock" />
+    <Image
+      class="navigation__image"
+      src={logo}
+      height={50}
+      quality={100}
+      alt="Logo Scan&Stock"
+    />
     <label for="burger" class="burger__btn" aria-label="menu">
       <i class="fa-solid fa-bars"></i>
     </label>
@@ -66,7 +72,13 @@ const links = [
 
 <!-- DESKTOP navigation bar -->
 <nav class="desktop-nav">
-  <Image class="navigation__image" src={logo} alt="Logo Scan&Stock" />
+  <Image
+    class="navigation__image"
+    src={logo}
+    height={50}
+    quality={100}
+    alt="Logo Scan&Stock"
+  />
 
   <ul class="navigation__list desktop-nav__list">
     {
@@ -117,11 +129,6 @@ const links = [
     color: white;
     box-shadow: #41778c 0 0 2px 1px;
     z-index: 5;
-  }
-
-  .navigation__image {
-    max-height: 50px;
-    max-width: 150px;
   }
 
   .navigation__list {
