@@ -4,6 +4,7 @@ import "../styles/global.css";
 
 /** Import Components */
 import ThirdPartyScripts from "../components/ThirdPartyScripts.astro";
+import NavigationBar from "../components/NavigationBar.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -36,8 +37,14 @@ const { title } = Astro.props;
       href="https://assets.calendly.com/assets/external/widget.css"
       rel="stylesheet"
     />
+    <!-- Font awesome -->
+    <script
+      is:inline
+      src="https://kit.fontawesome.com/db30f5a5c0.js"
+      crossorigin="anonymous"></script>
   </head>
   <body>
+    <NavigationBar />
     <slot />
     <ThirdPartyScripts />
   </body>
