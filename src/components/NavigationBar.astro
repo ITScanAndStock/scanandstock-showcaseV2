@@ -116,10 +116,15 @@ const links = [
 
 <style>
   /* ─── SHARED ───────────────────────────────────────────  */
-  .navigation,
+  .mobile-nav,
   .desktop-nav {
     position: sticky;
     top: 0.5rem;
+    z-index: 5;
+  }
+
+  .navigation,
+  .desktop-nav {
     justify-content: space-between;
     align-items: center;
     background:
@@ -128,7 +133,6 @@ const links = [
     border-radius: 20px;
     color: white;
     box-shadow: #41778c 0 0 2px 1px;
-    z-index: 5;
   }
 
   .navigation__list {
