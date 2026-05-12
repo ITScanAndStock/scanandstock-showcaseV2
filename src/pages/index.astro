@@ -8,6 +8,14 @@ import Order from "../assets/order.svg";
 import Stock from "../assets/stock.svg";
 import Compare from "../assets/compare.svg";
 import Warning from "../assets/warning.svg";
+import GradientTitle from "../components/ui/GradientTitle.astro";
+import Laulan from "../assets/photos/Camille_LAULAN.jpg";
+import Dischant from "../assets/photos/Claire_DISCHANT.png";
+import Raux from "../assets/photos/Frederic_RAUX.png";
+import Toth from "../assets/photos/Kevin_TOTH.png";
+import Camaleonte from "../assets/photos/Gregory_CAMALEONTE.jpg";
+import Colin from "../assets/photos/Matthieu_COLIN.png";
+import Keller from "../assets/photos/Pierre_kELLER.png";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -34,6 +42,99 @@ import Warning from "../assets/warning.svg";
         >Réservé une démo</button
       >
     </HeroBox>
+    <section class="clients">
+      <GradientTitle>Ils utilisent Scan&amp;Stock</GradientTitle>
+      <div class="carousel">
+        <div class="group">
+          <Image
+            draggable="false"
+            class="card"
+            src={Laulan}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Dischant}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Raux}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card card--lower"
+            src={Toth}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Camaleonte}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card card--lower"
+            src={Colin}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Keller}
+            alt="docteur laulan"
+          />
+        </div>
+        <div aria-hidden="true" class="group">
+          <Image
+            draggable="false"
+            class="card"
+            src={Laulan}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Dischant}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Raux}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card card--lower"
+            src={Toth}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Camaleonte}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card card--lower"
+            src={Colin}
+            alt="docteur laulan"
+          />
+          <Image
+            draggable="false"
+            class="card"
+            src={Keller}
+            alt="docteur laulan"
+          />
+        </div>
+      </div>
+    </section>
   </MainBox>
 </BaseLayout>
 
@@ -112,12 +213,63 @@ import Warning from "../assets/warning.svg";
   .booking:active {
     transform: scale(0.9);
   }
+  .clients {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 10px;
+  }
+  .carousel {
+    margin: 4rem 0;
+    display: flex;
+    overflow-x: auto;
+    flex: 1;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding-right: 1em;
+    animation: spin 20s infinite linear;
+  }
+  .card {
+    flex: 0 0 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .card--lower {
+    object-position: center 10% !important;
+  }
   /* ─── TABLET ───────────────────────────────────────────  */
   @media screen and (min-width: 768px) {
     .booking {
       margin: 30px 0;
       border-radius: 25px;
       font-size: 24px;
+    }
+    .clients {
+      flex-direction: row;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -152,6 +304,14 @@ import Warning from "../assets/warning.svg";
     .compare {
       left: 10%;
       top: 15%;
+    }
+  }
+  @keyframes spin {
+    from {
+      translate: 0;
+    }
+    to {
+      translate: -100%;
     }
   }
 </style>

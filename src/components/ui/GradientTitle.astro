@@ -1,0 +1,31 @@
+---
+interface Props {
+  as?: "h1" | "h2" | "h3" | "h4";
+  class?: string;
+}
+
+const { as: Tag = "h2", class: className } = Astro.props;
+---
+
+<Tag class:list={["gradient-title", className]}>
+  <slot />
+</Tag>
+
+<style>
+  .gradient-title {
+    flex: 0.8;
+    text-align: center;
+    background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%);
+    -webkit-background-clip: text;
+    background-size: 1300px;
+    background-position: center;
+    background-clip: text;
+    color: transparent;
+    margin: 1rem 0;
+  }
+  .gradient-title :global(.underline) {
+    display: inline-block;
+    border-bottom: 3px solid #12a19a80;
+    padding-bottom: 2px;
+  }
+</style>
