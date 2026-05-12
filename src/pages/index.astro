@@ -44,7 +44,7 @@ import Warning from "../assets/warning.svg";
     font-size: clamp(20px, 3vw, 40px);
     font-weight: 700;
     text-align: center;
-    margin: 1rem 0;
+    margin-bottom: 0.5rem;
   }
   .subtitle {
     color: white;
@@ -93,7 +93,10 @@ import Warning from "../assets/warning.svg";
     height: fit-content;
     box-shadow: 4px 4px 37.5px 0px #00000040;
   }
-  .order, .stock, .warning, .compare {
+  .order,
+  .stock,
+  .warning,
+  .compare {
     will-change: transform;
   }
   .booking {
@@ -118,31 +121,37 @@ import Warning from "../assets/warning.svg";
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .order, .stock, .warning, .compare {
+    .order,
+    .stock,
+    .warning,
+    .compare {
       will-change: auto;
     }
   }
 
   /* ─── desktop ───────────────────────────────────────────  */
   @media screen and (min-width: 1240px) {
+    .parallax-container {
+      padding: 0;
+    }
     .order {
       top: unset;
-      right: 18%;
+      right: 13%;
       bottom: 0;
     }
     .stock {
       top: unset;
-      left: 6%;
+      left: 0;
       bottom: 20%;
     }
     .warning {
       bottom: unset;
-      right: 10%;
-      top: 30%;
+      right: 5%;
+      top: 16%;
     }
     .compare {
-      left: 15%;
-      top: 25%;
+      left: 10%;
+      top: 15%;
     }
   }
 </style>
@@ -152,10 +161,10 @@ import Warning from "../assets/warning.svg";
 
   if (!reduced) {
     const items: { el: HTMLElement; speed: number }[] = [
-      { el: document.querySelector<HTMLElement>(".order")!,   speed:  0.18 },
-      { el: document.querySelector<HTMLElement>(".stock")!,   speed: -0.14 },
-      { el: document.querySelector<HTMLElement>(".warning")!, speed:  0.24 },
-      { el: document.querySelector<HTMLElement>(".compare")!, speed: -0.10 },
+      { el: document.querySelector<HTMLElement>(".order")!, speed: 0.18 },
+      { el: document.querySelector<HTMLElement>(".stock")!, speed: -0.14 },
+      { el: document.querySelector<HTMLElement>(".warning")!, speed: 0.24 },
+      { el: document.querySelector<HTMLElement>(".compare")!, speed: -0.1 },
     ];
 
     let ticking = false;
