@@ -23,9 +23,11 @@ const { as: Tag = "h2", class: className } = Astro.props;
     color: transparent;
     margin: 1rem 0;
   }
-  .gradient-title :global(.underline) {
-    display: inline-block;
-    border-bottom: 3px solid #12a19a80;
-    padding-bottom: 2px;
+  @media screen and (min-width: 1024px) {
+    .gradient-title :global(.underline) {
+      display: inline-block;
+      border-bottom: 3px solid #12a19a80;
+      padding-bottom: 2px;
+    }
   }
 </style>

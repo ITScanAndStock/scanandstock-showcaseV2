@@ -9,6 +9,7 @@ import Stock from "../assets/stock.svg";
 import Compare from "../assets/compare.svg";
 import Warning from "../assets/warning.svg";
 import ClientsCarousel from "../components/ClientsCarousel.astro";
+import GradientTitle from "../components/ui/GradientTitle.astro";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -36,6 +37,38 @@ import ClientsCarousel from "../components/ClientsCarousel.astro";
       >
     </HeroBox>
     <ClientsCarousel />
+    <section class="video-section">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/x3FlUQBuKHY"
+          title="Présentation Scan&Stock"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="separator"></div>
+      <div class="texts">
+        <p class="paragraphe">
+          Au sein d’un cabinet dentaire, le poste achat doit représenter <strong
+          >
+            5 à 7 % du chiffre d’affaires</strong
+          >, cependant peu de praticiens savent exactement combien représente
+          l’achat de consommables dans leurs structures.
+        </p>
+        <p class="paragraphe">
+          En utilisant un <strong>système de gestion efficace</strong> leur permettant
+          de connaître leurs stocks en <strong> temps réel</strong>, les
+          assistantes ou secrétaires peuvent générer leurs commandes au <strong
+            >moment idéal et ainsi faire des économies sur le poste achat</strong
+          >. <strong>Scan & Stock</strong> est disponible pour les cabinets dentaires,
+          laboratoires de prothèses et toutes les professions médicales.
+        </p>
+      </div>
+    </section>
+
+    <GradientTitle as="h3">
+      Une gestion des
+      <span class="underline"> stocks et des commandes optimale </span>
+    </GradientTitle>
   </MainBox>
 </BaseLayout>
 
@@ -114,12 +147,58 @@ import ClientsCarousel from "../components/ClientsCarousel.astro";
   .booking:active {
     transform: scale(0.9);
   }
+  .video-section {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+  }
+  .separator {
+    display: none;
+  }
+  .video-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+  .video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: unset;
+  }
+  .paragraphe {
+    line-height: 30px;
+    font-weight: 500;
+    margin: 1rem auto;
+    color: #27333a;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
   /* ─── TABLET ───────────────────────────────────────────  */
   @media screen and (min-width: 768px) {
     .booking {
       margin: 30px 0;
       border-radius: 25px;
       font-size: 24px;
+    }
+
+    .video-section {
+      max-width: unset;
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+    }
+    .video-wrapper {
+      flex: 0.7;
+    }
+    .separator {
+      display: flex;
+      width: 1px;
+      height: 320px; /* ou ce que tu veux */
+      border-left: 2px dashed #545d638c;
+      margin: 0 40px;
+    }
+    .texts {
+      flex: 1;
     }
   }
   @media (prefers-reduced-motion: reduce) {
