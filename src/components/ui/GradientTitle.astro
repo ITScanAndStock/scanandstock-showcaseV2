@@ -21,7 +21,8 @@ const { as: Tag = "h2", class: className } = Astro.props;
     background-position: center;
     background-clip: text;
     color: transparent;
-    margin: 1rem 0;
+    margin: 4rem 0;
+    font-size: clamp(20px, 5vw, 38px);
   }
   @media screen and (min-width: 1024px) {
     .gradient-title :global(.underline) {

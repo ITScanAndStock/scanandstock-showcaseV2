@@ -1,0 +1,219 @@
+---
+const videos = [
+  { key: "stock", label: "Stock", id: "x3FlUQBuKHY" },
+  { key: "commandes", label: "Commandes", id: "x3FlUQBuKHY" },
+  { key: "comparateur", label: "Comparateur", id: "x3FlUQBuKHY" },
+  { key: "alertes", label: "Alertes", id: "x3FlUQBuKHY" },
+  { key: "stats", label: "Statistiques", id: "x3FlUQBuKHY" },
+];
+---
+
+<section class="features-tabs">
+  <div class="tabs-bar" role="tablist">
+    {
+      videos.map((v, i) => (
+        <button
+          type="button"
+          class:list={["tab", { active: i === 0 }]}
+          data-index={i}
+          data-id={v.id}
+          role="tab"
+          aria-selected={i === 0 ? "true" : "false"}
+        >
+          {v.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="video-box">
+    <div class="video-frame">
+      <div id="features-player"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-tabs {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+  }
+
+  /* ─── Pilule blanche d'onglets ─────────────────────────── */
+  .tabs-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 999px;
+    overflow-x: auto;
+    scrollbar-width: none;
+   margin: 15px 0; /* chevauchement avec la box vidéo */
+  }
+  .tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    flex: 0 0 auto;
+    border: 1.5px solid #5BAFAB;
+    background: transparent;
+    color: #5BAFAB;
+    padding: 6px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 150ms ease;
+  }
+  .tab.active {
+    background: #12A19A;
+  }
+  .tab.active :global(*),
+  .tab.active {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  /* ─── Encadré contenant la vidéo ───────────────────────── */
+  .video-box {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    border-radius: 24px;
+    background: transparent;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .video-frame :global(iframe) {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* ─── Tablette / desktop ───────────────────────────────── */
+  @media screen and (min-width: 1024px) {
+    .tabs-bar {
+      gap: 14px;
+      padding: 12px 20px;
+      margin-bottom: -32px;
+    }
+    .tab {
+      padding: 8px 24px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tab {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ videos }}>
+  const section = document.querySelector(".features-tabs");
+  const tabsBar = section.querySelector(".tabs-bar");
+  const tabs = Array.from(section.querySelectorAll(".tab"));
+
+  let player = null;
+  let currentIndex = 0;
+
+  function setActive(index) {
+    currentIndex = index;
+    tabs.forEach((t, i) => {
+      const active = i === index;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+  }
+
+  function playIndex(index) {
+    setActive(index);
+    if (player && typeof player.loadVideoById === "function") {
+      player.loadVideoById(videos[index].id);
+    }
+  }
+
+  tabsBar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    const index = Number(btn.dataset.index);
+    if (Number.isNaN(index) || index === currentIndex) return;
+    playIndex(index);
+  });
+
+  function onPlayerStateChange(event) {
+    if (event.data === 0 /* YT.PlayerState.ENDED */) {
+      const next = (currentIndex + 1) % videos.length;
+      playIndex(next);
+    }
+  }
+
+  function createPlayer() {
+    player = new window.YT.Player("features-player", {
+      videoId: videos[0].id,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 1,
+        playsinline: 1,
+        rel: 0,
+        modestbranding: 1,
+      },
+      events: {
+        onStateChange: onPlayerStateChange,
+      },
+    });
+  }
+
+  function loadYouTubeAPI() {
+    if (window.YT && window.YT.Player) {
+      createPlayer();
+      return;
+    }
+    const existing = document.querySelector(
+      'script[src="https://www.youtube.com/iframe_api"]'
+    );
+    const prevCallback = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof prevCallback === "function") prevCallback();
+      createPlayer();
+    };
+    if (!existing) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadYouTubeAPI();
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  observer.observe(section);
+</script>

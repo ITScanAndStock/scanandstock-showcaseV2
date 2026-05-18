@@ -10,6 +10,7 @@ import Compare from "../assets/compare.svg";
 import Warning from "../assets/warning.svg";
 import ClientsCarousel from "../components/ClientsCarousel.astro";
 import GradientTitle from "../components/ui/GradientTitle.astro";
+import FeaturesTabs from "../components/FeaturesTabs.astro";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -40,9 +41,12 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
     <section class="video-section">
       <div class="video-wrapper">
         <iframe
-          src="https://www.youtube.com/embed/x3FlUQBuKHY"
+          id="yt-player"
+          data-src="https://www.youtube.com/embed/x3FlUQBuKHY?autoplay=1&mute=1&controls=0&loop=1&playlist=x3FlUQBuKHY"
           title="Présentation Scan&Stock"
-          allowfullscreen></iframe>
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        />
       </div>
 
       <div class="separator"></div>
@@ -50,7 +54,7 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
         <p class="paragraphe">
           Au sein d’un cabinet dentaire, le poste achat doit représenter <strong
           >
-            5 à 7 % du chiffre d’affaires</strong
+            5 à 7% du chiffre d’affaires</strong
           >, cependant peu de praticiens savent exactement combien représente
           l’achat de consommables dans leurs structures.
         </p>
@@ -69,6 +73,7 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
       Une gestion des
       <span class="underline"> stocks et des commandes optimale </span>
     </GradientTitle>
+    <FeaturesTabs />
   </MainBox>
 </BaseLayout>
 
@@ -238,6 +243,23 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
 </style>
 
 <script>
+  const ytFrame = document.getElementById("yt-player") as HTMLIFrameElement;
+  const ytWrapper = ytFrame?.closest(".video-wrapper") as HTMLElement | null;
+  if (ytFrame && ytWrapper) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !ytFrame.src) {
+            ytFrame.src = ytFrame.dataset.src!;
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(ytWrapper);
+  }
+
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!reduced) {
