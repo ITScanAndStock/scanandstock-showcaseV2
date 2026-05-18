@@ -14,6 +14,7 @@ import FeaturesTabs from "../components/FeaturesTabs.astro";
 import VideoPresentation from "../components/VideoPresentation.astro";
 import InfoFeatures from "../components/InfoFeatures.astro";
 import ReserveButton from "../components/ReserveButton.astro";
+import InfoUsers from "../components/InfoUsers.astro";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -45,7 +46,7 @@ import ReserveButton from "../components/ReserveButton.astro";
     </GradientTitle>
     <FeaturesTabs />
   </MainBox>
-  <MainBox class="small">
+  <MainBox class="bottom-up">
     <GradientTitle as="h2">
       Une gestion des
       <span class="underline"> stocks et des commandes optimale </span>
@@ -62,6 +63,7 @@ import ReserveButton from "../components/ReserveButton.astro";
 
     <InfoFeatures />
   </MainBox>
+  <InfoUsers />
 </BaseLayout>
 
 <style>
