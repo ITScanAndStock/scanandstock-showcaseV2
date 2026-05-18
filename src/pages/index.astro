@@ -11,6 +11,9 @@ import Warning from "../assets/warning.svg";
 import ClientsCarousel from "../components/ClientsCarousel.astro";
 import GradientTitle from "../components/ui/GradientTitle.astro";
 import FeaturesTabs from "../components/FeaturesTabs.astro";
+import VideoPresentation from "../components/VideoPresentation.astro";
+import InfoFeatures from "../components/InfoFeatures.astro";
+import ReserveButton from "../components/ReserveButton.astro";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -31,49 +34,33 @@ import FeaturesTabs from "../components/FeaturesTabs.astro";
         <Image class="compare" src={Compare} alt="stock" />
       </div>
 
-      <button
-        class="booking"
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
-        >Réservé une démo</button
-      >
+      <ReserveButton />
     </HeroBox>
     <ClientsCarousel />
-    <section class="video-section">
-      <div class="video-wrapper">
-        <iframe
-          id="yt-player"
-          data-src="https://www.youtube.com/embed/x3FlUQBuKHY?autoplay=1&mute=1&controls=0&loop=1&playlist=x3FlUQBuKHY"
-          title="Présentation Scan&Stock"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-        />
-      </div>
-
-      <div class="separator"></div>
-      <div class="texts">
-        <p class="paragraphe">
-          Au sein d’un cabinet dentaire, le poste achat doit représenter <strong
-          >
-            5 à 7% du chiffre d’affaires</strong
-          >, cependant peu de praticiens savent exactement combien représente
-          l’achat de consommables dans leurs structures.
-        </p>
-        <p class="paragraphe">
-          En utilisant un <strong>système de gestion efficace</strong> leur permettant
-          de connaître leurs stocks en <strong> temps réel</strong>, les
-          assistantes ou secrétaires peuvent générer leurs commandes au <strong
-            >moment idéal et ainsi faire des économies sur le poste achat</strong
-          >. <strong>Scan & Stock</strong> est disponible pour les cabinets dentaires,
-          laboratoires de prothèses et toutes les professions médicales.
-        </p>
-      </div>
-    </section>
+    <VideoPresentation />
 
     <GradientTitle as="h3">
       Une gestion des
       <span class="underline"> stocks et des commandes optimale </span>
     </GradientTitle>
     <FeaturesTabs />
+  </MainBox>
+  <MainBox class="small">
+    <GradientTitle as="h2">
+      Une gestion des
+      <span class="underline"> stocks et des commandes optimale </span>
+    </GradientTitle>
+    <p class="text">
+      Scan & Stock est un logiciel dentaire créé par un chirurgien-dentiste pour
+      les chirurgiens-dentistes. Notre solution a vu le jour en novembre 2021
+      lors du congrès de l’ADF. Aujourd’hui, il compte plus de 1 000
+      utilisateurs satisfaits répartis en France, en Belgique, en Suisse, dans
+      les DOM-TOM, à Monaco et même au Canada. Scan & Stock est un logiciel
+      évolutif, chaque année de nouvelles mises à jour sont faites afin de
+      répondre aux demandes de nos utilisateurs.
+    </p>
+
+    <InfoFeatures />
   </MainBox>
 </BaseLayout>
 
@@ -139,73 +126,18 @@ import FeaturesTabs from "../components/FeaturesTabs.astro";
   .compare {
     will-change: transform;
   }
-  .booking {
-    margin: 20px 0;
-    padding: 5px 20px;
-    border-radius: 20px;
-    color: #496f7f;
-    font-weight: 700;
-    font-size: 20px;
-    background-color: #fff;
-    transition: all 80ms ease;
-  }
-  .booking:active {
-    transform: scale(0.9);
-  }
-  .video-section {
-    width: 100%;
-    max-width: 900px;
-    margin: 2rem auto;
-  }
-  .separator {
-    display: none;
-  }
-  .video-wrapper {
-    position: relative;
-    aspect-ratio: 16 / 9;
-  }
-  .video-wrapper iframe {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    border: unset;
-  }
-  .paragraphe {
-    line-height: 30px;
-    font-weight: 500;
-    margin: 1rem auto;
-    color: #27333a;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-  }
+
   /* ─── TABLET ───────────────────────────────────────────  */
   @media screen and (min-width: 768px) {
-    .booking {
-      margin: 30px 0;
-      border-radius: 25px;
-      font-size: 24px;
-    }
-
-    .video-section {
-      max-width: unset;
-      display: flex;
-      align-items: center;
-      padding: 0 3rem;
-    }
-    .video-wrapper {
-      flex: 0.7;
-    }
-    .separator {
-      display: flex;
-      width: 1px;
-      height: 320px; /* ou ce que tu veux */
-      border-left: 2px dashed #545d638c;
-      margin: 0 40px;
-    }
-    .texts {
-      flex: 1;
+    .text {
+      max-width: 80%;
+      text-align: start;
+      margin: auto;
+      line-height: 45px;
+      font-size: 18px;
     }
   }
+
   @media (prefers-reduced-motion: reduce) {
     .order,
     .stock,
@@ -243,23 +175,6 @@ import FeaturesTabs from "../components/FeaturesTabs.astro";
 </style>
 
 <script>
-  const ytFrame = document.getElementById("yt-player") as HTMLIFrameElement;
-  const ytWrapper = ytFrame?.closest(".video-wrapper") as HTMLElement | null;
-  if (ytFrame && ytWrapper) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !ytFrame.src) {
-            ytFrame.src = ytFrame.dataset.src!;
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(ytWrapper);
-  }
-
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!reduced) {
