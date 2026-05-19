@@ -1,10 +1,30 @@
 ---
 const videos = [
-  { key: "stock", label: "Stock", id: "x3FlUQBuKHY" },
-  { key: "commandes", label: "Commandes", id: "x3FlUQBuKHY" },
-  { key: "comparateur", label: "Comparateur", id: "x3FlUQBuKHY" },
-  { key: "alertes", label: "Alertes", id: "x3FlUQBuKHY" },
-  { key: "stats", label: "Statistiques", id: "x3FlUQBuKHY" },
+  {
+    key: "stock",
+    label: "Stock",
+    src: "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/Video_site_1_stock.mp4",
+  },
+  {
+    key: "commandes",
+    label: "Commandes",
+    src: "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/Video_site_2_order.mp4",
+  },
+  {
+    key: "comparateur",
+    label: "Comparateur",
+    src: "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/Video_site_3_coompy.mp4",
+  },
+  {
+    key: "alertes",
+    label: "Alertes",
+    src: "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/Video_site_4_stockout.mp4",
+  },
+  {
+    key: "stats",
+    label: "Statistiques",
+    src: "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/Video_site_5_statistics.mp4",
+  },
 ];
 ---
 
@@ -16,7 +36,8 @@ const videos = [
           type="button"
           class:list={["tab", { active: i === 0 }]}
           data-index={i}
-          data-id={v.id}
+          data-id={v.label}
+          data-src={v.src}
           role="tab"
           aria-selected={i === 0 ? "true" : "false"}
         >
@@ -28,7 +49,22 @@ const videos = [
 
   <div class="video-box">
     <div class="video-frame">
-      <div id="features-player"></div>
+      <div id="features-player">
+        {
+          videos.map((v, i) => (
+            <video
+              class:list={["video-item", { active: i === 0 }]}
+              data-index={i}
+              controls
+              width="100%"
+              playsinline
+              preload="auto"
+            >
+              <source src={v.src} type="video/mp4" />
+            </video>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
@@ -58,16 +94,16 @@ const videos = [
     border-radius: 999px;
     overflow-x: auto;
     scrollbar-width: none;
-   margin: 15px 0; /* chevauchement avec la box vidéo */
+    margin: 15px 0; /* chevauchement avec la box vidéo */
   }
   .tabs-bar::-webkit-scrollbar {
     display: none;
   }
   .tab {
     flex: 0 0 auto;
-    border: 1.5px solid #5BAFAB;
+    border: 1.5px solid #5bafab;
     background: transparent;
-    color: #5BAFAB;
+    color: #5bafab;
     padding: 6px 18px;
     border-radius: 999px;
     cursor: pointer;
@@ -76,7 +112,7 @@ const videos = [
     transition: all 150ms ease;
   }
   .tab.active {
-    background: #12A19A;
+    background: #12a19a;
   }
   .tab.active :global(*),
   .tab.active {
@@ -98,13 +134,17 @@ const videos = [
     width: 100%;
     margin: 0 auto;
     aspect-ratio: 16 / 9;
-    border-radius: 12px;
     overflow: hidden;
   }
-  .video-frame :global(iframe) {
+  .video-frame :global(.video-item) {
+    display: none;
     width: 100%;
     height: 100%;
-    border: none;
+    background: transparent;
+    object-fit: fill;
+    border-radius: 20px;
+  }
+  .video-frame :global(.video-item.active) {
     display: block;
   }
 
@@ -128,92 +168,40 @@ const videos = [
   }
 </style>
 
-<script is:inline define:vars={{ videos }}>
-  const section = document.querySelector(".features-tabs");
-  const tabsBar = section.querySelector(".tabs-bar");
-  const tabs = Array.from(section.querySelectorAll(".tab"));
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(
+    ".features-tabs .tab",
+  );
+  const videoEls = document.querySelectorAll<HTMLVideoElement>(
+    ".features-tabs .video-item",
+  );
 
-  let player = null;
-  let currentIndex = 0;
+  function activateTab(index: number) {
+    tabs.forEach((t) => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+    });
+    tabs[index].classList.add("active");
+    tabs[index].setAttribute("aria-selected", "true");
 
-  function setActive(index) {
-    currentIndex = index;
-    tabs.forEach((t, i) => {
-      const active = i === index;
-      t.classList.toggle("active", active);
-      t.setAttribute("aria-selected", active ? "true" : "false");
+    videoEls.forEach((v, i) => {
+      if (i === index) {
+        v.classList.add("active");
+        v.play();
+      } else {
+        v.classList.remove("active");
+        v.pause();
+      }
     });
   }
 
-  function playIndex(index) {
-    setActive(index);
-    if (player && typeof player.loadVideoById === "function") {
-      player.loadVideoById(videos[index].id);
-    }
-  }
-
-  tabsBar.addEventListener("click", (e) => {
-    const btn = e.target.closest(".tab");
-    if (!btn) return;
-    const index = Number(btn.dataset.index);
-    if (Number.isNaN(index) || index === currentIndex) return;
-    playIndex(index);
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => activateTab(i));
   });
 
-  function onPlayerStateChange(event) {
-    if (event.data === 0 /* YT.PlayerState.ENDED */) {
-      const next = (currentIndex + 1) % videos.length;
-      playIndex(next);
-    }
-  }
-
-  function createPlayer() {
-    player = new window.YT.Player("features-player", {
-      videoId: videos[0].id,
-      playerVars: {
-        autoplay: 1,
-        mute: 1,
-        controls: 1,
-        playsinline: 1,
-        rel: 0,
-        modestbranding: 1,
-      },
-      events: {
-        onStateChange: onPlayerStateChange,
-      },
+  videoEls.forEach((v, i) => {
+    v.addEventListener("ended", () => {
+      activateTab((i + 1) % videoEls.length);
     });
-  }
-
-  function loadYouTubeAPI() {
-    if (window.YT && window.YT.Player) {
-      createPlayer();
-      return;
-    }
-    const existing = document.querySelector(
-      'script[src="https://www.youtube.com/iframe_api"]'
-    );
-    const prevCallback = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      if (typeof prevCallback === "function") prevCallback();
-      createPlayer();
-    };
-    if (!existing) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.head.appendChild(tag);
-    }
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          loadYouTubeAPI();
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-  observer.observe(section);
+  });
 </script>
