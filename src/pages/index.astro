@@ -15,6 +15,7 @@ import VideoPresentation from "../components/VideoPresentation.astro";
 import InfoFeatures from "../components/InfoFeatures.astro";
 import ReserveButton from "../components/ReserveButton.astro";
 import InfoUsers from "../components/InfoUsers.astro";
+import ImgPresentation from "../components/ImgPresentation.astro";
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -64,6 +65,16 @@ import InfoUsers from "../components/InfoUsers.astro";
     <InfoFeatures />
   </MainBox>
   <InfoUsers />
+
+  <MainBox class="bottom-down">
+    <GradientTitle as="h2">
+      Une solution
+      <span class="underline">
+        adaptée aux besoins des cabinets dentaires
+      </span>
+    </GradientTitle>
+    <ImgPresentation />
+  </MainBox>
 </BaseLayout>
 
 <style>

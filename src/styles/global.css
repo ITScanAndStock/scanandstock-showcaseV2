@@ -6,4 +6,13 @@ body {
   padding: 5px;
   margin: auto;
   min-height: 100vh;
+  line-height: 30px;
+  letter-spacing: 0.8px;
+
+}
+
+@media screen and (min-width: 1024px) {
+  body {
+    line-height: 45px;
+  }
 }
