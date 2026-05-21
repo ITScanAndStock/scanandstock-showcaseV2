@@ -1,0 +1,93 @@
+---
+import {Image} from "astro:assets";
+
+interface Props {
+    src: ImageMetadata;
+    alt: string;
+    title: string;
+    text: string;
+}
+
+const {src: imgSources, alt, title, text} = Astro.props;
+---
+
+<article class="card">
+    <Image class="img" src={imgSources} alt={alt}/>
+    <div class="description">
+        <h2>{title}</h2>
+        <p>{text}</p>
+    </div>
+</article>
+
+<style>
+    /* ─── Mobile / Tablette — layout vertical ─────────────── */
+    .card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: linear-gradient(
+                180deg,
+                #12a19a -4.3%,
+                #3983a3 51.09%,
+                #496f7f 106.47%
+        );
+        color: white;
+        line-height: 1.6;
+    }
+
+    .description h2 {
+        font-size: clamp(16px, 2.5vw, 22px);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .description p {
+        font-size: clamp(13px, 1.5vw, 16px);
+        margin: 0;
+    }
+
+    /* ─── Desktop — layout horizontal ─────────────────────── */
+    @media screen and (min-width: 768px) {
+        .card {
+            flex-direction: row;
+            align-items: stretch;
+            height: 430px;
+            border-radius: 0;
+            overflow: visible;
+        }
+
+        .img {
+            height: 100%;
+            width: 45%;
+            border-radius: 40px 0 0 40px;
+        }
+
+        .description {
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(
+                    270deg,
+                    #12a19a -4.3%,
+                    #3983a3 51.09%,
+                    #496f7f 106.47%
+            );
+            border-radius: 0 40px 40px 0;
+            line-height: 2;
+        }
+    }
+</style>
