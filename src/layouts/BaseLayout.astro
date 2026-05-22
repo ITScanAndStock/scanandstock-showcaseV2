@@ -5,6 +5,7 @@ import "../styles/global.css";
 /** Import Components */
 import ThirdPartyScripts from "../components/ThirdPartyScripts.astro";
 import NavigationBar from "../components/NavigationBar.astro";
+import Footer from "../components/Footer.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -47,5 +48,6 @@ const { title } = Astro.props;
     <NavigationBar />
     <slot />
     <ThirdPartyScripts />
+    <Footer />
   </body>
 </html>

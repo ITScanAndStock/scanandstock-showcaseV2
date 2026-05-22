@@ -1,0 +1,212 @@
+---
+import facebookIcon from "../assets/icones/network/facebook.svg?url";
+import instagramIcon from "../assets/icones/network/instagram.svg?url";
+import linkedinIcon from "../assets/icones/network/linkedin.svg?url";
+import youtubeIcon from "../assets/icones/network/youtube.svg?url";
+---
+
+<footer>
+    <div class="footer-grid">
+        <!-- Colonne 1 — Brand -->
+        <div class="footer-brand">
+            <h3>Oubliez la gestion de vos stocks, Scan &amp; Stock le fait pour vous</h3>
+            <p>
+                Facile et efficace, Scan &amp; Stock est là pour vous simplifier la vie !
+                Alors n'hésitez plus et déléguez cette tâche rébarbative de gestion de
+                stock à un logiciel dédié, vos assistantes et votre porte-monnaie vous
+                remercieront !
+            </p>
+        </div>
+
+        <!-- Colonne 2 — Nous contacter -->
+        <div class="footer-contact">
+            <h3>Nous contacter</h3>
+            <address>
+                <p class="adress">360 Rue Marc Lefrancq, 59300 Valenciennes</p>
+                <p>Tél : <a class="phone" href="tel:0784078048">07 84 07 80 48</a></p>
+                <p>Email : <a href="mailto:contact@scanandstock.fr">contact@scanandstock.fr</a></p>
+            </address>
+        </div>
+
+        <!-- Colonne 3 — Liens utiles -->
+        <nav aria-label="Liens utiles" class="footer-links">
+            <h3>Liens utiles</h3>
+            <ul>
+                <li><a href="#">La vitrine</a></li>
+                <li><a href="#">La boutique</a></li>
+                <li><a href="#">Le logiciel</a></li>
+                <li><a href="#">Mentions légales</a></li>
+            </ul>
+        </nav>
+
+        <!-- Colonne 4 — Réseaux sociaux -->
+        <div class="footer-social">
+            <h3>Réseaux sociaux</h3>
+            <div class="social-icons">
+                <a href="#" aria-label="Scan&amp;Stock sur Facebook" target="_blank" rel="noopener noreferrer">
+                    <img src={facebookIcon} alt="Scan&amp;Stock sur Facebook" width="28" height="28"/>
+                </a>
+                <a href="#" aria-label="Scan&amp;Stock sur Instagram" target="_blank" rel="noopener noreferrer">
+                    <img src={instagramIcon} alt="Scan&amp;Stock sur Instagram" width="28" height="28"/>
+                </a>
+                <a href="#" aria-label="Scan&amp;Stock sur LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <img src={linkedinIcon} alt="Scan&amp;Stock sur LinkedIn" width="28" height="28"/>
+                </a>
+                <a href="#" aria-label="Scan&amp;Stock sur YouTube" target="_blank" rel="noopener noreferrer">
+                    <img src={youtubeIcon} alt="Scan&amp;Stock sur YouTube" width="28" height="28"/>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre CGV/CGU -->
+    <div class="footer-bottom">
+        <a href="#">CGV</a>
+        <span aria-hidden="true"> | </span>
+        <a href="#">CGU</a>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #496f7f;
+        border-radius: 16px 16px 0 0;
+        padding: 3rem 2rem 2rem;
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    @media screen and (min-width: 768px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        footer {
+            padding: 3rem 3rem 2rem;
+        }
+
+        .footer-grid {
+            grid-template-columns: 2fr 1.5fr 1fr 1fr;
+            gap: 2rem;
+        }
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        color: #ffffff;
+    }
+
+    .footer-brand p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .footer-contact address {
+        font-style: normal;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .footer-contact address p {
+        margin: 0;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .footer-links a, .adress, .phone {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+        transition: color 150ms ease;
+    }
+
+    a:hover {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: underline;
+    }
+
+    a:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+
+    .social-icons {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .social-icons {
+            display: grid;
+            grid-template-columns: repeat(2, 48px);
+            gap: 0.75rem;
+        }
+    }
+
+    .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        transition: background 200ms ease, transform 200ms ease;
+        flex-shrink: 0;
+    }
+
+    .social-icons a:hover {
+        background: rgba(0, 0, 0, 0.35);
+        transform: scale(1.08);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .social-icons a:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+    }
+
+    .footer-bottom {
+        padding-top: 1rem;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .footer-bottom span {
+        color: #ffffff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        a,
+        .social-icons a {
+            transition: none;
+        }
+    }
+</style>

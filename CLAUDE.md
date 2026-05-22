@@ -14,7 +14,8 @@ pnpm preview    # Prévisualise le build local
 
 ## Architecture
 
-Site vitrine statique **Astro 6** pour Scan&Stock (logiciel de gestion de stocks dentaires), déployé sur `https://www.scanandstock.fr`.
+Site vitrine statique **Astro 6** pour Scan&Stock (logiciel de gestion de stocks dentaires), déployé sur
+`https://www.scanandstock.fr`.
 
 ### Couches de l'architecture
 
@@ -22,11 +23,46 @@ Site vitrine statique **Astro 6** pour Scan&Stock (logiciel de gestion de stocks
 src/layouts/BaseLayout.astro   ← Layout unique : Montserrat, Calendly, Font Awesome, canonical URL
 src/pages/                     ← Routes fichier (index, about, blogs)
 src/components/ui/             ← Primitives génériques (GradientTitle, HeroBox, MainBox)
-src/components/                ← Composants métier (NavigationBar, ClientsCarousel, ThirdPartyScripts, FeaturesTabs)
+src/components/                ← Composants métier (voir liste complète ci-dessous)
 src/styles/                    ← reset.css + global.css (body max-width: 1240px, Montserrat)
 src/assets/                    ← Images traitées par Astro (<Image /> avec optimisation WebP via sharp)
 src/js/                        ← Scripts IIFE tiers (ex. tawkto.js)
 public/                        ← Fichiers statiques non transformés
+```
+
+### Composants métier (`src/components/`)
+
+| Composant                 | Rôle                                                                                      |
+|---------------------------|-------------------------------------------------------------------------------------------|
+| `NavigationBar.astro`     | Barre de navigation avec détection de la route active                                     |
+| `ClientsCarousel.astro`   | Carrousel des logos clients (données statiques internes)                                  |
+| `FeaturesTabs.astro`      | Onglets de fonctionnalités avec vidéos chargées en lazy                                   |
+| `VideoPresentation.astro` | Section vidéo de présentation                                                             |
+| `InfoFeatures.astro`      | Liste d'articles/fonctionnalités (2 colonnes, données internes)                           |
+| `InfoUsers.astro`         | Témoignages utilisateurs avec photos                                                      |
+| `ImgPresentation.astro`   | Section image + texte                                                                     |
+| `Carousel.astro`          | Carrousel générique à slots — prop `variant: 'card' \| 'image'`, `withReserve?`, `label?` |
+| `CardCarousel.astro`      | Slide de type carte (titre, texte, image) — enfant de `Carousel`                          |
+| `ImageCarousel.astro`     | Slide de type image seule — enfant de `Carousel`                                          |
+| `ReserveButton.astro`     | Bouton CTA Calendly (prop `class?`)                                                       |
+| `ThirdPartyScripts.astro` | Isolation de Tawk.to, Calendly, Google Analytics                                          |
+
+### Composants UI (`src/components/ui/`)
+
+| Composant             | Rôle                                                                                 |
+|-----------------------|--------------------------------------------------------------------------------------|
+| `GradientTitle.astro` | Titre avec dégradé de couleur — prop `as?: "h1"\|"h2"\|"h3"\|"h4"` (`h2` par défaut) |
+| `HeroBox.astro`       | Section hero avec parallax au scroll (`requestAnimationFrame`)                       |
+| `MainBox.astro`       | Conteneur de section avec prop `class?`                                              |
+
+### Assets (`src/assets/`)
+
+```
+photos/         ← Photos utilisateurs et carrousel (PNG/JPG/WebP)
+icones/         ← Icônes statiques + animations WebP
+images/         ← Images produit (computer, phone, scanner)
+*.svg           ← Illustrations vectorielles (stats, order, stock, compare, warning)
+logo.svg        ← Logo Scan&Stock
 ```
 
 ### Conventions de style
