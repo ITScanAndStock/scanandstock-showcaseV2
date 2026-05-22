@@ -21,6 +21,11 @@ import Carousel from "../components/Carousel.astro";
 import StockPlace from "../assets/photos/carousel/stock_place.png";
 import Scanner from "../assets/photos/carousel/scanner.png";
 import LessStock from "../assets/photos/carousel/less_stock.png";
+import ImageCarousel from "../components/ImageCarousel.astro";
+import MyCoompy from "../assets/photos/carousel/mycoompy.png";
+import MyscanScan from "../assets/photos/carousel/myscanandstock_scan.png";
+import MyscanStock from "../assets/photos/carousel/myscanandstock_stock.png";
+import ScannerApp from "../assets/photos/carousel/scanner_et_app.png";
 
 const carouselCards = [
     {
@@ -42,6 +47,13 @@ const carouselCards = [
         text: "Le surstockage et les périmés sont les fléaux de nombreux cabinets dentaires. La peur de manquer ou encore les offres attrayantes de fabricants et fournisseurs entraînent trop souvent des commandes inutiles. Ces commandes (et donc cet argent qui dort !) se retrouvent sur nos étagères ou au fin fond de tiroir parfois jusqu’à ce que leurs dates de péremption soient dépassées ! Pensez à la planète et stoppez le surstockage !",
     },
 ];
+
+const imageCarousel = [
+    {src: ScannerApp, alt: "douchette et application Scan&Stock"},
+    {src: MyscanScan, alt: "application MyScan&Stock et scanner"},
+    {src: MyscanStock, alt: "application MyScan&Stock et gestion de stock"},
+    {src: MyCoompy, alt: "application MyCoompy"},
+]
 ---
 
 <BaseLayout title="Scan&Stock | Accueil">
@@ -122,6 +134,14 @@ const carouselCards = [
             ))}
         </Carousel>
     </MainBox>
+
+    <Carousel label="Nos outils" variant="image">
+        {imageCarousel.map((image) => (
+                <li class="carousel-slide">
+                    <ImageCarousel src={image.src} alt={image.alt}/>
+                </li>
+        ))}
+    </Carousel>
 
 
 </BaseLayout>

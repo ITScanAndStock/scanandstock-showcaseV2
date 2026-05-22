@@ -4,12 +4,13 @@ import ReserveButton from "./ReserveButton.astro";
 interface Props {
     label?: string;
     withReserve?: boolean;
+    variant?: 'card' | 'image';
 }
 
-const {label = "Carousel de présentation", withReserve = false} = Astro.props;
+const {label = "Carousel de présentation", withReserve = false, variant = 'card'} = Astro.props;
 ---
 
-<section class="carousel-section" aria-label={label}>
+<section class:list={["carousel-section", `carousel-section--${variant}`]} aria-label={label}>
     <div
             class="carousel-container"
             role="group"
@@ -71,12 +72,18 @@ const {label = "Carousel de présentation", withReserve = false} = Astro.props;
         transition: transform 0.4s ease;
     }
 
-    /* Les <li class="carousel-slide"> sont injectés par le parent via slot */
-    :global(.carousel-slide) {
+    /* ─── Variant card (défaut) ───────────────────────────── */
+    :global(.carousel-section--card .carousel-slide) {
         flex: 0 0 90%;
-        width: 95%;
+        width: 90%;
         padding: 1rem;
+    }
 
+    /* ─── Variant image — largeur naturelle ──────────────── */
+    :global(.carousel-section--image .carousel-slide) {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0 0.5rem;
     }
 
     /* ─── Zone sous les cards ─────────────────────────────── */
@@ -231,14 +238,27 @@ const {label = "Carousel de présentation", withReserve = false} = Astro.props;
                 slide.setAttribute("aria-hidden", i !== 0 ? "true" : "false");
             });
 
+            let isAnimating = false;
+
             function goTo(n) {
+                if (isAnimating) return;
+                isAnimating = true;
                 currentIndex = n;
-                track.style.transform = "translateX(-" + (currentIndex * 90) + "%)";
+
+                // Recalcul offsetLeft à chaque appel — tient compte des images chargées après init
+                const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
+                const target = allSlides[n];
+                const offset = target ? target.offsetLeft : 0;
+                track.style.transform = "translateX(-" + offset + "px)";
+
                 // Mise à jour ARIA uniquement sur les vraies slides
                 const realIndex = ((n % total) + total) % total;
                 slides.forEach(function (slide, i) {
                     slide.setAttribute("aria-hidden", i !== realIndex ? "true" : "false");
                 });
+
+                // Fallback si transitionend ne se déclenche pas (reduced motion, transition: none)
+                if (reduced) isAnimating = false;
             }
 
             // Après la transition vers le clone, revenir silencieusement à la slide 0
@@ -253,6 +273,7 @@ const {label = "Carousel de présentation", withReserve = false} = Astro.props;
                         });
                     });
                 }
+                isAnimating = false;
             });
 
             function goNext() {
