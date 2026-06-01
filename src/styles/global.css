@@ -2,7 +2,7 @@
 
 body {
     font-family: "Montserrat", sans-serif;
-    max-width: 1240px;
+    max-width: 1580px;
     padding: 0 5px;
     margin: auto;
     min-height: 100vh;
@@ -13,8 +13,8 @@ body {
 
 @media screen and (min-width: 1024px) {
     body {
+        width: 90%;
         line-height: 45px;
         padding: 0;
-
     }
 }

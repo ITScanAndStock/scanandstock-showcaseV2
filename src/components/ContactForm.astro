@@ -1,0 +1,271 @@
+---
+
+---
+
+<section>
+  <div class="reserve">
+    <h3>Vous souhaitez une demo du logiciel ?</h3>
+    <p>
+      Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes avec
+      l’un de nos experts :
+    </p>
+    <button>
+      <img src="/src/assets/icones/calendar.svg" alt="Aicon de calendrier" />
+      Prendre rendez-vous
+    </button>
+  </div>
+  <div class="contact">
+    <h3>Nous contacter</h3>
+    <address>
+      <a href="tel:+0784078048" class="phone-number">
+        <img src="/src/assets/icones/phone.svg" alt="" />
+        07 84 07 80 48
+      </a>
+      <a href="mailto:contact@scanandstock.fr">
+        <img src="/src/assets/icones/mail.svg" alt="" />
+        contact@scanandstock.fr
+      </a>
+      <a
+        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
+        class="address-street"
+      >
+        <img src="/src/assets/icones/localisation.svg" alt="" />
+        360 Rue Marc Lefrancq, 59300 Valenciennes
+      </a>
+    </address>
+  </div>
+  <form action="https://formspree.io/f/mwvzdyor" method="post" class="form">
+    <h3>Demande de contact</h3>
+    <ul class="form__list">
+      <li class="list__item firstname">
+        <label for="firstname">Prénom</label>
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          autocomplete="given-name"
+          required
+        />
+      </li>
+      <li class="list__item lastname">
+        <label for="lastname">Nom</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          autocomplete="family-name"
+          required
+        />
+      </li>
+      <li class="list__item mail">
+        <label for="mail">Adresse mail</label>
+        <input
+          type="email"
+          id="mail"
+          name="email"
+          autocomplete="email"
+          required
+        />
+      </li>
+      <li class="list__item phone">
+        <label for="phone">Téléphone</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" />
+      </li>
+      <li class="list__item content">
+        <label for="content">Message</label>
+        <textarea name="content" id="content" required></textarea>
+      </li>
+    </ul>
+    <button type="submit">
+      <img src="/src/assets/icones/send.svg" alt="icone d'avion en papier" />
+      Envoyer
+    </button>
+  </form>
+</section>
+<style>
+  h3 {
+    font-size: 1.2rem;
+    line-height: normal;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #333b3f;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 25px;
+    font-weight: 400;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #12a19a;
+    border-radius: 100px;
+    padding: 0.5rem 2rem;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .reserve {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+
+    button {
+      margin: 0 auto;
+      margin-top: 2rem;
+      width: fit-content;
+      font-size: 1rem;
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+  .contact {
+    margin-bottom: 2rem;
+    address {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      a {
+        display: flex;
+        gap: 2rem;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 600;
+      }
+      .phone-number,
+      .address-street {
+        text-decoration: underline;
+      }
+    }
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px dashed rgba(154, 180, 188, 0.8);
+    padding-top: 1rem;
+    .list__item {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      textarea {
+        background-color: #f0f6fe;
+        border-radius: 6px;
+        border: unset;
+        padding: 0.5rem;
+      }
+
+      textarea {
+        height: 120px;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+  @media screen and (min-width: 728px) {
+    section {
+      width: 1325px;
+      display: grid;
+      padding: 2rem;
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-areas:
+        "form reserve"
+        "form contact";
+      margin: 0 auto;
+    }
+    .form {
+      grid-area: form;
+      border-top: unset;
+      border-right: 2px dashed rgba(154, 180, 188, 0.8);
+      padding-right: 2rem;
+
+      .form__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "firstname lastname"
+          "mail phone"
+          "content content";
+        gap: 2rem;
+
+        .list__item {
+          textarea {
+            height: 195px;
+          }
+        }
+
+        .firstname {
+          grid-area: firstname;
+        }
+        .lastname {
+          grid-area: lastname;
+        }
+        .mail {
+          grid-area: mail;
+        }
+        .phone {
+          grid-area: phone;
+        }
+        .content {
+          grid-area: content;
+        }
+      }
+
+      button {
+        margin: 0 auto;
+        margin-top: 2rem;
+      }
+    }
+    .reserve {
+      grid-area: reserve;
+      height: 310px;
+      padding: 0 0 2rem 2rem;
+      border-bottom: 2px dashed rgba(154, 180, 188, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      button {
+        width: fit-content;
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+    .contact {
+      grid-area: contact;
+      height: 310px;
+      padding: 2rem 0 2rem 2rem;
+
+      address {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        a {
+          display: flex;
+          gap: 1.5rem;
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+</style>
