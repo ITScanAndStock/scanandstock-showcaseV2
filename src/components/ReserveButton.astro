@@ -1,50 +1,50 @@
 ---
 interface Props {
-    class?: string;
+  class?: string;
 }
 
-const {class: className} = Astro.props;
+const { class: className } = Astro.props;
 ---
 
 <button
-        class:list={["booking", className]}
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
+  class:list={["booking", className]}
+  onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
 >
-    Réservez une démo
+  Réservez une démo
 </button>
 
 <style>
+  .booking {
+    margin: 20px auto;
+    padding: 5px 20px;
+    border-radius: 20px;
+    color: #496f7f;
+    font-weight: 700;
+    font-size: 20px;
+    background-color: #fff;
+    transition: all 80ms ease;
+    width: fit-content;
+  }
+
+  .dark {
+    background: linear-gradient(
+      90deg,
+      #185873 1.73%,
+      #33657e 50.87%,
+      #415b82 100%
+    );
+    color: white;
+  }
+
+  .booking:active {
+    transform: scale(0.9);
+  }
+
+  @media screen and (min-width: 768px) {
     .booking {
-        margin: 20px auto;
-        padding: 5px 20px;
-        border-radius: 20px;
-        color: #496f7f;
-        font-weight: 700;
-        font-size: 20px;
-        background-color: #fff;
-        transition: all 80ms ease;
-        width: fit-content;
+      margin: 30px auto;
+      border-radius: 25px;
+      font-size: 24px;
     }
-
-    .dark {
-        background: linear-gradient(
-                90deg,
-                #185873 1.73%,
-                #33657e 50.87%,
-                #415b82 100%
-        );
-        color: white;
-    }
-
-    .booking:active {
-        transform: scale(0.9);
-    }
-
-    @media screen and (min-width: 768px) {
-        .booking {
-            margin: 30px auto;
-            border-radius: 25px;
-            font-size: 24px;
-        }
-    }
+  }
 </style>
