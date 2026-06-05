@@ -84,16 +84,22 @@
 </section>
 <style>
   h3 {
-    font-size: 1.2rem;
+    font-size: 1.375rem;
     line-height: normal;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-weight: 600;
-    color: #333b3f;
+    background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%);
+    background-size: 1300px;
+    background-position: left;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   p {
-    font-size: 1rem;
+    font-size: 1.0625rem;
     line-height: 25px;
     font-weight: 400;
+    color: #27333a;
   }
   button {
     display: flex;
@@ -139,9 +145,10 @@
       a {
         display: flex;
         gap: 2rem;
-        font-size: 1rem;
+        font-size: 1.0625rem;
         font-style: normal;
-        font-weight: 600;
+        font-weight: 500;
+        color: #27333a;
       }
       .phone-number,
       .address-street {
@@ -153,14 +160,14 @@
     display: flex;
     flex-direction: column;
     border-top: 2px dashed rgba(154, 180, 188, 0.8);
-    padding-top: 1rem;
     .list__item {
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
 
       label {
-        font-weight: 600;
+        font-weight: 400;
+        color: #27333a;
       }
 
       input,
@@ -202,7 +209,7 @@
           "firstname lastname"
           "mail phone"
           "content content";
-        gap: 2rem;
+        column-gap: 2rem;
 
         .list__item {
           textarea {
@@ -229,7 +236,7 @@
 
       button {
         margin: 0 auto;
-        margin-top: 2rem;
+        margin-top: 0.5%;
       }
     }
     .reserve {
@@ -243,6 +250,7 @@
 
       button {
         width: fit-content;
+        font-size: 24px;
         img {
           width: 32px;
           height: 32px;

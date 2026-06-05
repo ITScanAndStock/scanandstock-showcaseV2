@@ -1,7 +1,583 @@
 ---
+import { Image } from "astro:assets";
+import HeroBox from "../components/ui/Hero-box.astro";
+import MainBox from "../components/ui/Main-box.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ReserveButton from "../components/ReserveButton.astro";
+import InUse from "../assets/photos/inUse.png";
+import GradientTitle from "../components/ui/GradientTitle.astro";
+import Carousel from "../components/Carousel.astro";
+import Sas from "../assets/icones/animation/sas.gif";
+import Security from "../assets/icones/animation/security.gif";
+import Compatibility from "../assets/icones/animation/compatibility.gif";
+import StockPlace from "../assets/photos/carousel/stock_place.png";
+import Productivity from "../assets/photos/carousel/productivity.png";
+import CardCarousel from "../components/CardCarousel.astro";
+import Robin from "../assets/photos/robin_fantino.png";
+import Arthur from "../assets/photos/arthur_dausque.png";
+import PJ from "../assets/photos/pierre-jean_vandoorne.png";
+import PJ2 from "../assets/photos/pj.png";
+import Rocket from "../assets/icones/animation/rocket.gif";
+import Reliability from "../assets/icones/animation/reliability.gif";
+import Innovation from "../assets/icones/animation/innovation.gif";
+import ContactForm from "../components/ContactForm.astro";
+
+const testimonials = [
+  {
+    name: "Dr Roland Cardeillac",
+    profession: "Chrirguen-dentiste",
+    message:
+      "Super solution de gestion de stock, ultra simple à utiliser, l’équipe et très facile à contacter quand on a des questions ( merci à Arthur pour sa disponibilité et réactivité). Mes assistantes s’amusent beaucoup !",
+  },
+  {
+    name: "Abir Driss",
+    profession: "Directrice opérationnelle de centre médico-dentaire",
+    message:
+      "Nous sommes ravie d'avoir installé scan and stock. Le logiciel est facile, très ludique et nous permettra de gagner un temps considérable sur la gestion du stock et les commandes.",
+  },
+  {
+    name: "Elodie Niotou",
+    profession: "Assistante dentaire",
+    message:
+      "Très bon logiciel, simple et rapide d'utilisation. Permet un gain de temps considérable et non négligeable d'autant que les journées des assistantes sont bien remplies. L'équipe technique est au top et répond vite et efficacement à la demande.",
+  },
+  {
+    name: "Dr Yohan Guigui",
+    profession: "Chrirguen-dentiste",
+    message:
+      "Excellent logiciel , excellent suivi des clients par toute l’équipe est très disponible. Bravo pour ce projet que tous les cabinets devraient adopter.",
+  },
+  {
+    name: "Dr Roland Cardeillac",
+    profession: "Chrirguen-dentiste",
+    message:
+      "Logiciel performant et simple à utiliser !Équipe ultra sympa et réactive !",
+  },
+  {
+    name: "Jennifer Opposité",
+    profession: "Assistante Dentaire",
+    message:
+      "Nous utilisons Scan & Stock depuis maintenant 1 an, il met impossible de revenir à notre organisation d’avant. C’est pratique et c’est un gain de temps non négligeable dans notre profession. Au top 🚀🚀",
+  },
+  {
+    name: "Dr Elisabeth Hollard Milhem",
+    profession: "Chrirguen-dentiste",
+    message:
+      "Utilisé depuis 1 an, nous facilite la vie, on passe moins de temps à préparer les commandes. Moins d'erreurs de référence aussi. Merci Scan and Stock.",
+  },
+  {
+    name: "OCEADENT",
+    profession: "Cabinet dentaire",
+    message:
+      "Nous sommes ravies d'avoir choisi ce logiciel, il répond à nos attentes à tous niveaux : écoute, réactivité et rapport qualité/prix sont au rendez-vous. Le service client est irréprochable toujours joignable et dans l'accompagnement. De plus, le logiciel reste facile d'utilisation et très instinctif.",
+  },
+];
+const carouselCards = [
+  {
+    src: Productivity,
+    alt: "Assistante dentaire réalisant un soin",
+    title: "Gagnez en productivité",
+    text: "Le gain de temps dans la gestion des stocks et des commandes a été notre principale préoccupation lors de la création de Scan&Stock. Aujourd’hui grâce aux nombreux retours de nos utilisateurs nous pouvons affirmer que les assistantes dentaires, secrétaires ou prothésistes gagnent en productivité en limitant à leur strict minimum le temps non clinique. L’exemple de notre cabinet est probant, nous sommes passés d’1h15 à 20 minutes en temps de déstockage, envois et réceptions de commandes.",
+  },
+  {
+    src: StockPlace,
+    alt: "Espace de stockage dentaire organisé avec les produits Scan&Stock",
+    title: "Optimisez votre budget",
+    text: "Qui dit gestion optimale des stocks dit économie d’argent, car seules les quantités nécessaires sont commandées. Grâce à cela, les utilisateurs de Scan&Stock nous ont révélé obtenir de 11 à 20 % d’économies sur leurs postes achats. Plus le cabinet est grand, plus ces économies sont exponentielles. Des grosses structures nous avoue avoir économisé plus de 40 000 € la première année ! ",
+  },
+];
 ---
 
 <BaseLayout title="Scan&Stock | À propos">
-  <h1>I am a legend about us</h1>
+  <MainBox>
+    <HeroBox>
+      <div class="hero">
+        <h1>Scan & Stock, le logiciel pour cabinets dentaires 100% en ligne</h1>
+        <p class="hero__testimonial">
+          Découvrez le témoignage du Dr Grégory CAMALEONTE.
+        </p>
+        <iframe
+          class="hero__video"
+          src="https://www.youtube.com/embed/L0pJrd-BRQM"></iframe>
+        <p class="hero__description">
+          Vous hésitez et souhaitez avoir le sentiment de vos consoeurs et
+          confrères sur les bienfaits de l'utilisation de Scan&Stock ?
+        </p>
+        <ReserveButton class="hero-btn" />
+      </div>
+    </HeroBox>
+    <section class="history">
+      <Image src={InUse} alt="utilisation de scanandstock" />
+      <div class="separator"></div>
+      <p>
+        Scan&Stock est un logiciel dentaire créé par un chirurgien-dentiste pour
+        les chirurgiens-dentistes. Notre solution a vu le jour en novembre 2021
+        lors du congrès de l’ADF. Aujourd’hui, il compte plus de 1000
+        utilisateurs satisfaits répartis en France, en Belgique, en Suisse, dans
+        les DOM-TOM, à Monaco et même au Canada. Scan&Stock est un logiciel
+        évolutif, chaque année de nouvelles mises à jour sont faites afin de
+        répondre aux demandes de nos utilisateurs.
+      </p>
+    </section>
+    <GradientTitle>
+      <span class="underline">Ils ont adopté</span> le logiciel
+      <span class="underline">Scan & Stock</span>
+    </GradientTitle>
+
+    <Carousel withReserveBtn variant="testimonial" label="Témoignages clients">
+      {
+        testimonials.map((testi) => (
+          <li class="carousel-slide">
+            <article class="testimonial-article">
+              <h3 class="testimonial-name">{testi.name}</h3>
+              <p class="testimonial-profession">{testi.profession}</p>
+              <p class="testimonial-message">{testi.message}</p>
+            </article>
+          </li>
+        ))
+      }
+    </Carousel>
+  </MainBox>
+  <!--
+  <MainBox>
+    <GradientTitle>
+      Un logiciel <span class="underline">flexible et sécurisé</span>
+    </GradientTitle>
+    <ul class="info-list">
+      <li>
+        <article class="info-article">
+          <Image src={Sas} alt="image" width={100} height={100} />
+          <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+            Connexion simple
+          </GradientTitle>
+          <p>
+            Après avoir créé votre compte en choisissant votre login et votre
+            mot de passe, une simple connexion internet et un navigateur type
+            Google Chrome suffisent.
+          </p>
+        </article>
+      </li>
+      <div class="separator"></div>
+      <li>
+        <article class="info-article">
+          <Image src={Security} alt="image" width={100} height={100} />
+          <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+            Sécurité des données
+          </GradientTitle>
+          <p>
+            Toutes les données saisies sur Scan&Stock sont stockées sur des
+            serveurs sécurisés tout comme les dossiers patients d’un logiciel en
+            ligne de cabinet dentaire. Notre hébergeur principal est AWS.
+          </p>
+        </article>
+      </li>
+      <div class="separator"></div>
+      <li>
+        <article class="info-article">
+          <Image src={Compatibility} alt="image" width={100} height={100} />
+          <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+            Compatibilité tablette
+          </GradientTitle>
+          <p>
+            Nos cabinets n’étant pas extensibles, nous avons développé notre
+            logiciel également sur tablette Androïd ou iOS. Cela permet
+            d’optimiser l’espace disponible dans nos salles non cliniques
+            parfois plus exiguës !
+          </p>
+        </article>
+      </li>
+    </ul>
+
+    <GradientTitle>
+      <span class="underline">Les avantages</span> de notre logiciel en ligne
+    </GradientTitle>
+    <Carousel>
+      {
+        carouselCards.map((card) => (
+          <li class="carousel-slide">
+            <CardCarousel
+              src={card.src}
+              alt={card.alt}
+              title={card.title}
+              text={card.text}
+            />
+          </li>
+        ))
+      }
+    </Carousel>
+  </MainBox>
+
+  <GradientTitle>
+    <span class="underline">La team</span> Scan & Stock
+  </GradientTitle>
+
+  <section class="team">
+    <Image
+      class="team__photo"
+      src={PJ}
+      alt="Image de Pierre-Jean Vandoorne le CEO"
+    />
+    <div class="separator"></div>
+    <Image
+      class="team__photo"
+      src={Arthur}
+      alt="Image de Arthur Dausque le commercial"
+    />
+    <div class="separator"></div>
+    <Image
+      class="team__photo"
+      src={Arthur}
+      alt="Image de Nicholas Larcin qui s'occupe du marketing"
+    />
+    <div class="separator"></div>
+    <Image
+      class="team__photo"
+      src={Robin}
+      alt="Image de Robin Fantino le développeur"
+    />
+  </section>
+
+  <MainBox>
+    <GradientTitle>
+      <span class="underline">L'histoire</span> de Scan & Stock
+    </GradientTitle>
+
+    <section class="presentation__ceo">
+      <Image src={PJ2} alt="Pierre-Jean Vandoorne" width={440} height={520} />
+      <div class="separator"></div>
+      <div class="presentation__text">
+        <p>
+          Chirurgien-dentiste je cherchais un logiciel me permettant de gérer
+          simplement mes stocks et mes commandes au cabinet. Mon but était
+          d’optimiser mes achats et surtout faire gagner du temps à mon
+          assistante afin de l’avoir encore plus avec moi au fauteuil.
+        </p>
+        <p>
+          Ne trouvant pas mon bonheur dans les solutions existantes qui étaient
+          trop complexes, trop lourdes à mettre en place ou au contraire trop
+          simplistes j’ai décidé de développer Scan&Stock. Aujourd’hui nombreux
+          sont les cabinets qui nous disent qu’ils ne sauraient plus faire sans.
+          Alors vous aussi, libérez votre esprit de la gestion des stocks,
+          Scan&Stock le fait pour vous !
+        </p>
+      </div>
+    </section>
+    <section>
+      <ul class="info-list">
+        <li>
+          <article class="info-article">
+            <Image src={Reliability} alt="image" width={100} height={100} />
+            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+              La fiabilité
+            </GradientTitle>
+            <p>
+              Notre équipe de développement travaille depuis 15 ans à
+              l’amélioration de ses process et produits.
+            </p>
+          </article>
+        </li>
+        <div class="separator"></div>
+        <li>
+          <article class="info-article">
+            <Image src={Rocket} alt="image" width={100} height={100} />
+            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+              La réactivité
+            </GradientTitle>
+            <p>
+              Nous marquons notre considération envers nos clients par la
+              rapidité et la promptitude de nos réponses.
+            </p>
+          </article>
+        </li>
+        <div class="separator"></div>
+        <li>
+          <article class="info-article">
+            <Image src={Innovation} alt="image" width={100} height={100} />
+            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+              L’innovation
+            </GradientTitle>
+            <p>
+              À l’écoute de nos clients, nous désirons faire évoluer le logiciel
+              en fonction de leurs demandes.
+            </p>
+          </article>
+        </li>
+      </ul>
+    </section>
+    <ReserveButton />
+  </MainBox>
+
+  <section class="help">
+    <details>
+      <summary
+        >Comment commencer à utiliser le logiciel ? <i
+          class="fa-solid fa-chevron-down"></i></summary
+      >
+      Dès votre souscription, vous avez accès au logiciel. Il vous suffit ensuite
+      de contacter vos fournisseurs et de leur demander un état des lieux de vos commandes
+      sur les 6 derniers mois. Vous nous faites parvenir ces fichiers Excel et les
+      intégrons à votre logiciel. Ainsi vos produits sont déjà intégrés dans le logiciel,
+      il ne vous reste plus qu’à faire votre inventaire. <br />Vous disposez de
+      2 mois satisfait ou remboursé afin de prendre en main votre logiciel et
+      confirmer le fait que celui-ci vous aidera au quotidien dans la gestion de
+      vos stocks et de vos commandes.
+    </details>
+    <details>
+      <summary>
+        Scan&Stock est-il facile à utiliser ?
+        <i class="fa-solid fa-chevron-down"></i>
+      </summary>
+    </details>
+    <details>
+      <summary>
+        Scan&Stock fait-il office de fournisseur ?
+        <i class="fa-solid fa-chevron-down"></i>
+      </summary>
+    </details>
+    <details>
+      <summary>
+        Vais-je gagner du temps à utiliser Scan&Stock ?
+        <i class="fa-solid fa-chevron-down"></i>
+      </summary>
+      Non. Scan&Stock est une application tierce qui vous permet de rassembler tous
+      vos fournisseurs sur une seule et même plateforme. Cela vous permet de commander
+      tout ce dont vous avez besoin quand vous en avez besoin. Nous comblons le fossé
+      entre la gestion et la commande des stocks en vous fournissant des fonctionnalités
+      automatisées qui permettront à votre cabinet d'économiser du temps et de l'argent
+      et de réduire la dépendance du personnel clé lors de la gestion du processus.
+      Scan&Stock a développé COOMPY (comparateur de prix en ligne sur www.coompy.fr
+      ) afin de vous faire profiter des produits dont vous avez besoin aux meilleurs
+      tarifs.
+    </details>
+    <details>
+      <summary>
+        Y-a-t-il une formation pour débuter ?
+        <i class="fa-solid fa-chevron-down"></i>
+      </summary>
+      Notre équipe support est là pour vous guider à chaque étape du processus de
+      configuration. Nous disposons également d'une série de tutoriels sous format
+      vidéo accessible directement depuis le logiciel en pied de page. Celles-ci sont
+      spécifiques à chaque service de notre solution, offrant ainsi aux assistantes
+      et collaborateurs un outil de référence rapide et facile en cas de problème.
+      Si vous ne trouvez pas votre bonheur dans ces vidéos il vous est toujours possible
+      d’échanger avec quelqu’un de notre support par mail ou téléphone. Nous nous
+      ferons toujours un plaisir de vous répondre !
+    </details>
+    <details>
+      <summary>
+        Scan&Stock est-il sécurisé ?
+        <i class="fa-solid fa-chevron-down"></i>
+      </summary>
+      Toutes les données que vous rentrez au sein de Scan&Stock sont stockées sur
+      des serveurs sécurisés à Paris (FRANCE). Vos données sont donc hautement sécurisées
+      dans le cloud.
+    </details>
+  </section>
+
+  <MainBox>
+    <GradientTitle> Nous contacter </GradientTitle>
+    <ContactForm />
+  </MainBox> -->
 </BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 1rem 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-weight: 400;
+      line-height: 19px;
+      font-size: 1rem;
+    }
+
+    .hero__video {
+      border: unset;
+      border-radius: 25px;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 150px 30px 80px 100px;
+      grid-template-areas:
+        "title video"
+        "testimonial video"
+        "description video"
+        "btn video";
+      margin: 2rem;
+
+      .hero__title {
+        grid-area: title;
+      }
+      .hero__testimonial {
+        grid-area: testimonial;
+      }
+      .hero__video {
+        grid-area: video;
+      }
+      .hero__description {
+        grid-area: description;
+        line-height: 35px;
+      }
+      .hero__btn {
+        grid-area: btn;
+      }
+    }
+  }
+
+  .history {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .history {
+      display: flex;
+      flex-direction: row;
+      gap: 3rem;
+      padding: 5rem;
+      align-items: center;
+    }
+  }
+
+  .testimonial-article {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 10px 30px rgba(39, 51, 58, 0.08);
+  }
+
+  .testimonial-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #27333a;
+  }
+
+  .testimonial-profession {
+    margin: 0.15rem 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #27333a;
+  }
+
+  .testimonial-message {
+    margin: 1.25rem 0 0;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.58;
+    color: #51646d;
+  }
+
+  .info-list {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+  .info-article {
+    display: flex;
+    height: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 15px;
+    min-height: 255px;
+    max-width: 400px;
+    width: 100%;
+    p {
+      font-size: 16px;
+      color: #27333a;
+      line-height: 25px;
+    }
+  }
+  .separator {
+    display: block;
+    grid-row: 1;
+    align-self: stretch;
+    position: relative;
+    border-right: 2px dashed rgba(154, 180, 188, 0.8);
+  }
+
+  .team {
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .team-fig {
+    width: 300px;
+    height: 395px;
+    position: relative;
+    border-radius: 35px;
+    overflow: hidden;
+    background-color: #eef3f7;
+
+    .team__photo {
+      display: block;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      mask-image: linear-gradient(transparent 40%, black);
+      -webkit-mask-image: linear-gradient(transparent 40%, black);
+    }
+
+    figcaption {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      border-radius: 0 0 35px 35px;
+      height: 100px;
+      line-height: 30px;
+      padding-left: 20px;
+      padding-bottom: 15px;
+      color: white;
+      font-weight: 600;
+      margin-top: -100px;
+    }
+  }
+
+  .presentation__ceo {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin: 0 auto;
+
+    .separator {
+      margin: 0 3rem;
+    }
+
+    .presentation__text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+</style>

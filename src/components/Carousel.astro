@@ -4,7 +4,7 @@ import ReserveButton from "./ReserveButton.astro";
 interface Props {
   label?: string;
   withReserveBtn?: boolean;
-  variant?: "card" | "image";
+  variant?: "card" | "image" | "testimonial";
 }
 
 const {
@@ -97,6 +97,41 @@ const {
     flex: 0 0 auto;
     width: auto;
     padding: 0 0.5rem;
+  }
+
+  /* ─── Variant testimonial — multi-cards responsive ────── */
+  :global(.carousel-section--testimonial .carousel-slide) {
+    position: relative;
+    flex: 0 0 85%;
+    width: 85%;
+    padding: 0 0.75rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    :global(.carousel-section--testimonial .carousel-slide) {
+      flex: 0 0 50%;
+      width: 50%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    :global(.carousel-section--testimonial .carousel-slide) {
+      flex: 0 0 33.333%;
+      width: 33.333%;
+    }
+  }
+
+  /* Séparateur pointillé vertical dans la gouttière droite */
+  @media screen and (min-width: 768px) {
+    :global(.carousel-section--testimonial .carousel-slide::after) {
+      content: "";
+      position: absolute;
+      top: 1.5rem;
+      bottom: 1.5rem;
+      right: 0;
+      border-right: 2px dashed rgba(154, 180, 188, 0.8);
+      pointer-events: none;
+    }
   }
 
   /* ─── Zone sous les cards ─────────────────────────────── */
