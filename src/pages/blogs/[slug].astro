@@ -1,0 +1,125 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MainBox from "../../components/ui/Main-box.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("blog");
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, date, cover } = entry.data;
+---
+
+<BaseLayout title={`Scan&Stock | ${title}`}>
+    <MainBox>
+        <article class="article">
+            <a class="article__back" href="/blogs">← Retour au blog</a>
+
+            <Image class="article__cover" src={cover} alt={title} width={1200} height={630} />
+
+            <p class="article__meta">
+                <span class="article__category">{category}</span>
+                <time datetime={date}>{date}</time>
+            </p>
+
+            <h1 class="article__title">{title}</h1>
+
+            <div class="article__body">
+                <Content />
+            </div>
+
+            <a class="article__back" href="/blogs">← Retour au blog</a>
+        </article>
+    </MainBox>
+</BaseLayout>
+
+<style>
+    .article {
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .article__back {
+        display: inline-block;
+        margin: 1rem 0;
+        color: #12a19a;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .article__back:hover {
+        text-decoration: underline;
+    }
+
+    .article__back:focus-visible {
+        outline: 3px solid #12a19a;
+        outline-offset: 2px;
+    }
+
+    .article__cover {
+        width: 100%;
+        height: auto;
+        border-radius: 24px;
+        object-fit: cover;
+    }
+
+    .article__meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.9375rem;
+        color: #496f7f;
+    }
+
+    .article__category {
+        background-color: rgba(65, 119, 140, 0.65);
+        color: #fff;
+        border-radius: 200px;
+        padding: 0.25rem 0.9rem;
+        font-weight: 600;
+    }
+
+    .article__title {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        line-height: 1.2;
+        color: #27333a;
+        margin: 0.75rem 0 1.5rem;
+    }
+
+    .article__body {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+        color: #27333a;
+    }
+
+    .article__body :global(h2) {
+        font-size: 1.6rem;
+        color: #3983a3;
+        margin-top: 2rem;
+    }
+
+    .article__body :global(h3) {
+        font-size: 1.3rem;
+        color: #41778c;
+        margin-top: 1.5rem;
+    }
+
+    .article__body :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 16px;
+        margin: 1.5rem 0;
+    }
+
+    .article__body :global(a) {
+        color: #12a19a;
+    }
+</style>
