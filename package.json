@@ -7,8 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev --port 4321",
-    "sync:notion": "node --env-file=.env scripts/sync-notion.mjs",
-    "prebuild": "node --env-file=.env scripts/sync-notion.mjs",
+    "sync:notion": "node --env-file-if-exists=.env scripts/sync-notion.mjs",
+    "prebuild": "node --env-file-if-exists=.env scripts/sync-notion.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "test": "node --test \"scripts/**/*.test.mjs\""

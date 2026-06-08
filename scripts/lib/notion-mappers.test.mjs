@@ -77,6 +77,14 @@ test("mapProperties concatène un extrait multi-segments", () => {
   assert.equal(mapProperties(props).excerpt, "Un extrait.");
 });
 
+test("mapProperties retire les espaces en début/fin d'extrait", () => {
+  const props = {
+    ...fullProps,
+    Extrait: { rich_text: [{ plain_text: "  Texte avec espaces ! " }] },
+  };
+  assert.equal(mapProperties(props).excerpt, "Texte avec espaces !");
+});
+
 import { demoteHeadings } from "./notion-mappers.mjs";
 
 test("demoteHeadings rétrograde chaque niveau d'un cran", () => {

@@ -26,15 +26,16 @@ const notion = new Client({ auth: TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 function frontmatter(data) {
-  const esc = (s) => String(s).replace(/"/g, '\\"');
+  // JSON.stringify produit un scalaire YAML double-quoted valide
+  // (échappe guillemets, antislashs et retours ligne).
   return [
     "---",
-    `title: "${esc(data.title)}"`,
-    `category: "${esc(data.category)}"`,
-    `excerpt: "${esc(data.excerpt)}"`,
-    `cover: "${data.cover}"`,
-    `date: "${data.date}"`,
-    `slug: "${data.slug}"`,
+    `title: ${JSON.stringify(data.title)}`,
+    `category: ${JSON.stringify(data.category)}`,
+    `excerpt: ${JSON.stringify(data.excerpt)}`,
+    `cover: ${JSON.stringify(data.cover)}`,
+    `date: ${JSON.stringify(data.date)}`,
+    `slug: ${JSON.stringify(data.slug)}`,
     "---",
     "",
   ].join("\n");
@@ -76,31 +77,33 @@ async function main() {
 
   const pages = await fetchPublishedPages();
   const usedSlugs = new Set();
+  let written = 0;
 
   for (const page of pages) {
     const data = mapProperties(page.properties);
+
+    // 2. Cover obligatoire : un article sans couverture est ignoré (le site reste sain).
+    if (!data.coverUrl) {
+      console.warn(`⚠ Article ignoré (aucune image de couverture) : "${data.title}"`);
+      continue;
+    }
+
     const base = data.slug ? slugify(data.slug) : slugify(data.title);
     const slug = makeUniqueSlug(base || "article", usedSlugs);
     usedSlugs.add(slug);
 
-    // 2. Cover
-    let coverPath = "";
-    if (data.coverUrl) {
-      const ext = extFromUrl(data.coverUrl);
-      const file = `${slug}-cover.${ext}`;
-      await downloadImage(data.coverUrl, path.join(IMG_DIR, file));
-      coverPath = `./_images/${file}`;
-    } else {
-      console.warn(`⚠ Article sans image de couverture : ${slug}`);
-    }
+    const coverExt = extFromUrl(data.coverUrl);
+    const coverFile = `${slug}-cover.${coverExt}`;
+    await downloadImage(data.coverUrl, path.join(IMG_DIR, coverFile));
+    const coverPath = `./_images/${coverFile}`;
 
     // 3. Corps Markdown
     const mdblocks = await n2m.pageToMarkdown(page.id);
     let body = n2m.toMarkdownString(mdblocks).parent ?? "";
     body = demoteHeadings(body);
 
-    // 4. Images du corps : télécharger + réécrire
-    const urls = extractImageUrls(body);
+    // 4. Images du corps : télécharger (sans doublon) + réécrire
+    const urls = [...new Set(extractImageUrls(body))];
     const mapping = {};
     let i = 1;
     for (const url of urls) {
@@ -115,6 +118,7 @@ async function main() {
     // 5. Écrire le .md
     const fm = frontmatter({ ...data, cover: coverPath, slug });
     await writeFile(path.join(OUT_DIR, `${slug}.md`), fm + body + "\n", "utf8");
+    written += 1;
     console.log(`✓ ${slug}.md`);
   }
 
@@ -125,7 +129,7 @@ async function main() {
     JSON.stringify(categories, null, 2),
     "utf8",
   );
-  console.log(`✓ ${pages.length} article(s), ${categories.length} catégorie(s).`);
+  console.log(`✓ ${written} article(s) écrit(s), ${categories.length} catégorie(s).`);
 }
 
 main().catch((err) => {

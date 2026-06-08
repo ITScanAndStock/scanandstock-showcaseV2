@@ -6,11 +6,24 @@ import ContactForm from "../components/ContactForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import BlogFilters from "../components/BlogFilters.astro";
 import { getCollection } from "astro:content";
-import categories from "../content/blog/_categories.json";
+import { readFile } from "node:fs/promises";
 
 const entries = await getCollection("blog");
-// Tri antéchronologique
-const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
+// Tri antéchronologique (copie pour ne pas muter la collection)
+const sorted = [...entries].sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+// Catégories depuis le Select Notion (_categories.json) ;
+// repli sur les catégories présentes si le fichier n'a pas encore été généré.
+let categories: string[];
+try {
+  const raw = await readFile(
+    new URL("../content/blog/_categories.json", import.meta.url),
+    "utf8",
+  );
+  categories = JSON.parse(raw);
+} catch {
+  categories = [...new Set(entries.map((e) => e.data.category))];
+}
 ---
 
 <BaseLayout title="Scan&Stock | Blog">

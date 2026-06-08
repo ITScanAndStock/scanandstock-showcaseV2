@@ -15,7 +15,7 @@ export function makeUniqueSlug(base, usedSet) {
 }
 
 function richText(prop) {
-  return (prop?.rich_text ?? []).map((t) => t.plain_text).join("");
+  return (prop?.rich_text ?? []).map((t) => t.plain_text).join("").trim();
 }
 
 function fileUrl(prop) {
