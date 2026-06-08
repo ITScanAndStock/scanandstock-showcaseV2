@@ -1,35 +1,32 @@
 ---
-import {Image} from "astro:assets";
-import type {Article} from "../data/articles";
+import { Image } from "astro:assets";
 
 interface Props {
-    article: Article;
+  slug: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  cover: ImageMetadata;
 }
 
-const {article} = Astro.props;
+const { slug, title, category, excerpt, cover } = Astro.props;
 ---
 
-<a
-        class="card"
-        href={article.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-category={article.categorie}
->
+<a class="card" href={`/blogs/${slug}`} data-category={category}>
     <div class="card__media">
         <Image
                 class="card__img"
-                src={article.image}
-                alt={article.titre}
+                src={cover}
+                alt={title}
                 width={363}
                 height={510}
         />
         <span class="card__overlay" aria-hidden="true"></span>
-        <span class="card__badge">{article.categorie}</span>
+        <span class="card__badge">{category}</span>
         <span class="card__divider" aria-hidden="true"></span>
     </div>
-    <h3 class="card__title">{article.titre}</h3>
-    <p class="card__excerpt">{article.extrait}</p>
+    <h3 class="card__title">{title}</h3>
+    <p class="card__excerpt">{excerpt}</p>
 </a>
 
 <style>
