@@ -39,3 +39,21 @@ export function mapProperties(properties) {
 export function demoteHeadings(markdown) {
   return markdown.replace(/^(#{1,5})(\s)/gm, "#$1$2");
 }
+
+const IMAGE_RE = /!\[[^\]]*\]\(([^)]+)\)/g;
+
+export function extractImageUrls(markdown) {
+  const urls = [];
+  for (const match of markdown.matchAll(IMAGE_RE)) {
+    urls.push(match[1]);
+  }
+  return urls;
+}
+
+export function rewriteImageUrls(markdown, mapping) {
+  return markdown.replace(IMAGE_RE, (full, url) => {
+    const local = mapping[url];
+    if (!local) return full;
+    return full.replace(`(${url})`, `(${local})`);
+  });
+}

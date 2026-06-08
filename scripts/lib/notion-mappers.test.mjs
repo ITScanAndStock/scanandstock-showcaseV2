@@ -92,3 +92,35 @@ test("demoteHeadings plafonne à h6", () => {
 test("demoteHeadings n'altère pas un # en milieu de ligne", () => {
   assert.equal(demoteHeadings("Voir la note #1 ici"), "Voir la note #1 ici");
 });
+
+import { extractImageUrls, rewriteImageUrls } from "./notion-mappers.mjs";
+
+const mdImages = "Intro\n\n![photo](https://notion.so/a.png?sig=1)\n\n![](https://notion.so/b.jpg?sig=2)";
+
+test("extractImageUrls renvoie toutes les URLs d'images", () => {
+  assert.deepEqual(extractImageUrls(mdImages), [
+    "https://notion.so/a.png?sig=1",
+    "https://notion.so/b.jpg?sig=2",
+  ]);
+});
+
+test("extractImageUrls renvoie un tableau vide sans image", () => {
+  assert.deepEqual(extractImageUrls("Juste du texte"), []);
+});
+
+test("rewriteImageUrls remplace les URLs par les chemins locaux", () => {
+  const mapping = {
+    "https://notion.so/a.png?sig=1": "./_images/art-1.png",
+    "https://notion.so/b.jpg?sig=2": "./_images/art-2.jpg",
+  };
+  const out = rewriteImageUrls(mdImages, mapping);
+  assert.equal(
+    out,
+    "Intro\n\n![photo](./_images/art-1.png)\n\n![](./_images/art-2.jpg)",
+  );
+});
+
+test("rewriteImageUrls laisse intactes les URLs non mappées", () => {
+  const out = rewriteImageUrls(mdImages, {});
+  assert.equal(out, mdImages);
+});
