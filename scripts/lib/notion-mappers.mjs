@@ -35,3 +35,7 @@ export function mapProperties(properties) {
     coverUrl: fileUrl(properties.Image),
   };
 }
+
+export function demoteHeadings(markdown) {
+  return markdown.replace(/^(#{1,5})(\s)/gm, "#$1$2");
+}

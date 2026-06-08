@@ -76,3 +76,19 @@ test("mapProperties concatène un extrait multi-segments", () => {
   };
   assert.equal(mapProperties(props).excerpt, "Un extrait.");
 });
+
+import { demoteHeadings } from "./notion-mappers.mjs";
+
+test("demoteHeadings rétrograde chaque niveau d'un cran", () => {
+  const input = "# Titre\n\nTexte\n\n## Sous-titre\n\n### Détail";
+  const expected = "## Titre\n\nTexte\n\n### Sous-titre\n\n#### Détail";
+  assert.equal(demoteHeadings(input), expected);
+});
+
+test("demoteHeadings plafonne à h6", () => {
+  assert.equal(demoteHeadings("###### Profond"), "###### Profond");
+});
+
+test("demoteHeadings n'altère pas un # en milieu de ligne", () => {
+  assert.equal(demoteHeadings("Voir la note #1 ici"), "Voir la note #1 ici");
+});
