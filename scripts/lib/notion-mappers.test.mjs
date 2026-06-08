@@ -124,3 +124,17 @@ test("rewriteImageUrls laisse intactes les URLs non mappées", () => {
   const out = rewriteImageUrls(mdImages, {});
   assert.equal(out, mdImages);
 });
+
+import { extFromUrl } from "./notion-mappers.mjs";
+
+test("extFromUrl lit l'extension malgré les query params", () => {
+  assert.equal(extFromUrl("https://notion.so/path/a.PNG?sig=abc&exp=1"), "png");
+});
+
+test("extFromUrl gère jpeg", () => {
+  assert.equal(extFromUrl("https://cdn.com/x.jpeg"), "jpeg");
+});
+
+test("extFromUrl retombe sur png par défaut", () => {
+  assert.equal(extFromUrl("https://cdn.com/no-extension"), "png");
+});

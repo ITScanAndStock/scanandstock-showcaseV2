@@ -57,3 +57,9 @@ export function rewriteImageUrls(markdown, mapping) {
     return full.replace(`(${url})`, `(${local})`);
   });
 }
+
+export function extFromUrl(url) {
+  const pathname = new URL(url).pathname;
+  const match = pathname.match(/\.([a-z0-9]+)$/i);
+  return match ? match[1].toLowerCase() : "png";
+}
