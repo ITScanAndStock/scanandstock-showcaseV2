@@ -14,6 +14,9 @@ import {
 
 const TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
+// Cible de déploiement : "staging" inclut les articles en relecture,
+// sinon (par défaut, "prod") on ne prend que les articles publiés.
+const TARGET = process.env.SYNC_TARGET === "staging" ? "staging" : "prod";
 const OUT_DIR = path.resolve("src/content/blog");
 const IMG_DIR = path.join(OUT_DIR, "_images");
 
@@ -54,13 +57,29 @@ async function fetchCategories() {
   return (select?.options ?? []).map((o) => o.name);
 }
 
-async function fetchPublishedPages() {
+// Filtre Notion selon la cible :
+// - prod    : Statut = "Publié"
+// - staging : Statut = "Publié" OU "En relecture"
+function statusFilter() {
+  const published = { property: "Statut", select: { equals: "Publié" } };
+  if (TARGET === "staging") {
+    return {
+      or: [
+        published,
+        { property: "Statut", select: { equals: "En relecture" } },
+      ],
+    };
+  }
+  return published;
+}
+
+async function fetchPages() {
   const pages = [];
   let cursor;
   do {
     const res = await notion.databases.query({
       database_id: DATABASE_ID,
-      filter: { property: "Publié", checkbox: { equals: true } },
+      filter: statusFilter(),
       sorts: [{ property: "Date", direction: "descending" }],
       start_cursor: cursor,
     });
@@ -71,11 +90,13 @@ async function fetchPublishedPages() {
 }
 
 async function main() {
+  console.log(`▶ Synchronisation Notion (cible : ${TARGET})`);
+
   // 1. Nettoyer le dossier de sortie (reflète suppressions/dépublications)
   await rm(OUT_DIR, { recursive: true, force: true });
   await mkdir(IMG_DIR, { recursive: true });
 
-  const pages = await fetchPublishedPages();
+  const pages = await fetchPages();
   const usedSlugs = new Set();
   let written = 0;
 
