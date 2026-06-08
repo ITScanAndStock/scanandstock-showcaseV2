@@ -1,7 +1,229 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import MainBox from "../components/ui/Main-box.astro";
+import GradientTitle from "../components/ui/GradientTitle.astro";
+import ContactForm from "../components/ContactForm.astro";
+import BlogCard from "../components/BlogCard.astro";
+import BlogFilters from "../components/BlogFilters.astro";
+import {articles, type Categorie} from "../data/articles";
+
+// Catégories réellement présentes, dans l'ordre d'apparition
+const categories = [...new Set(articles.map((a) => a.categorie))] as Categorie[];
+// Tri antéchronologique
+const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date));
 ---
 
-<BaseLayout title="Scan&Stock | Blogs">
-  <h1>I am a legendary blogs</h1>
+<BaseLayout title="Scan&Stock | Blog">
+    <MainBox>
+        <GradientTitle as="h1">Blog Scan & Stock</GradientTitle>
+        <h2 class="blog__subtitle">Nos derniers articles</h2>
+
+        <BlogFilters categories={categories}/>
+
+        <div class="blog__grid" id="blog-grid">
+            {sorted.map((article) =>
+                    <BlogCard article={article}/>)}
+        </div>
+
+        <p class="blog__empty is-hidden" id="blog-empty">
+            Aucun article dans cette catégorie.
+        </p>
+
+        <nav class="pagination" id="pagination" aria-label="Pagination des articles">
+            <span class="pagination__line" aria-hidden="true"></span>
+
+            <button type="button" class="pagination__btn" id="prev" aria-label="Page précédente">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="pagination__status" id="page-status" aria-live="polite">1 sur 1</span>
+            <button type="button" class="pagination__btn" id="next" aria-label="Page suivante">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <span class="pagination__line" aria-hidden="true"></span>
+
+        </nav>
+
+        <GradientTitle>Nous contacter</GradientTitle>
+        <ContactForm/>
+    </MainBox>
 </BaseLayout>
+
+<style>
+    .blog__subtitle {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #3983a3;
+        margin-top: 0.5rem;
+    }
+
+    .blog__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem 4rem;
+    }
+
+    .blog__empty {
+        text-align: center;
+        font-size: 1.0625rem;
+        color: #27333a;
+        margin: 2rem 0;
+    }
+
+    :global(.is-hidden) {
+        display: none !important;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+    }
+
+    .pagination__line {
+        flex: 1 1 0;
+        height: 0;
+        border-top: 1px solid rgba(73, 111, 127, 0.4);
+    }
+
+    .pagination__btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(73, 111, 127, 0.3);
+        background-color: #fff;
+        font-size: 1rem;
+        line-height: 1;
+        color: #12a19a;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination__btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .pagination__btn:focus-visible {
+        outline: 3px solid #12a19a;
+        outline-offset: 2px;
+    }
+
+    .pagination__status {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #27333a;
+        min-width: 5rem;
+        text-align: center;
+    }
+
+    @media screen and (min-width: 768px) {
+        .blog__grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: calc(363px * 2 + 4rem);
+            margin-inline: auto;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .blog__grid {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: calc(363px * 3 + 8rem);
+            margin-inline: auto;
+        }
+    }
+</style>
+
+<script>
+    const PER_PAGE = 6;
+
+    const grid = document.getElementById("blog-grid");
+    const cards = grid
+        ? Array.from(grid.querySelectorAll<HTMLElement>("[data-category]"))
+        : [];
+    const filterBtns = Array.from(
+        document.querySelectorAll<HTMLButtonElement>("[data-filter]"),
+    );
+    const prevBtn = document.getElementById("prev") as HTMLButtonElement | null;
+    const nextBtn = document.getElementById("next") as HTMLButtonElement | null;
+    const status = document.getElementById("page-status");
+    const pagination = document.getElementById("pagination");
+    const emptyMsg = document.getElementById("blog-empty");
+
+    let activeFilter = "all";
+    let page = 1;
+
+    function getVisible(): HTMLElement[] {
+        return cards.filter(
+            (c) => activeFilter === "all" || c.dataset.category === activeFilter,
+        );
+    }
+
+    function columnsCount(): number {
+        if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+        if (window.matchMedia("(min-width: 768px)").matches) return 2;
+        return 1;
+    }
+
+    function render() {
+        const visible = getVisible();
+        const totalPages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+        if (page > totalPages) page = totalPages;
+        if (page < 1) page = 1;
+
+        const shown = visible.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+        cards.forEach((c) => {
+            c.classList.add("is-hidden");
+            c.classList.remove("is-row-start");
+        });
+        const cols = columnsCount();
+        shown.forEach((c, i) => {
+            c.classList.remove("is-hidden");
+            if (i % cols === 0) c.classList.add("is-row-start");
+        });
+
+        const hasArticles = visible.length > 0;
+        emptyMsg?.classList.toggle("is-hidden", hasArticles);
+        pagination?.classList.toggle("is-hidden", !hasArticles);
+
+        if (status) status.textContent = `${page} sur ${totalPages}`;
+        if (prevBtn) prevBtn.disabled = page <= 1;
+        if (nextBtn) nextBtn.disabled = page >= totalPages;
+    }
+
+    filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            activeFilter = btn.dataset.filter ?? "all";
+            page = 1;
+            filterBtns.forEach((b) => {
+                const on = b === btn;
+                b.classList.toggle("is-active", on);
+                b.setAttribute("aria-pressed", String(on));
+            });
+            render();
+        });
+    });
+
+    prevBtn?.addEventListener("click", () => {
+        if (page > 1) {
+            page--;
+            render();
+        }
+    });
+
+    nextBtn?.addEventListener("click", () => {
+        page++;
+        render();
+    });
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(render, 150);
+    });
+
+    render();
+</script>
