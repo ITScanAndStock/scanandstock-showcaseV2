@@ -26,3 +26,6 @@ pnpm-debug.log*
 # artefacts locaux non versionnés
 .wireframes/
 docs/
+
+# Contenu généré depuis Notion (regénéré par `pnpm sync:notion`)
+src/content/blog/
