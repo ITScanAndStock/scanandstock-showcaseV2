@@ -28,3 +28,51 @@ test("makeUniqueSlug incrémente jusqu'à trouver un libre", () => {
   const used = new Set(["article", "article-2"]);
   assert.equal(makeUniqueSlug("article", used), "article-3");
 });
+
+import { mapProperties } from "./notion-mappers.mjs";
+
+const fullProps = {
+  Titre: { title: [{ plain_text: "Gestion manuelle" }] },
+  "Catégorie": { select: { name: "Gestion des stocks" } },
+  Extrait: { rich_text: [{ plain_text: "Simplifiez la gestion." }] },
+  Date: { date: { start: "2026-05-20" } },
+  Slug: { rich_text: [{ plain_text: "gestion-manuelle" }] },
+  Image: { files: [{ type: "file", file: { url: "https://notion.so/img.png?sig=abc" } }] },
+};
+
+test("mapProperties extrait tous les champs", () => {
+  assert.deepEqual(mapProperties(fullProps), {
+    title: "Gestion manuelle",
+    category: "Gestion des stocks",
+    excerpt: "Simplifiez la gestion.",
+    date: "2026-05-20",
+    slug: "gestion-manuelle",
+    coverUrl: "https://notion.so/img.png?sig=abc",
+  });
+});
+
+test("mapProperties gère un slug absent (null)", () => {
+  const props = { ...fullProps, Slug: { rich_text: [] } };
+  assert.equal(mapProperties(props).slug, null);
+});
+
+test("mapProperties gère une image externe", () => {
+  const props = {
+    ...fullProps,
+    Image: { files: [{ type: "external", external: { url: "https://cdn.com/x.jpg" } }] },
+  };
+  assert.equal(mapProperties(props).coverUrl, "https://cdn.com/x.jpg");
+});
+
+test("mapProperties gère une image absente (null)", () => {
+  const props = { ...fullProps, Image: { files: [] } };
+  assert.equal(mapProperties(props).coverUrl, null);
+});
+
+test("mapProperties concatène un extrait multi-segments", () => {
+  const props = {
+    ...fullProps,
+    Extrait: { rich_text: [{ plain_text: "Un " }, { plain_text: "extrait." }] },
+  };
+  assert.equal(mapProperties(props).excerpt, "Un extrait.");
+});
