@@ -5,12 +5,12 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
 import ContactForm from "../components/ContactForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import BlogFilters from "../components/BlogFilters.astro";
-import {articles, type Categorie} from "../data/articles";
+import { getCollection } from "astro:content";
+import categories from "../content/blog/_categories.json";
 
-// Catégories réellement présentes, dans l'ordre d'apparition
-const categories = [...new Set(articles.map((a) => a.categorie))] as Categorie[];
+const entries = await getCollection("blog");
 // Tri antéchronologique
-const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date));
+const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
 ---
 
 <BaseLayout title="Scan&Stock | Blog">
@@ -18,11 +18,20 @@ const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date));
         <GradientTitle as="h1">Blog Scan & Stock</GradientTitle>
         <h2 class="blog__subtitle">Nos derniers articles</h2>
 
-        <BlogFilters categories={categories}/>
+        <BlogFilters categories={categories} />
 
         <div class="blog__grid" id="blog-grid">
-            {sorted.map((article) =>
-                    <BlogCard article={article}/>)}
+            {
+                sorted.map((entry) => (
+                    <BlogCard
+                        slug={entry.data.slug}
+                        title={entry.data.title}
+                        category={entry.data.category}
+                        excerpt={entry.data.excerpt}
+                        cover={entry.data.cover}
+                    />
+                ))
+            }
         </div>
 
         <p class="blog__empty is-hidden" id="blog-empty">
