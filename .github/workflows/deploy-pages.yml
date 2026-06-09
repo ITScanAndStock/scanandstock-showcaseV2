@@ -21,6 +21,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Rattaché à l'environnement github-pages pour accéder à ses Environment secrets
+    # (NOTION_TOKEN, NOTION_DATABASE_ID).
+    environment: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
