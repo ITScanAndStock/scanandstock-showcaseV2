@@ -63,3 +63,22 @@ export function extFromUrl(url) {
   const match = pathname.match(/\.([a-z0-9]+)$/i);
   return match ? match[1].toLowerCase() : "png";
 }
+
+const FILENAME_ALT_RE = /\.(png|jpe?g|webp|gif|svg|avif)$/i;
+
+// notion-to-md utilise la légende Notion comme alt, sinon le nom de fichier
+// (souvent "image.png" ou un hash) — inutile et nuisible pour l'accessibilité.
+// On vide ces alt « nom de fichier » (image décorative) et on les liste pour
+// avertir l'auteur d'ajouter une légende dans Notion.
+export function stripFilenameAlts(markdown) {
+  const blanked = [];
+  const out = markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (full, alt, url) => {
+    const trimmed = alt.trim();
+    if (trimmed !== "" && FILENAME_ALT_RE.test(trimmed)) {
+      blanked.push(trimmed);
+      return `![](${url})`;
+    }
+    return full;
+  });
+  return { markdown: out, blanked };
+}

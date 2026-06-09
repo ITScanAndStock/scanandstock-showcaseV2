@@ -10,6 +10,7 @@ import {
   extractImageUrls,
   rewriteImageUrls,
   extFromUrl,
+  stripFilenameAlts,
 } from "./lib/notion-mappers.mjs";
 
 const TOKEN = process.env.NOTION_TOKEN;
@@ -135,6 +136,15 @@ async function main() {
       i += 1;
     }
     body = rewriteImageUrls(body, mapping);
+
+    // 4b. Alt « nom de fichier » (pas de légende Notion) → alt vide + avertissement
+    const { markdown: cleanedBody, blanked } = stripFilenameAlts(body);
+    body = cleanedBody;
+    for (const altName of blanked) {
+      console.warn(
+        `⚠ Image sans légende dans "${data.title}" (alt vidé : ${altName}) — ajoute une légende dans Notion pour l'accessibilité/SEO.`,
+      );
+    }
 
     // 5. Écrire le .md
     const fm = frontmatter({ ...data, cover: coverPath, slug });

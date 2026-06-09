@@ -146,3 +146,54 @@ test("extFromUrl gère jpeg", () => {
 test("extFromUrl retombe sur png par défaut", () => {
   assert.equal(extFromUrl("https://cdn.com/no-extension"), "png");
 });
+
+import { stripFilenameAlts } from "./notion-mappers.mjs";
+
+test("stripFilenameAlts conserve une vraie légende", () => {
+  const md = "![Le cabinet dentaire réorganisé](./_images/a-1.jpg)";
+  const { markdown, blanked } = stripFilenameAlts(md);
+  assert.equal(markdown, md);
+  assert.deepEqual(blanked, []);
+});
+
+test("stripFilenameAlts vide un alt qui n'est qu'un nom de fichier", () => {
+  const { markdown, blanked } = stripFilenameAlts("![image.png](./_images/a-1.jpg)");
+  assert.equal(markdown, "![](./_images/a-1.jpg)");
+  assert.deepEqual(blanked, ["image.png"]);
+});
+
+test("stripFilenameAlts vide un hash de fichier", () => {
+  const md = "![07fc114e0edef2af166e13d353b8e3889ac7c7a5.jpg](./_images/a-1.jpg)";
+  const { markdown, blanked } = stripFilenameAlts(md);
+  assert.equal(markdown, "![](./_images/a-1.jpg)");
+  assert.deepEqual(blanked, ["07fc114e0edef2af166e13d353b8e3889ac7c7a5.jpg"]);
+});
+
+test("stripFilenameAlts vide un nom de fichier lisible (.webp)", () => {
+  const { markdown, blanked } = stripFilenameAlts(
+    "![changement-cabinet-dentaire.webp](./_images/a-1.webp)",
+  );
+  assert.equal(markdown, "![](./_images/a-1.webp)");
+  assert.deepEqual(blanked, ["changement-cabinet-dentaire.webp"]);
+});
+
+test("stripFilenameAlts laisse un alt déjà vide", () => {
+  const md = "![](./_images/a-1.jpg)";
+  const { markdown, blanked } = stripFilenameAlts(md);
+  assert.equal(markdown, md);
+  assert.deepEqual(blanked, []);
+});
+
+test("stripFilenameAlts ne confond pas une légende contenant un point", () => {
+  const md = "![Version 2.0 du logiciel](./_images/a-1.jpg)";
+  const { markdown, blanked } = stripFilenameAlts(md);
+  assert.equal(markdown, md);
+  assert.deepEqual(blanked, []);
+});
+
+test("stripFilenameAlts gère plusieurs images", () => {
+  const md = "![Photo réelle](a.jpg)\n\n![image.png](b.jpg)";
+  const { markdown, blanked } = stripFilenameAlts(md);
+  assert.equal(markdown, "![Photo réelle](a.jpg)\n\n![](b.jpg)");
+  assert.deepEqual(blanked, ["image.png"]);
+});
