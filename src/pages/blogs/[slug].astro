@@ -31,7 +31,7 @@ const dateLong = new Date(date).toLocaleDateString("fr-FR", {
 });
 
 // Données structurées BlogPosting (articles attribués à la marque Scan&Stock)
-const articleURL = new URL(`/blogs/${slug}`, Astro.site).href;
+const articleURL = new URL(`${import.meta.env.BASE_URL}blogs/${slug}`, Astro.site).href;
 const coverURL = new URL(cover.src, Astro.site).href;
 const logoURL = new URL(logo.src, Astro.site).href;
 const jsonLd = {
