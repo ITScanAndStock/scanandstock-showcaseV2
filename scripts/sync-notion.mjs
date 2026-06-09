@@ -38,6 +38,7 @@ function frontmatter(data) {
     `category: ${JSON.stringify(data.category)}`,
     `excerpt: ${JSON.stringify(data.excerpt)}`,
     `cover: ${JSON.stringify(data.cover)}`,
+    `coverAlt: ${JSON.stringify(data.coverAlt ?? "")}`,
     `date: ${JSON.stringify(data.date)}`,
     `slug: ${JSON.stringify(data.slug)}`,
     "---",

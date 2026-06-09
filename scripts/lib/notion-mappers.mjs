@@ -33,6 +33,7 @@ export function mapProperties(properties) {
     date: properties.Date?.date?.start ?? "",
     slug: slugText === "" ? null : slugText,
     coverUrl: fileUrl(properties.Image),
+    coverAlt: richText(properties["Alt image"]),
   };
 }
 

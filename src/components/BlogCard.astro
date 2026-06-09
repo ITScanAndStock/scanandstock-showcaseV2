@@ -7,9 +7,10 @@ interface Props {
   category: string;
   excerpt: string;
   cover: ImageMetadata;
+  coverAlt?: string;
 }
 
-const { slug, title, category, excerpt, cover } = Astro.props;
+const { slug, title, category, excerpt, cover, coverAlt = "" } = Astro.props;
 ---
 
 <a class="card" href={`/blogs/${slug}`} data-category={category}>
@@ -17,7 +18,7 @@ const { slug, title, category, excerpt, cover } = Astro.props;
         <Image
                 class="card__img"
                 src={cover}
-                alt={title}
+                alt={coverAlt}
                 width={363}
                 height={510}
         />

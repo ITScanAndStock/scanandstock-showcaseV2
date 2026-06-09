@@ -38,6 +38,7 @@ const fullProps = {
   Date: { date: { start: "2026-05-20" } },
   Slug: { rich_text: [{ plain_text: "gestion-manuelle" }] },
   Image: { files: [{ type: "file", file: { url: "https://notion.so/img.png?sig=abc" } }] },
+  "Alt image": { rich_text: [{ plain_text: "Photo d'un cabinet dentaire" }] },
 };
 
 test("mapProperties extrait tous les champs", () => {
@@ -48,7 +49,14 @@ test("mapProperties extrait tous les champs", () => {
     date: "2026-05-20",
     slug: "gestion-manuelle",
     coverUrl: "https://notion.so/img.png?sig=abc",
+    coverAlt: "Photo d'un cabinet dentaire",
   });
+});
+
+test("mapProperties met coverAlt à vide si Alt image est absente", () => {
+  const props = { ...fullProps };
+  delete props["Alt image"];
+  assert.equal(mapProperties(props).coverAlt, "");
 });
 
 test("mapProperties gère un slug absent (null)", () => {

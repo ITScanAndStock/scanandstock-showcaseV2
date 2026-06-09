@@ -9,6 +9,7 @@ const blog = defineCollection({
       category: z.string(),
       excerpt: z.string(),
       cover: image(),
+      coverAlt: z.string().default(""),
       date: z.string(),
       slug: z.string(),
     }),
