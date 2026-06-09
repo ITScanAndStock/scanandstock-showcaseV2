@@ -1,5 +1,9 @@
 ---
-
+import calendarIcon from "../assets/icones/calendar.svg";
+import phoneIcon from "../assets/icones/phone.svg";
+import mailIcon from "../assets/icones/mail.svg";
+import localisationIcon from "../assets/icones/localisation.svg";
+import sendIcon from "../assets/icones/send.svg";
 ---
 
 <section>
@@ -10,7 +14,7 @@
             l’un de nos experts :
         </p>
         <button>
-            <img src="/src/assets/icones/calendar.svg" alt="Aicon de calendrier"/>
+            <img src={calendarIcon.src} alt="icône de calendrier"/>
             Prendre rendez-vous
         </button>
     </div>
@@ -18,18 +22,18 @@
         <h3>Nous contacter</h3>
         <address>
             <a href="tel:+0784078048" class="phone-number">
-                <img src="/src/assets/icones/phone.svg" alt=""/>
+                <img src={phoneIcon.src} alt=""/>
                 07 84 07 80 48
             </a>
             <a href="mailto:contact@scanandstock.fr">
-                <img src="/src/assets/icones/mail.svg" alt=""/>
+                <img src={mailIcon.src} alt=""/>
                 contact@scanandstock.fr
             </a>
             <a
                     href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
                     class="address-street"
             >
-                <img src="/src/assets/icones/localisation.svg" alt=""/>
+                <img src={localisationIcon.src} alt=""/>
                 360 Rue Marc Lefrancq, 59300 Valenciennes
             </a>
         </address>
@@ -77,7 +81,7 @@
             </li>
         </ul>
         <button type="submit">
-            <img src="/src/assets/icones/send.svg" alt="icone d'avion en papier"/>
+            <img src={sendIcon.src} alt="icône d'avion en papier"/>
             Envoyer
         </button>
     </form>

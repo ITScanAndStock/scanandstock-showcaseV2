@@ -5,15 +5,17 @@ import computerIcon from "../assets/computer.svg";
 import calendarIcon from "../assets/calendar.png";
 
 const {pathname} = Astro.url;
+// Préfixe de base : "" en prod (scanandstock.fr), "/scanandstock-showcaseV2" sur GitHub Pages.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const links = [
-    {href: "/", label: "Accueil", internal: true},
+    {href: `${base}/`, label: "Accueil", internal: true},
     {
         href: "https://shop.myscanandstock.fr/",
         label: "Nos offres",
         internal: false,
     },
-    {href: "/about", label: "À propos", internal: true},
-    {href: "/blogs", label: "Blog", internal: true},
+    {href: `${base}/about`, label: "À propos", internal: true},
+    {href: `${base}/blogs`, label: "Blog", internal: true},
     {
         href: "https://myscanandstock.fr/",
         label: "Mon logiciel",

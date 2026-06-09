@@ -1,0 +1,69 @@
+name: Déploiement démo (GitHub Pages)
+
+on:
+  # Déploiement à chaque push sur main…
+  push:
+    branches: [main]
+  # …et déclenchement manuel depuis l'onglet Actions.
+  workflow_dispatch:
+
+# Permissions requises par actions/deploy-pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois ; annule celui en cours si un nouveau arrive.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Installer Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Installer les dépendances
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Astro (avec synchro Notion)
+        run: pnpm build
+        env:
+          # Active le `base` /scanandstock-showcaseV2 dans astro.config.mjs.
+          GITHUB_PAGES: "true"
+          # Secrets du dépôt (Settings → Secrets and variables → Actions).
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          SYNC_TARGET: prod
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Uploader l'artefact (dossier dist/)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

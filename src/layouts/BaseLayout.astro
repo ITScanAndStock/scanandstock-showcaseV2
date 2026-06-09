@@ -36,7 +36,7 @@ const isStaging = import.meta.env.SYNC_TARGET === "staging";
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
