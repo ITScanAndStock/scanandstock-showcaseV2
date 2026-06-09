@@ -5,6 +5,7 @@ import MainBox from "../../components/ui/Main-box.astro";
 import GradientTitle from "../../components/ui/GradientTitle.astro";
 import ContactForm from "../../components/ContactForm.astro";
 import BlogCard from "../../components/BlogCard.astro";
+import logo from "../../assets/logo.svg";
 
 export async function getStaticPaths() {
   const entries = await getCollection("blog");
@@ -21,15 +22,50 @@ export async function getStaticPaths() {
 
 const { entry, latest } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, date, excerpt } = entry.data;
+const { title, category, date, excerpt, cover, slug } = entry.data;
 const dateLong = new Date(date).toLocaleDateString("fr-FR", {
   day: "numeric",
   month: "long",
   year: "numeric",
 });
+
+// Données structurées BlogPosting (articles attribués à la marque Scan&Stock)
+const articleURL = new URL(`/blogs/${slug}`, Astro.site).href;
+const coverURL = new URL(cover.src, Astro.site).href;
+const logoURL = new URL(logo.src, Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: excerpt,
+  image: coverURL,
+  datePublished: date,
+  dateModified: date,
+  author: {
+    "@type": "Organization",
+    name: "Scan&Stock",
+    url: "https://www.scanandstock.fr",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Scan&Stock",
+    logo: { "@type": "ImageObject", url: logoURL },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": articleURL },
+};
 ---
 
-<BaseLayout title={`Scan&Stock | ${title}`}>
+<BaseLayout
+    title={`Scan&Stock | ${title}`}
+    description={excerpt}
+    image={cover}
+    type="article"
+>
+    <script
+        type="application/ld+json"
+        slot="head"
+        set:html={JSON.stringify(jsonLd)}
+    />
     <MainBox>
         <article class="article">
             <h1 class="article__title">{title}</h1>
