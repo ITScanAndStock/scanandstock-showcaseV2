@@ -10,6 +10,8 @@ const blog = defineCollection({
       excerpt: z.string(),
       cover: image(),
       coverAlt: z.string().default(""),
+      heroImage: image().optional(),
+      heroAlt: z.string().default(""),
       date: z.string(),
       slug: z.string(),
     }),

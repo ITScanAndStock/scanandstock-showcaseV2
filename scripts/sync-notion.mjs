@@ -32,7 +32,7 @@ const n2m = new NotionToMarkdown({ notionClient: notion });
 function frontmatter(data) {
   // JSON.stringify produit un scalaire YAML double-quoted valide
   // (échappe guillemets, antislashs et retours ligne).
-  return [
+  const lines = [
     "---",
     `title: ${JSON.stringify(data.title)}`,
     `category: ${JSON.stringify(data.category)}`,
@@ -41,9 +41,15 @@ function frontmatter(data) {
     `coverAlt: ${JSON.stringify(data.coverAlt ?? "")}`,
     `date: ${JSON.stringify(data.date)}`,
     `slug: ${JSON.stringify(data.slug)}`,
-    "---",
-    "",
-  ].join("\n");
+  ];
+  // Image hero optionnelle : on n'écrit heroImage + heroAlt (paire indissociable)
+  // que si un hero existe — sinon le schéma applique heroAlt: "" par défaut.
+  if (data.heroImage) {
+    lines.push(`heroImage: ${JSON.stringify(data.heroImage)}`);
+    lines.push(`heroAlt: ${JSON.stringify(data.heroAlt ?? "")}`);
+  }
+  lines.push("---", "");
+  return lines.join("\n");
 }
 
 async function downloadImage(url, destPath) {
@@ -120,6 +126,20 @@ async function main() {
     await downloadImage(data.coverUrl, path.join(IMG_DIR, coverFile));
     const coverPath = `./_images/${coverFile}`;
 
+    // 2b. Image hero (optionnelle) : fichier distinct suffixé -hero
+    let heroPath = null;
+    if (data.heroUrl) {
+      const heroExt = extFromUrl(data.heroUrl);
+      const heroFile = `${slug}-hero.${heroExt}`;
+      await downloadImage(data.heroUrl, path.join(IMG_DIR, heroFile));
+      heroPath = `./_images/${heroFile}`;
+      if (!data.heroAlt) {
+        console.warn(
+          `⚠ Image hero sans texte alternatif dans "${data.title}" — renseigne « Alt hero » dans Notion pour l'accessibilité/SEO.`,
+        );
+      }
+    }
+
     // 3. Corps Markdown
     const mdblocks = await n2m.pageToMarkdown(page.id);
     let body = n2m.toMarkdownString(mdblocks).parent ?? "";
@@ -148,7 +168,7 @@ async function main() {
     }
 
     // 5. Écrire le .md
-    const fm = frontmatter({ ...data, cover: coverPath, slug });
+    const fm = frontmatter({ ...data, cover: coverPath, heroImage: heroPath, slug });
     await writeFile(path.join(OUT_DIR, `${slug}.md`), fm + body + "\n", "utf8");
     written += 1;
     console.log(`✓ ${slug}.md`);

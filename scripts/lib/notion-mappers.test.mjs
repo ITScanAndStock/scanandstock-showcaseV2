@@ -39,6 +39,8 @@ const fullProps = {
   Slug: { rich_text: [{ plain_text: "gestion-manuelle" }] },
   Image: { files: [{ type: "file", file: { url: "https://notion.so/img.png?sig=abc" } }] },
   "Alt image": { rich_text: [{ plain_text: "Photo d'un cabinet dentaire" }] },
+  "Image hero": { files: [{ type: "file", file: { url: "https://notion.so/hero.jpg?sig=xyz" } }] },
+  "Alt hero": { rich_text: [{ plain_text: "Vue d'ensemble du cabinet" }] },
 };
 
 test("mapProperties extrait tous les champs", () => {
@@ -50,6 +52,8 @@ test("mapProperties extrait tous les champs", () => {
     slug: "gestion-manuelle",
     coverUrl: "https://notion.so/img.png?sig=abc",
     coverAlt: "Photo d'un cabinet dentaire",
+    heroUrl: "https://notion.so/hero.jpg?sig=xyz",
+    heroAlt: "Vue d'ensemble du cabinet",
   });
 });
 
@@ -75,6 +79,33 @@ test("mapProperties gère une image externe", () => {
 test("mapProperties gère une image absente (null)", () => {
   const props = { ...fullProps, Image: { files: [] } };
   assert.equal(mapProperties(props).coverUrl, null);
+});
+
+test("mapProperties lit Image hero → heroUrl", () => {
+  assert.equal(mapProperties(fullProps).heroUrl, "https://notion.so/hero.jpg?sig=xyz");
+});
+
+test("mapProperties lit Alt hero → heroAlt", () => {
+  assert.equal(mapProperties(fullProps).heroAlt, "Vue d'ensemble du cabinet");
+});
+
+test("mapProperties met heroAlt à vide si Alt hero est absente", () => {
+  const props = { ...fullProps };
+  delete props["Alt hero"];
+  assert.equal(mapProperties(props).heroAlt, "");
+});
+
+test("mapProperties gère une image hero externe", () => {
+  const props = {
+    ...fullProps,
+    "Image hero": { files: [{ type: "external", external: { url: "https://cdn.com/hero.jpg" } }] },
+  };
+  assert.equal(mapProperties(props).heroUrl, "https://cdn.com/hero.jpg");
+});
+
+test("mapProperties renvoie heroUrl null si Image hero est absente", () => {
+  const props = { ...fullProps, "Image hero": { files: [] } };
+  assert.equal(mapProperties(props).heroUrl, null);
 });
 
 test("mapProperties concatène un extrait multi-segments", () => {

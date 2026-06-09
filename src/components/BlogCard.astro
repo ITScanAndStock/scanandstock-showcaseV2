@@ -1,16 +1,16 @@
 ---
-import { Image } from "astro:assets";
+import {Image} from "astro:assets";
 
 interface Props {
-  slug: string;
-  title: string;
-  category: string;
-  excerpt: string;
-  cover: ImageMetadata;
-  coverAlt?: string;
+    slug: string;
+    title: string;
+    category: string;
+    excerpt: string;
+    cover: ImageMetadata;
+    coverAlt?: string;
 }
 
-const { slug, title, category, excerpt, cover, coverAlt = "" } = Astro.props;
+const {slug, title, category, excerpt, cover, coverAlt = ""} = Astro.props;
 ---
 
 <a class="card" href={`/blogs/${slug}`} data-category={category}>
@@ -26,8 +26,10 @@ const { slug, title, category, excerpt, cover, coverAlt = "" } = Astro.props;
         <span class="card__badge">{category}</span>
         <span class="card__divider" aria-hidden="true"></span>
     </div>
-    <h3 class="card__title">{title}</h3>
-    <p class="card__excerpt">{excerpt}</p>
+    <div class="card__content">
+        <h3 class="card__title">{title}</h3>
+        <p class="card__excerpt">{excerpt}</p>
+    </div>
 </a>
 
 <style>
@@ -117,11 +119,16 @@ const { slug, title, category, excerpt, cover, coverAlt = "" } = Astro.props;
         pointer-events: none;
     }
 
+    .card__content {
+        padding-left: 0.5rem;
+        border-left: 1px dashed #27333A;
+        margin-top: 1rem;
+    }
+
     .card__title {
         font-size: 1.5rem;
         font-weight: 500;
         line-height: 1.3;
-        margin: 1rem 0 0.5rem;
         color: #27333a;
     }
 

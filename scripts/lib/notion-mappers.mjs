@@ -34,6 +34,8 @@ export function mapProperties(properties) {
     slug: slugText === "" ? null : slugText,
     coverUrl: fileUrl(properties.Image),
     coverAlt: richText(properties["Alt image"]),
+    heroUrl: fileUrl(properties["Image hero"]),
+    heroAlt: richText(properties["Alt hero"]),
   };
 }
 
