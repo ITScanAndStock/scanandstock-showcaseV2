@@ -26,10 +26,31 @@ import MyCoompy from "../assets/photos/carousel/mycoompy.png";
 import MyscanScan from "../assets/photos/carousel/myscanandstock_scan.png";
 import MyscanStock from "../assets/photos/carousel/myscanandstock_stock.png";
 import ScannerApp from "../assets/photos/carousel/scanner_et_app.png";
-import TestimonialGaillard from "../assets/photos/testimonials/cyril_gaillard.png";
-import TestimonialFarge from "../assets/photos/testimonials/charlotte_farge.png";
-import TestimonialNonclerc from "../assets/photos/testimonials/soline_nonclercq.png";
+import TestimonialCharlotte from "../assets/video/testimonial_charlotte.mp4";
+import TestimonialJeanChristophe from "../assets/video/testimonial_jean-Christophe.mp4";
+import TestimonialKevin from "../assets/video/testimonial_Kevin.mp4";
+import PosterCharlotte from "../assets/video/poster/charlotte.png";
+import PosterJeanChristophe from "../assets/video/poster/jean-christophe.png";
+import PosterKevin from "../assets/video/poster/kevin.png";
 import ContactForm from "../components/ContactForm.astro";
+
+const testimonials = [
+  {
+    src: TestimonialJeanChristophe,
+    poster: PosterJeanChristophe.src,
+    label: "Témoignage vidéo de Jean-Christophe, utilisateur de Scan & Stock",
+  },
+  {
+    src: TestimonialCharlotte,
+    poster: PosterCharlotte.src,
+    label: "Témoignage vidéo de Charlotte, utilisatrice de Scan & Stock",
+  },
+  {
+    src: TestimonialKevin,
+    poster: PosterKevin.src,
+    label: "Témoignage vidéo de Kevin, utilisateur de Scan & Stock",
+  },
+];
 
 const carouselCards = [
   {
@@ -161,24 +182,20 @@ const imageCarousel = [
     <GradientTitle as="h2"
       >Ils <span class="underline">utilisent Scan & Stock</span></GradientTitle
     >
-    <div
-      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;"
-    >
-      <img
-        src={TestimonialGaillard.src}
-        alt="logo GAILLARD"
-        style="width: 360px; height: 510px; object-fit: cover; border-radius: 35px;"
-      />
-      <img
-        src={TestimonialFarge.src}
-        alt="logo GAILLARD"
-        style="width: 360px; height: 510px; object-fit: cover; border-radius: 35px;"
-      />
-      <img
-        src={TestimonialNonclerc.src}
-        alt="logo GAILLARD"
-        style="width: 360px; height: 510px; object-fit: cover; border-radius: 35px;"
-      />
+    <div class="testimonials">
+      {
+        testimonials.map((testimonial) => (
+          <video
+            class="testimonial-video"
+            src={testimonial.src}
+            poster={testimonial.poster}
+            preload="none"
+            loop
+            playsinline
+            aria-label={testimonial.label}
+          />
+        ))
+      }
     </div>
     <GradientTitle> Nous contacter </GradientTitle>
     <ContactForm />
@@ -254,6 +271,22 @@ const imageCarousel = [
   .warning,
   .compare {
     will-change: transform;
+  }
+
+  .testimonials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .testimonial-video {
+    width: 360px;
+    height: 510px;
+    object-fit: cover;
+    border-radius: 35px;
+    background: #000;
+    cursor: pointer;
   }
 
   /* ─── TABLET ───────────────────────────────────────────  */
@@ -333,4 +366,36 @@ const imageCarousel = [
       }
     });
   }
+
+  const testimonialVideos = document.querySelectorAll<HTMLVideoElement>(
+    ".testimonial-video",
+  );
+
+  testimonialVideos.forEach((video) => {
+    const play = () => {
+      video.play().catch(() => {
+        // Le navigateur bloque la lecture avec son sans geste : on repli en muet.
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    };
+
+    const stop = () => {
+      video.pause();
+      // Recharge la vidéo pour réafficher le poster (et non la 1re frame).
+      video.load();
+    };
+
+    video.addEventListener("mouseenter", play);
+    video.addEventListener("mouseleave", stop);
+
+    // Support tactile : pas de hover, on bascule lecture/pause au tap.
+    video.addEventListener("click", () => {
+      if (video.paused) {
+        play();
+      } else {
+        stop();
+      }
+    });
+  });
 </script>
