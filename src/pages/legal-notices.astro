@@ -1,0 +1,180 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MainBox from "../components/ui/Main-box.astro";
+import GradientTitle from "../components/ui/GradientTitle.astro";
+
+const lastUpdate = "10 juin 2026";
+---
+
+<BaseLayout
+        title="Scan&Stock | Mentions légales"
+        description="Mentions légales du site Scan&Stock : éditeur, directeur de la publication et hébergeur."
+>
+    <MainBox>
+        <article class="legal">
+            <GradientTitle as="h1">Mentions légales</GradientTitle>
+            <p class="legal__update">Dernière mise à jour : {lastUpdate}</p>
+
+            <section class="legal__section">
+                <h2>Éditeur du site</h2>
+                <dl class="legal__dl">
+                    <dt>Raison sociale</dt>
+                    <dd>SCAN&amp;STOCK — SASU au capital de 300 200 €</dd>
+
+                    <dt>Immatriculation</dt>
+                    <dd>RCS Valenciennes B 919 629 626</dd>
+
+                    <dt>Siège social</dt>
+                    <dd>360 rue Marc Lefrancq – 59300 Valenciennes, France</dd>
+
+                    <dt>N° de TVA intracommunautaire</dt>
+                    <dd>FR49 919 629 626</dd>
+
+                    <dt>Téléphone</dt>
+                    <dd><a href="tel:+33698568458">06 98 56 84 58</a></dd>
+
+                    <dt>Adresse e-mail</dt>
+                    <dd>
+                        <a href="mailto:contact@scanandstock.fr">contact@scanandstock.fr</a>
+                    </dd>
+                </dl>
+            </section>
+
+            <section class="legal__section">
+                <h2>Directeur de la publication</h2>
+                <p>Monsieur Pierre-Jean Vandoorne.</p>
+            </section>
+
+            <section class="legal__section">
+                <h2>Hébergeur</h2>
+                <p>
+                    Le site et les données sont hébergés par Amazon Web Services au sein
+                    de l'Union européenne, dans la région <strong
+                >AWS Europe (Paris)</strong
+                >.
+                </p>
+                <dl class="legal__dl">
+                    <dt>Raison sociale</dt>
+                    <dd>Amazon Web Services EMEA SARL</dd>
+
+                    <dt>Siège social</dt>
+                    <dd>38 Avenue John F. Kennedy, L-1855 Luxembourg</dd>
+
+                    <dt>Site web</dt>
+                    <dd>
+                        <a
+                                href="https://aws.amazon.com"
+                                target="_blank"
+                                rel="noopener noreferrer">aws.amazon.com</a
+                        >
+                    </dd>
+                </dl>
+            </section>
+
+            <section class="legal__section">
+                <h2>Propriété intellectuelle</h2>
+                <p>
+                    L'ensemble des contenus présents sur ce site (textes, images, logos,
+                    vidéos, éléments graphiques et logiciels) est la propriété exclusive
+                    de Scan&amp;Stock ou de ses partenaires, et est protégé par le droit
+                    de la propriété intellectuelle. Toute reproduction, représentation,
+                    modification ou exploitation, totale ou partielle, sans autorisation
+                    écrite préalable, est interdite.
+                </p>
+            </section>
+
+            <section class="legal__section">
+                <h2>Données personnelles</h2>
+                <p>
+                    Conformément au Règlement général sur la protection des données
+                    (RGPD) et à la loi « Informatique et Libertés », vous disposez d'un
+                    droit d'accès, de rectification, d'effacement et d'opposition aux
+                    données vous concernant. Pour exercer ces droits, contactez-nous à
+                    l'adresse <a href="mailto:contact@scanandstock.fr"
+                >contact@scanandstock.fr</a
+                >.
+                </p>
+            </section>
+        </article>
+    </MainBox>
+</BaseLayout>
+
+<style>
+    .legal {
+        max-width: 820px;
+        margin: 2rem auto 4rem;
+        color: #27333a;
+    }
+
+    .legal__update {
+        margin: 0.5rem 0 2.5rem;
+        font-size: 0.9375rem;
+        color: #51646d;
+    }
+
+    .legal__section {
+        margin-bottom: 2.5rem;
+    }
+
+    .legal__section h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #41778c;
+        margin: 0 0 1rem;
+    }
+
+    .legal__section p {
+        font-size: 16px;
+        line-height: 1.7;
+        margin: 0 0 1rem;
+    }
+
+    .legal__dl {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.25rem 1.5rem;
+        margin: 0;
+    }
+
+    .legal__dl dt {
+        font-weight: 700;
+        color: #496f7f;
+    }
+
+    .legal__dl dd {
+        margin: 0 0 0.75rem;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .legal a {
+        color: #3983a3;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .legal a:hover {
+        color: #12a19a;
+    }
+
+    .legal a:focus-visible {
+        outline: 2px solid #3983a3;
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .legal__dl {
+            grid-template-columns: minmax(180px, auto) 1fr;
+        }
+
+        .legal__dl dt {
+            grid-column: 1;
+        }
+
+        .legal__dl dd {
+            grid-column: 2;
+            margin-bottom: 0.4rem;
+        }
+    }
+</style>
