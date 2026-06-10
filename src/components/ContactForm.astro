@@ -13,7 +13,7 @@ import sendIcon from "../assets/icones/send.svg";
             Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes avec
             l’un de nos experts :
         </p>
-        <button>
+        <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})">
             <img src={calendarIcon.src} alt="icône de calendrier"/>
             Prendre rendez-vous
         </button>
@@ -80,7 +80,7 @@ import sendIcon from "../assets/icones/send.svg";
                 <textarea name="content" id="content" required></textarea>
             </li>
         </ul>
-        <button type="submit">
+        <button class="submit-btn" type="submit">
             <img src={sendIcon.src} alt="icône d'avion en papier"/>
             Envoyer
         </button>
@@ -134,15 +134,20 @@ import sendIcon from "../assets/icones/send.svg";
         padding: 2rem 0;
 
         button {
-            margin: 0 auto;
-            margin-top: 2rem;
+            margin: 2rem auto 0;
             width: fit-content;
             font-size: 1rem;
+            transition: all 0.3s ease;
 
             img {
                 width: 32px;
                 height: 32px;
             }
+        }
+
+        button:hover {
+            scale: 1.01;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
     }
 
@@ -211,6 +216,12 @@ import sendIcon from "../assets/icones/send.svg";
             color: #fff;
             width: fit-content;
             margin: 1rem auto 0;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            scale: 1.02;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
     }
 
