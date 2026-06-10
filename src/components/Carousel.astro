@@ -269,12 +269,18 @@ const {
       const total = slides.length;
       if (total === 0) return;
 
-      // Clone la première slide à la fin pour l'effet de peek sur la dernière
-      const firstClone = slides[0].cloneNode(true);
-      firstClone.setAttribute("aria-hidden", "true");
-      firstClone.removeAttribute("aria-label");
-      firstClone.dataset.clone = "true";
-      track.appendChild(firstClone);
+      // Clone toutes les slides à la fin pour remplir la zone visible et
+      // éviter l'espace blanc en fin de course (notamment variant "image" où
+      // plusieurs slides à largeur naturelle sont visibles en même temps).
+      // Le bouclage se fait à currentIndex === total : le 1er clone est aligné
+      // avec la vraie slide 0, donc le retour reste invisible.
+      slides.forEach(function (slide) {
+        const clone = slide.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.removeAttribute("aria-label");
+        clone.dataset.clone = "true";
+        track.appendChild(clone);
+      });
 
       let currentIndex = 0;
       let autoplayTimer = null;
