@@ -25,7 +25,7 @@ import ContactForm from "../components/ContactForm.astro";
 const testimonials = [
     {
         name: "Dr Roland Cardeillac",
-        profession: "Chrirguen-dentiste",
+        profession: "Chirurgien-dentiste",
         message:
             "Super solution de gestion de stock, ultra simple à utiliser, l’équipe et très facile à contacter quand on a des questions ( merci à Arthur pour sa disponibilité et réactivité). Mes assistantes s’amusent beaucoup !",
     },
@@ -43,13 +43,13 @@ const testimonials = [
     },
     {
         name: "Dr Yohan Guigui",
-        profession: "Chrirguen-dentiste",
+        profession: "Chirurgien-dentiste",
         message:
             "Excellent logiciel , excellent suivi des clients par toute l’équipe est très disponible. Bravo pour ce projet que tous les cabinets devraient adopter.",
     },
     {
         name: "Dr Roland Cardeillac",
-        profession: "Chrirguen-dentiste",
+        profession: "Chirurgien-dentiste",
         message:
             "Logiciel performant et simple à utiliser !Équipe ultra sympa et réactive !",
     },
@@ -61,7 +61,7 @@ const testimonials = [
     },
     {
         name: "Dr Elisabeth Hollard Milhem",
-        profession: "Chrirguen-dentiste",
+        profession: "Chirurgien-dentiste",
         message:
             "Utilisé depuis 1 an, nous facilite la vie, on passe moins de temps à préparer les commandes. Moins d'erreurs de référence aussi. Merci Scan and Stock.",
     },
@@ -77,20 +77,20 @@ const carouselCards = [
         src: Productivity,
         alt: "Assistante dentaire réalisant un soin",
         title: "Gagnez en productivité",
-        text: "Le gain de temps dans la gestion des stocks et des commandes a été notre principale préoccupation lors de la création de Scan&Stock. Aujourd’hui grâce aux nombreux retours de nos utilisateurs nous pouvons affirmer que les assistantes dentaires, secrétaires ou prothésistes gagnent en productivité en limitant à leur strict minimum le temps non clinique. L’exemple de notre cabinet est probant, nous sommes passés d’1h15 à 20 minutes en temps de déstockage, envois et réceptions de commandes.",
+        text: "Le gain de temps dans la gestion des stocks et des commandes a été notre principale préoccupation lors de la création de Scan&Stock. Aujourd’hui grâce aux nombreux retours de nos utilisateurs nous pouvons affirmer que les assistantes dentaires, secrétaires ou prothésistes gagnent en productivité en limitant à leur strict minimum le temps non clinique. L’exemple de notre cabinet est probant, nous sommes passés d’1h15 à 20 minutes en temps de déstockage, envois et réceptions de commandes.",
     },
     {
         src: StockPlace,
         alt: "Espace de stockage dentaire organisé avec les produits Scan&Stock",
         title: "Optimisez votre budget",
-        text: "Qui dit gestion optimale des stocks dit économie d’argent, car seules les quantités nécessaires sont commandées. Grâce à cela, les utilisateurs de Scan&Stock nous ont révélé obtenir de 11 à 20 % d’économies sur leurs postes achats. Plus le cabinet est grand, plus ces économies sont exponentielles. Des grosses structures nous avoue avoir économisé plus de 40 000 € la première année ! ",
+        text: "Qui dit gestion optimale des stocks dit économie d’argent, car seules les quantités nécessaires sont commandées. Grâce à cela, les utilisateurs de Scan&Stock nous ont révélé obtenir de 11 à 20 % d’économies sur leurs postes achats. Plus le cabinet est grand, plus ces économies sont exponentielles. Des grosses structures nous avoue avoir économisé plus de 40 000 € la première année ! ",
     },
 ];
 ---
 
 <BaseLayout
-    title="Scan&Stock | À propos"
-    description="Découvrez Scan&Stock : l'équipe et la mission derrière le logiciel de gestion de stock pensé pour les cabinets dentaires."
+        title="Scan&Stock | À propos"
+        description="Découvrez Scan&Stock : l'équipe et la mission derrière le logiciel de gestion de stock pensé pour les cabinets dentaires."
 >
     <MainBox>
         <HeroBox>
@@ -129,12 +129,12 @@ const carouselCards = [
 
         <Carousel withReserveBtn variant="testimonial" label="Témoignages clients">
             {
-                testimonials.map((testi) => (
+                testimonials.map((testimonial) => (
                         <li class="carousel-slide">
                             <article class="testimonial-article">
-                                <h3 class="testimonial-name">{testi.name}</h3>
-                                <p class="testimonial-profession">{testi.profession}</p>
-                                <p class="testimonial-message">{testi.message}</p>
+                                <h3 class="testimonial-name">{testimonial.name}</h3>
+                                <p class="testimonial-profession">{testimonial.profession}</p>
+                                <p class="testimonial-message">{testimonial.message}</p>
                             </article>
                         </li>
                 ))
