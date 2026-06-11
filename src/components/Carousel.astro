@@ -62,6 +62,11 @@ const {
     position: relative;
     overflow: hidden;
     width: 100%;
+    cursor: grab;
+  }
+
+  .carousel-container.dragging {
+    cursor: grabbing;
   }
 
   /* Dégradé sur le bord droit — révèle le début de la card suivante */
@@ -83,6 +88,11 @@ const {
     margin: 0;
     padding: 0;
     transition: transform 0.4s ease;
+    user-select: none;
+  }
+
+  .carousel-track img {
+    pointer-events: none;
   }
 
   /* ─── Variant card (défaut) ───────────────────────────── */
@@ -284,6 +294,10 @@ const {
 
       let currentIndex = 0;
       let autoplayTimer = null;
+      let smoothScrollOffset = 0;
+      let smoothScrollAnimationId = null;
+      let isHovering = false;
+      const SCROLL_SPEED = 0.8;
 
       // Initialiser les attributs ARIA sur les vraies slides
       slides.forEach(function (slide, i) {
@@ -295,9 +309,37 @@ const {
 
       let isAnimating = false;
 
+      function startSmoothScroll() {
+        if (smoothScrollAnimationId !== null) return;
+        function scroll() {
+          if (isHovering || isMouseDown) {
+            smoothScrollAnimationId = requestAnimationFrame(scroll);
+            return;
+          }
+          smoothScrollOffset += SCROLL_SPEED;
+          const totalWidth = slides.reduce(function (sum, slide) {
+            return sum + slide.offsetWidth;
+          }, 0);
+          if (smoothScrollOffset >= totalWidth) {
+            smoothScrollOffset = 0;
+          }
+          track.style.transform = "translateX(-" + smoothScrollOffset + "px)";
+          smoothScrollAnimationId = requestAnimationFrame(scroll);
+        }
+        smoothScrollAnimationId = requestAnimationFrame(scroll);
+      }
+
+      function stopSmoothScroll() {
+        if (smoothScrollAnimationId !== null) {
+          cancelAnimationFrame(smoothScrollAnimationId);
+          smoothScrollAnimationId = null;
+        }
+      }
+
       function goTo(n) {
         if (isAnimating) return;
         isAnimating = true;
+        stopSmoothScroll();
         currentIndex = n;
 
         // Recalcul offsetLeft à chaque appel — tient compte des images chargées après init
@@ -305,6 +347,7 @@ const {
         const target = allSlides[n];
         const offset = target ? target.offsetLeft : 0;
         track.style.transform = "translateX(-" + offset + "px)";
+        smoothScrollOffset = offset;
 
         // Mise à jour ARIA uniquement sur les vraies slides
         const realIndex = ((n % total) + total) % total;
@@ -355,16 +398,30 @@ const {
       }
 
       const container = section.querySelector(".carousel-container");
-      container.addEventListener("mouseenter", stopAutoplay);
-      container.addEventListener("mouseleave", startAutoplay);
+
+      container.addEventListener("mouseenter", function () {
+        isHovering = true;
+        stopAutoplay();
+        stopSmoothScroll();
+      });
+      container.addEventListener("mouseleave", function () {
+        isHovering = false;
+        startAutoplay();
+        startSmoothScroll();
+      });
       container.addEventListener("focusin", stopAutoplay);
       container.addEventListener("focusout", startAutoplay);
 
       let touchStartX = 0;
+      let mouseStartX = 0;
+      let isMouseDown = false;
+      let dragOffset = 0;
+
       container.addEventListener(
         "touchstart",
         function (e) {
           touchStartX = e.changedTouches[0].clientX;
+          stopAutoplay();
         },
         { passive: true },
       );
@@ -375,12 +432,55 @@ const {
           if (Math.abs(delta) > 50) {
             delta < 0 ? goNext() : goPrev();
           }
+          startAutoplay();
         },
         { passive: true },
       );
 
+      container.addEventListener("dragstart", function (e) {
+        e.preventDefault();
+      });
+
+      container.addEventListener("mousedown", function (e) {
+        if (e.button !== 0) return;
+        isMouseDown = true;
+        mouseStartX = e.clientX;
+        dragOffset = 0;
+        stopAutoplay();
+        stopSmoothScroll();
+        container.classList.add("dragging");
+        track.style.transition = "none";
+      });
+
+      document.addEventListener("mousemove", function (e) {
+        if (!isMouseDown) return;
+        const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
+        const target = allSlides[currentIndex];
+        const baseOffset = target ? target.offsetLeft : 0;
+        dragOffset = e.clientX - mouseStartX;
+        track.style.transform = "translateX(-" + (baseOffset - dragOffset) + "px)";
+      });
+
+      document.addEventListener("mouseup", function () {
+        if (!isMouseDown) return;
+        isMouseDown = false;
+        container.classList.remove("dragging");
+        track.style.transition = "transform 0.4s ease";
+
+        if (Math.abs(dragOffset) > 50) {
+          dragOffset < 0 ? goNext() : goPrev();
+        } else {
+          goTo(currentIndex);
+        }
+        if (!isHovering) {
+          startAutoplay();
+          startSmoothScroll();
+        }
+      });
+
       goTo(0);
       startAutoplay();
+      startSmoothScroll();
     });
   })();
 </script>
