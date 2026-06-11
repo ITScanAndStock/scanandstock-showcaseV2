@@ -179,10 +179,8 @@ const jsonLd = {
         font-size: 1.1rem;
         line-height: 28px;
         color: #27333a;
-        max-width: 860px;
-        margin-inline: auto;
-        padding-left: 2rem;
-        border-left: 2px dashed #12a19a;
+        padding-left: 1rem;
+        border-left: 2px dashed #27333A;
     }
 
     .article__body :global(h2) {
@@ -197,7 +195,7 @@ const jsonLd = {
     }
 
     .article__body :global(p) {
-        margin: 1rem;
+        margin: 1.5rem 0;
     }
 
     .article__body :global(img) {
@@ -230,7 +228,7 @@ const jsonLd = {
 
     /* Section « Nos derniers articles » */
     .related {
-        margin-top: 3.5rem;
+        margin-top: 0.5rem;
     }
 
     .related__grid {
@@ -245,6 +243,12 @@ const jsonLd = {
             grid-template-columns: repeat(2, 1fr);
             max-width: calc(363px * 2 + 4rem);
             margin-inline: auto;
+        }
+
+        .article__body {
+            max-width: 860px;
+            margin-inline: auto;
+            padding-left: 2rem;
         }
     }
 

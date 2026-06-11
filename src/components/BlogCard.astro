@@ -45,37 +45,13 @@ const {slug, title, category, excerpt, cover, coverAlt = ""} = Astro.props;
         transition: transform 0.2s ease;
     }
 
-    /* Séparateur pointillé vertical dans la gouttière, à gauche de la carte.
-       Hauteur calée sur l'image grâce au même aspect-ratio que le média. */
-    .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -2rem;
-        width: 100%;
-        aspect-ratio: 363 / 510;
-        border-left: 1.5px dashed rgba(2, 73, 101, 0.45);
-        pointer-events: none;
-    }
-
-    /* Pas de séparateur pour la 1re carte de chaque rangée (classe posée par le JS) */
-    .card.is-row-start::before {
-        display: none;
-    }
-
-    /* En mono-colonne (mobile), aucun séparateur vertical */
-    @media screen and (max-width: 767px) {
-        .card::before {
-            display: none;
-        }
-    }
-
     .card__media {
         position: relative;
         border-radius: 35px;
         overflow: hidden;
         aspect-ratio: 363 / 510;
         transition: box-shadow 0.2s ease;
+        margin-bottom: 1.5rem;
     }
 
     .card__img {
@@ -119,12 +95,6 @@ const {slug, title, category, excerpt, cover, coverAlt = ""} = Astro.props;
         pointer-events: none;
     }
 
-    .card__content {
-        padding-left: 0.5rem;
-        border-left: 1px dashed #27333A;
-        margin-top: 1rem;
-    }
-
     .card__title {
         font-size: 1.5rem;
         font-weight: 500;
@@ -155,9 +125,28 @@ const {slug, title, category, excerpt, cover, coverAlt = ""} = Astro.props;
         outline-offset: 4px;
     }
 
+    .card__content {
+        padding-left: 1rem;
+        border-left: 1px dashed #27333A;
+    }
+
+    @media screen and (min-width: 768px) {
+        .card {
+            padding-left: 1rem;
+            border-left: 1px dashed #27333A;
+        }
+
+        .card__content {
+            padding-left: 0;
+            border-left: unset;
+        }
+
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .card {
             transition: none;
+
         }
 
         .card:hover {

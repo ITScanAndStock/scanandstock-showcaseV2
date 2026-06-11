@@ -20,16 +20,14 @@ const {as: Tag = "h2", class: className} = Astro.props;
         background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%) center;
         background-clip: text;
         color: transparent;
-        margin: 4rem 0;
+        margin: 1.5rem 0;
         font-size: clamp(20px, 5vw, 38px);
         line-height: 45px;
     }
 
     .gradient-subtitle {
-        margin: unset;
         font-size: 20px;
         text-align: start;
-        margin: unset;
         margin-top: 1rem;
         flex: unset;
     }
@@ -38,4 +36,11 @@ const {as: Tag = "h2", class: className} = Astro.props;
         text-decoration: underline 3px #12a19a80;
         text-underline-offset: 5px;
     }
+
+    @media screen and (min-width: 768px) {
+        .gradient-title {
+            margin: 4rem 0;
+        }
+    }
+
 </style>
