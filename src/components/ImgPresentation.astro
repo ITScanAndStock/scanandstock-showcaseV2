@@ -30,19 +30,25 @@ import ReserveButton from "./ReserveButton.astro";
 
   <div class="separator"></div>
   <div class="img-section">
+    <!-- Formes décoratives derrière les images -->
+    <div class="deco deco-teal" aria-hidden="true" data-parallax-speed="0.08"></div>
+    <div class="deco deco-blue" aria-hidden="true" data-parallax-speed="-0.06"></div>
+
     <Image
       class="img scanner"
       src={Scanner}
       alt="image d'une douchette"
       width={300}
+      data-parallax-speed="-0.05"
     />
     <Image
       class="img computer"
       src={Computer}
       alt="image d'ordinateur"
       width={400}
+      data-parallax-speed="0.04"
     />
-    <Image class="img phone" src={Phone} alt="image de téléphone" width={70} />
+    <Image class="img phone" src={Phone} alt="image de téléphone" width={70} data-parallax-speed="-0.07"/>
   </div>
 </section>
 <ReserveButton class="dark" />
@@ -61,6 +67,47 @@ import ReserveButton from "./ReserveButton.astro";
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
+  }
+
+  /* ─── Formes décoratives ─────────────────────────────── */
+  .deco {
+    position: absolute;
+    border-radius: 14px;
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+
+  /* teal grand : ~350×450, rotate(17.6deg), ombre — derrière l'ordinateur */
+  .deco-teal {
+    width: clamp(200px, 20vw, 350px);
+    height: clamp(280px, 26vw, 450px);
+    background: linear-gradient(
+      122deg,
+      rgba(18, 161, 154, 0.5) 9.7%,
+      rgba(18, 161, 154, 0.25) 104%
+    );
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    top: -20%;
+    left: 20%;
+    /* translateY d'abord : le déplacement parallaxe reste vertical malgré la rotation */
+    transform: translateY(var(--parallax-y, 0px)) rotate(17.6deg);
+  }
+
+  /* bleu : ~260×480, rotate(35.4deg) — côté droit, derrière le téléphone */
+  .deco-blue {
+    width: clamp(160px, 15vw, 260px);
+    height: clamp(300px, 28vw, 480px);
+    background: linear-gradient(
+      116deg,
+      rgba(2, 73, 101, 0.5) 9.7%,
+      rgba(65, 119, 140, 0.5) 104%
+    );
+    top: -30%;
+    right: 5%;
+    transform: translateY(var(--parallax-y, 0px)) rotate(35.4deg);
   }
   .text {
     flex: 1;
@@ -81,14 +128,28 @@ import ReserveButton from "./ReserveButton.astro";
   .scanner {
     z-index: 1;
     translate: -120px -10px;
+    will-change: transform;
+    transform: translateY(var(--parallax-y, 0px));
   }
   .computer {
     z-index: 2;
+    will-change: transform;
+    transform: translateY(var(--parallax-y, 0px));
   }
   .phone {
     z-index: 2;
     translate: 140px 40px;
-    transform: rotate(-3deg);
+    will-change: transform;
+    transform: translateY(var(--parallax-y, 0px)) rotate(-3deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deco,
+    .scanner,
+    .computer,
+    .phone {
+      will-change: auto;
+    }
   }
 
   /* ─── Tablet ─────────────────────────────────────────── */

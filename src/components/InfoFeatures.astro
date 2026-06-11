@@ -49,6 +49,12 @@ const listArticles2 = [
 ---
 
 <section>
+  <!-- Formes décoratives — cachées en mobile, visibles ≥768px -->
+  <div class="deco deco-blue deco-blue--1" aria-hidden="true" data-parallax-speed="0.07"></div>
+  <div class="deco deco-teal deco-teal--1" aria-hidden="true" data-parallax-speed="-0.06"></div>
+  <div class="deco deco-teal deco-teal--2" aria-hidden="true" data-parallax-speed="0.09"></div>
+  <div class="deco deco-blue deco-blue--2" aria-hidden="true" data-parallax-speed="-0.08"></div>
+
   <ul class="first-class">
     {
       listArticles1.map((article) => (
@@ -87,6 +93,74 @@ const listArticles2 = [
 </section>
 
 <style>
+  /* ─── Formes décoratives ─────────────────────────────── */
+  .deco {
+    display: none; /* masquées en mobile */
+    position: absolute;
+    border-radius: 14px;
+    filter: blur(2px);
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .deco-blue {
+    background: linear-gradient(
+      116deg,
+      rgba(2, 73, 101, 0.5) 9.7%,
+      rgba(65, 119, 140, 0.5) 104%
+    );
+  }
+
+  .deco-teal {
+    background: linear-gradient(
+      122deg,
+      rgba(18, 161, 154, 0.5) 9.7%,
+      rgba(18, 161, 154, 0.25) 104%
+    );
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* bleu haut-gauche : 200×329, z-index bas */
+  .deco-blue--1 {
+    width: 200px;
+    height: 329px;
+    top: -30px;
+    left: -20px;
+    z-index: 0;
+    transform: translateY(var(--parallax-y, 0px));
+  }
+
+  /* teal gauche-milieu : 177×266, rotation ~5° */
+  .deco-teal--1 {
+    width: 177px;
+    height: 266px;
+    top: 45%;
+    left: -15px;
+    z-index: 0;
+    /* translateY d'abord : le déplacement parallaxe reste vertical malgré la rotation */
+    transform: translateY(var(--parallax-y, 0px)) rotate(4.9deg);
+  }
+
+  /* teal droite-haut : 177×266, rotation ~5° */
+  .deco-teal--2 {
+    width: 177px;
+    height: 266px;
+    top: 5%;
+    right: -15px;
+    z-index: 0;
+    transform: translateY(var(--parallax-y, 0px)) rotate(5deg);
+  }
+
+  /* bleu droite-bas : 179×235 */
+  .deco-blue--2 {
+    width: 179px;
+    height: 235px;
+    bottom: 40px;
+    right: -20px;
+    z-index: 0;
+    transform: translateY(var(--parallax-y, 0px));
+  }
+
   .separator {
     display: none;
   }
@@ -95,6 +169,7 @@ const listArticles2 = [
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
 
   ul {
@@ -104,6 +179,8 @@ const listArticles2 = [
     list-style: none;
     padding: 0;
     margin: 0;
+    position: relative;
+    z-index: 1;
   }
 
   article {
@@ -117,6 +194,8 @@ const listArticles2 = [
     min-height: 255px;
     max-width: 400px;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   p {
@@ -131,6 +210,10 @@ const listArticles2 = [
   }
 
   @media screen and (min-width: 768px) {
+    .deco {
+      display: block;
+    }
+
     section {
       display: grid;
       grid-template-columns: 1fr 56px 1fr;
@@ -191,6 +274,12 @@ const listArticles2 = [
   @media screen and (min-width: 1024px) {
     section {
       max-width: 60%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deco {
+      will-change: auto;
     }
   }
 </style>

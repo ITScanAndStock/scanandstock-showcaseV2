@@ -101,11 +101,14 @@ const imageCarousel = [
             </p>
 
             <div class="parallax-container">
+                <div class="deco deco-white deco-white--a" aria-hidden="true" data-parallax-speed="0.12"></div>
+                <div class="deco deco-white deco-white--b" aria-hidden="true" data-parallax-speed="-0.08"></div>
+                <div class="deco deco-white deco-white--c" aria-hidden="true" data-parallax-speed="0.16"></div>
                 <Image class="stats" src={Stats} alt="statistique"/>
-                <Image class="order" src={Order} alt="commande"/>
-                <Image class="stock" src={Stock} alt="stock"/>
-                <Image class="warning" src={Warning} alt="stock"/>
-                <Image class="compare" src={Compare} alt="stock"/>
+                <Image class="order" src={Order} alt="commande" data-parallax-speed="0.18"/>
+                <Image class="stock" src={Stock} alt="stock" data-parallax-speed="-0.14"/>
+                <Image class="warning" src={Warning} alt="stock" data-parallax-speed="0.24"/>
+                <Image class="compare" src={Compare} alt="stock" data-parallax-speed="-0.1"/>
             </div>
 
             <ReserveButton/>
@@ -278,11 +281,53 @@ const imageCarousel = [
         box-shadow: 4px 4px 38px 0 #00000040;
     }
 
+    /* ─── Formes décoratives hero ─────────────────────────── */
+    .deco {
+        position: absolute;
+        border-radius: 14px;
+        filter: blur(2px);
+        pointer-events: none;
+        will-change: transform;
+    }
+
+    .deco-white {
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* haut-droite, ~140×138 */
+    .deco-white--a {
+        width: clamp(90px, 8vw, 140px);
+        height: clamp(88px, 8vw, 138px);
+        top: 5%;
+        right: 8%;
+        transform: translateY(var(--parallax-y, 0px));
+    }
+
+    /* milieu-gauche, ~149×145 */
+    .deco-white--b {
+        width: clamp(90px, 8.6vw, 149px);
+        height: clamp(88px, 8.4vw, 145px);
+        top: 40%;
+        left: 8%;
+        transform: translateY(var(--parallax-y, 0px));
+    }
+
+    /* bas-droite, ~129×125, légèrement plus opaque */
+    .deco-white--c {
+        background: rgba(255, 255, 255, 0.11);
+        width: clamp(80px, 7.5vw, 129px);
+        height: clamp(78px, 7.2vw, 125px);
+        bottom: 5%;
+        right: 10%;
+        transform: translateY(var(--parallax-y, 0px));
+    }
+
     .order,
     .stock,
     .warning,
     .compare {
         will-change: transform;
+        transform: translateY(var(--parallax-y, 0px));
     }
 
     .testimonials {
@@ -377,6 +422,7 @@ const imageCarousel = [
     }
 
     @media (prefers-reduced-motion: reduce) {
+        .deco,
         .order,
         .stock,
         .warning,
@@ -420,25 +466,65 @@ const imageCarousel = [
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (!reduced) {
-        const items: { el: HTMLElement; speed: number }[] = [
-            {el: document.querySelector<HTMLElement>(".order")!, speed: 0.18},
-            {el: document.querySelector<HTMLElement>(".stock")!, speed: -0.14},
-            {el: document.querySelector<HTMLElement>(".warning")!, speed: 0.24},
-            {el: document.querySelector<HTMLElement>(".compare")!, speed: -0.1},
-        ];
+        interface ParallaxItem {
+            el: HTMLElement;
+            speed: number;
+            neutral: number;
+            applied: number;
+        }
+
+        const allEls = document.querySelectorAll<HTMLElement>("[data-parallax-speed]");
+        const items: ParallaxItem[] = [];
+
+        allEls.forEach((el) => {
+            const speed = parseFloat(el.dataset.parallaxSpeed ?? "0");
+            if (isNaN(speed)) return;
+            items.push({ el, speed, neutral: 0, applied: 0 });
+        });
+
+        const calcNeutral = (item: ParallaxItem) => {
+            const rect = item.el.getBoundingClientRect();
+            // On retire le décalage déjà appliqué pour mesurer la position « au repos ».
+            const centerInDoc =
+                window.scrollY + rect.top + rect.height / 2 - item.applied;
+            item.neutral = Math.max(0, centerInDoc - window.innerHeight / 2);
+        };
+
+        const applyParallax = () => {
+            const y = window.scrollY;
+            items.forEach((item) => {
+                item.applied = (y - item.neutral) * item.speed;
+                item.el.style.setProperty("--parallax-y", `${item.applied}px`);
+            });
+        };
+
+        items.forEach(calcNeutral);
+        applyParallax();
 
         let ticking = false;
 
         window.addEventListener("scroll", () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    const y = window.scrollY;
-                    items.forEach(({el, speed}) => {
-                        el.style.transform = `translateY(${y * speed}px)`;
-                    });
+                    applyParallax();
                     ticking = false;
                 });
                 ticking = true;
+            }
+        });
+
+        // Recalcule les points neutres au resize (le layout peut changer),
+        // throttlé en rAF car iOS émet des rafales de resize.
+        let resizing = false;
+
+        window.addEventListener("resize", () => {
+            if (!resizing) {
+                requestAnimationFrame(() => {
+                    items.forEach(calcNeutral);
+                    applyParallax();
+                    resizing = false;
+                });
+                resizing = true;
             }
         });
     }
