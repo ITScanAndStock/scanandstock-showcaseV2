@@ -161,20 +161,27 @@ const imageCarousel = [
             et des bienfaits qu’elle va vous apporter, notre abonnement vous donne
             droit à un satisfait ou remboursé d’une période de 2 mois.
         </p>
-        <Carousel label="Présentation Scan&Stock" withReserveBtn>
-            {
-                carouselCards.map((card) => (
-                        <li class="carousel-slide">
-                            <CardCarousel
-                                    src={card.src}
-                                    alt={card.alt}
-                                    title={card.title}
-                                    text={card.text}
-                            />
-                        </li>
-                ))
-            }
-        </Carousel>
+        <div class="promises-zone">
+            <!-- Formes décoratives derrière le carrousel -->
+            <div class="deco deco-blue deco-blue--left" aria-hidden="true" data-parallax-speed="0.06"></div>
+            <div class="deco deco-teal deco-teal--right" aria-hidden="true" data-parallax-speed="-0.08"></div>
+            <div class="deco deco-blue deco-blue--right" aria-hidden="true" data-parallax-speed="0.09"></div>
+
+            <Carousel label="Présentation Scan&Stock" withReserveBtn>
+                {
+                    carouselCards.map((card) => (
+                            <li class="carousel-slide">
+                                <CardCarousel
+                                        src={card.src}
+                                        alt={card.alt}
+                                        title={card.title}
+                                        text={card.text}
+                                />
+                            </li>
+                    ))
+                }
+            </Carousel>
+        </div>
     </MainBox>
 
     <Carousel label="Nos outils" variant="image">
@@ -192,6 +199,10 @@ const imageCarousel = [
         >Ils <span class="underline">utilisent Scan & Stock</span></GradientTitle
         >
         <div class="testimonials">
+            <!-- Formes décoratives derrière les vidéos témoignages -->
+            <div class="deco deco-teal deco-teal--testim-top" aria-hidden="true"></div>
+            <div class="deco deco-teal deco-teal--testim-left" aria-hidden="true"></div>
+            <div class="deco deco-blue deco-blue--testim-right" aria-hidden="true"></div>
             {
                 testimonials.map((testimonial) => (
                         <figure class="testimonial-card">
@@ -212,8 +223,15 @@ const imageCarousel = [
                 ))
             }
         </div>
-        <GradientTitle> Nous contacter</GradientTitle>
-        <ContactForm/>
+        <div class="contact-zone">
+            <!-- Formes décoratives derrière le formulaire de contact -->
+            <div class="deco deco-teal deco-teal--contact-top" aria-hidden="true"></div>
+            <div class="deco deco-blue deco-blue--contact-left" aria-hidden="true"></div>
+            <div class="deco deco-teal deco-teal--contact-right" aria-hidden="true"></div>
+
+            <GradientTitle> Nous contacter</GradientTitle>
+            <ContactForm/>
+        </div>
     </MainBox>
 </BaseLayout>
 
@@ -330,15 +348,179 @@ const imageCarousel = [
         transform: translateY(var(--parallax-y, 0px));
     }
 
+    /* ─── Formes décoratives carrousel « promesses » ──────── */
+    .promises-zone {
+        position: relative;
+    }
+
+    /* Le carrousel passe au-dessus des formes */
+    .promises-zone :global(.carousel-section) {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Le texte garde la priorité si une forme remonte dessous */
+    .text {
+        position: relative;
+        z-index: 1;
+    }
+
+    .deco-blue {
+        background: linear-gradient(
+                110deg,
+                rgba(2, 73, 101, 0.5) 9.7%,
+                rgba(65, 119, 140, 0.5) 104%
+        );
+    }
+
+    .deco-teal {
+        background: linear-gradient(
+                122deg,
+                rgba(18, 161, 154, 0.5) 9.7%,
+                rgba(18, 161, 154, 0.25) 104%
+        );
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Masquées en mobile (les cards occupent ~90% de la largeur) */
+    .deco-blue--left,
+    .deco-teal--right,
+    .deco-blue--right {
+        display: none;
+    }
+
+    @media screen and (min-width: 768px) {
+        /* gauche : 206×470, dépasse du bord gauche du carrousel */
+        .deco-blue--left {
+            display: block;
+            width: clamp(110px, 14%, 210px);
+            aspect-ratio: 206 / 470;
+            top: 4%;
+            left: 1%;
+            transform: translateY(var(--parallax-y, 0px)) rotate(-4deg);
+        }
+
+
+        /* haut-droite : 238×365, rotation ~5°, dépasse au-dessus du carrousel */
+        .deco-teal--right {
+            display: block;
+            width: clamp(120px, 16%, 240px);
+            aspect-ratio: 238 / 365;
+            top: 0px;
+            right: 16%;
+            transform: translateY(var(--parallax-y, 0px)) rotate(-4deg);
+        }
+
+        /* droite : 261×481 */
+        .deco-blue--right {
+            display: block;
+            width: clamp(130px, 17%, 260px);
+            aspect-ratio: 261 / 481;
+            top: -15px;
+            right: 1%;
+            transform: translateY(var(--parallax-y, 0px));
+        }
+    }
+
     .testimonials {
         display: flex;
         justify-content: center;
         gap: 20px;
         flex-wrap: wrap;
+        position: relative;
+        margin: 2rem 0;
+    }
+
+    /* ─── Formes décoratives témoignages + contact ────────── */
+    .contact-zone {
+        position: relative;
+    }
+
+    /* Le titre et le formulaire passent au-dessus des formes */
+    .contact-zone > :global(h2),
+    .contact-zone > :global(section) {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Masquées en mobile, comme les autres zones décorées.
+       Ces 6 formes sont statiques (pas de parallaxe). */
+    .deco-teal--testim-top,
+    .deco-teal--testim-left,
+    .deco-blue--testim-right,
+    .deco-teal--contact-top,
+    .deco-blue--contact-left,
+    .deco-teal--contact-right {
+        display: none;
+        will-change: auto;
+    }
+
+    /* La rangée de vidéos fait 1120px (3×360 + 2×20), centrée :
+       les formes se calent sur ses bords via calc(50% - …),
+       avec max() pour rester dans la zone sur les écrans étroits. */
+    @media screen and (min-width: 768px) {
+        /* coin haut-droit de la dernière vidéo (droite) */
+        .deco-teal--testim-top {
+            display: block;
+            width: clamp(60px, 15%, 210px);
+            aspect-ratio: 209 / 348;
+            top: -26px;
+            right: max(-12px, calc(50% - 600px));
+            transform: rotate(-4.97deg);
+        }
+
+        /* coin haut-gauche de la 1re vidéo (gauche) */
+        .deco-teal--testim-left {
+            display: block;
+            width: clamp(60px, 7.5%, 105px);
+            aspect-ratio: 184 / 347;
+            top: -25px;
+            left: max(-12px, calc(50% - 600px));
+            transform: rotate(-11deg);
+        }
+
+        /* coin bas-droit de la dernière vidéo (droite) */
+        .deco-blue--testim-right {
+            display: block;
+            width: clamp(70px, 8.5%, 130px);
+            aspect-ratio: 261 / 481;
+            bottom: -25px;
+            right: max(-15px, calc(50% - 610px));
+        }
+
+        /* haut-gauche : rotation ~-5°, derrière le titre */
+        .deco-teal--contact-top {
+            display: block;
+            width: clamp(60px, 7%, 105px);
+            aspect-ratio: 209 / 348;
+            top: -20px;
+            left: 13%;
+            transform: rotate(-4.97deg);
+        }
+
+        /* gauche-centre : dépasse au-dessus du formulaire */
+        .deco-blue--contact-left {
+            display: block;
+            width: clamp(80px, 11%, 170px);
+            aspect-ratio: 338 / 623;
+            top: -30px;
+            left: 25%;
+        }
+
+        /* bas-droite : sans rotation, derrière les coordonnées */
+        .deco-teal--contact-right {
+            display: block;
+            width: clamp(55px, 7%, 108px);
+            aspect-ratio: 214 / 368;
+            bottom: -4%;
+            right: -1%;
+        }
     }
 
     .testimonial-card {
         position: relative;
+        /* au-dessus des formes décoratives du contact qui débordent vers le haut */
+        z-index: 1;
         width: 360px;
         margin: 0;
         border-radius: 35px;
@@ -479,7 +661,7 @@ const imageCarousel = [
         allEls.forEach((el) => {
             const speed = parseFloat(el.dataset.parallaxSpeed ?? "0");
             if (isNaN(speed)) return;
-            items.push({ el, speed, neutral: 0, applied: 0 });
+            items.push({el, speed, neutral: 0, applied: 0});
         });
 
         const calcNeutral = (item: ParallaxItem) => {

@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import {Image} from "astro:assets";
 import Box from "../assets/icones/animation/box.webp";
 import Chariot from "../assets/icones/animation/chariot.webp";
 import Scan from "../assets/icones/animation/scan.webp";
@@ -8,278 +8,278 @@ import Warning from "../assets/icones/animation/warning.webp";
 import GradientTitle from "./ui/GradientTitle.astro";
 import ReserveButton from "./ReserveButton.astro";
 const listArticles1 = [
-  {
-    src: Box,
-    alt: "icone de boite",
-    title: "Surveillez vos stocks",
-    description:
-      "Scan & Stock affiche l’état de vos stocks en temps réel et vous permet ainsi de faire face aux oublis ou au surstockage.",
-  },
-  {
-    src: Chariot,
-    alt: "icone de chariot",
-    title: "Retrouvez vos fournisseurs",
-    description:
-      "Pas besoin de fouiller dans vos factures pour les retrouver, Scan&Stock retrouve vos fournisseurs en 1 clic et vous gérez la liste à votre gré.",
-  },
-  {
-    src: User,
-    alt: "icone de personne derrière un écran",
-    title: "Passez vos commandes",
-    description:
-      "Tous vos produits sont répertoriés. Glissez ceux dont vous avez besoin dans votre panier: Scan & Stock envoie votre commande par mail au fournisseur !",
-  },
+    {
+        src: Box,
+        alt: "icone de boite",
+        title: "Surveillez vos stocks",
+        description:
+            "Scan & Stock affiche l’état de vos stocks en temps réel et vous permet ainsi de faire face aux oublis ou au surstockage.",
+    },
+    {
+        src: Chariot,
+        alt: "icone de chariot",
+        title: "Retrouvez vos fournisseurs",
+        description:
+            "Pas besoin de fouiller dans vos factures pour les retrouver, Scan&Stock retrouve vos fournisseurs en 1 clic et vous gérez la liste à votre gré.",
+    },
+    {
+        src: User,
+        alt: "icone de personne derrière un écran",
+        title: "Passez vos commandes",
+        description:
+            "Tous vos produits sont répertoriés. Glissez ceux dont vous avez besoin dans votre panier: Scan & Stock envoie votre commande par mail au fournisseur !",
+    },
 ];
 const listArticles2 = [
-  {
-    src: Warning,
-    alt: "icone de cirène de pompier",
-    title: "Recevez des alertes",
-    description:
-      "Adieu les ruptures de stock ou les dates de péremptions dépassées, Scan&Stock vous alerte automatiquement afin que vous ne manquiez de rien ou que vous stoppiez le gaspillage.",
-  },
-  {
-    src: Scan,
-    alt: "icone de boite",
-    title: "Scannez vos produits",
-    description:
-      "Vos produits sont livrés ? Scannez-les et Scan&Stock se charge de les intégrer dans votre stock en y ajoutant des données telles que le numéro de lot ou la date de péremption quand ceux-ci sont présents.",
-  },
+    {
+        src: Warning,
+        alt: "icone de cirène de pompier",
+        title: "Recevez des alertes",
+        description:
+            "Adieu les ruptures de stock ou les dates de péremptions dépassées, Scan&Stock vous alerte automatiquement afin que vous ne manquiez de rien ou que vous stoppiez le gaspillage.",
+    },
+    {
+        src: Scan,
+        alt: "icone de boite",
+        title: "Scannez vos produits",
+        description:
+            "Vos produits sont livrés ? Scannez-les et Scan&Stock se charge de les intégrer dans votre stock en y ajoutant des données telles que le numéro de lot ou la date de péremption quand ceux-ci sont présents.",
+    },
 ];
 ---
 
 <section>
-  <!-- Formes décoratives — cachées en mobile, visibles ≥768px -->
-  <div class="deco deco-blue deco-blue--1" aria-hidden="true" data-parallax-speed="0.07"></div>
-  <div class="deco deco-teal deco-teal--1" aria-hidden="true" data-parallax-speed="-0.06"></div>
-  <div class="deco deco-teal deco-teal--2" aria-hidden="true" data-parallax-speed="0.09"></div>
-  <div class="deco deco-blue deco-blue--2" aria-hidden="true" data-parallax-speed="-0.08"></div>
+    <!-- Formes décoratives — cachées en mobile, visibles ≥768px -->
+    <div class="deco deco-blue deco-blue--1" aria-hidden="true" data-parallax-speed="0.07"></div>
+    <div class="deco deco-teal deco-teal--1" aria-hidden="true" data-parallax-speed="-0.06"></div>
+    <div class="deco deco-teal deco-teal--2" aria-hidden="true" data-parallax-speed="0.09"></div>
+    <div class="deco deco-blue deco-blue--2" aria-hidden="true" data-parallax-speed="-0.08"></div>
 
-  <ul class="first-class">
-    {
-      listArticles1.map((article) => (
-        <li>
-          <article>
-            <Image src={article.src} alt={article.alt} width={80} height={80} />
-            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
-              {article.title}
-            </GradientTitle>
-            <p>{article.description}</p>
-          </article>
-        </li>
-      ))
-    }
-  </ul>
-  <div class="separator"></div>
-  <ul class="second-class">
-    {
-      listArticles2.map((article) => (
-        <li>
-          <article>
-            <Image src={article.src} alt={article.alt} width={80} height={80} />
-            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
-              {article.title}
-            </GradientTitle>
-            <p>{article.description}</p>
-          </article>
-        </li>
-      ))
-    }
-  </ul>
+    <ul class="first-class">
+        {
+            listArticles1.map((article) => (
+                    <li>
+                        <article>
+                            <Image src={article.src} alt={article.alt} width={80} height={80}/>
+                            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                                {article.title}
+                            </GradientTitle>
+                            <p>{article.description}</p>
+                        </article>
+                    </li>
+            ))
+        }
+    </ul>
+    <div class="separator"></div>
+    <ul class="second-class">
+        {
+            listArticles2.map((article) => (
+                    <li>
+                        <article>
+                            <Image src={article.src} alt={article.alt} width={80} height={80}/>
+                            <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                                {article.title}
+                            </GradientTitle>
+                            <p>{article.description}</p>
+                        </article>
+                    </li>
+            ))
+        }
+    </ul>
 
-  <div class="button-row">
-    <ReserveButton class="dark" />
-  </div>
+    <div class="button-row">
+        <ReserveButton class="dark"/>
+    </div>
 </section>
 
 <style>
-  /* ─── Formes décoratives ─────────────────────────────── */
-  .deco {
-    display: none; /* masquées en mobile */
-    position: absolute;
-    border-radius: 14px;
-    filter: blur(2px);
-    pointer-events: none;
-    will-change: transform;
-  }
-
-  .deco-blue {
-    background: linear-gradient(
-      116deg,
-      rgba(2, 73, 101, 0.5) 9.7%,
-      rgba(65, 119, 140, 0.5) 104%
-    );
-  }
-
-  .deco-teal {
-    background: linear-gradient(
-      122deg,
-      rgba(18, 161, 154, 0.5) 9.7%,
-      rgba(18, 161, 154, 0.25) 104%
-    );
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  /* bleu haut-gauche : 200×329, z-index bas */
-  .deco-blue--1 {
-    width: 200px;
-    height: 329px;
-    top: -30px;
-    left: -20px;
-    z-index: 0;
-    transform: translateY(var(--parallax-y, 0px));
-  }
-
-  /* teal gauche-milieu : 177×266, rotation ~5° */
-  .deco-teal--1 {
-    width: 177px;
-    height: 266px;
-    top: 45%;
-    left: -15px;
-    z-index: 0;
-    /* translateY d'abord : le déplacement parallaxe reste vertical malgré la rotation */
-    transform: translateY(var(--parallax-y, 0px)) rotate(4.9deg);
-  }
-
-  /* teal droite-haut : 177×266, rotation ~5° */
-  .deco-teal--2 {
-    width: 177px;
-    height: 266px;
-    top: 5%;
-    right: -15px;
-    z-index: 0;
-    transform: translateY(var(--parallax-y, 0px)) rotate(5deg);
-  }
-
-  /* bleu droite-bas : 179×235 */
-  .deco-blue--2 {
-    width: 179px;
-    height: 235px;
-    bottom: 40px;
-    right: -20px;
-    z-index: 0;
-    transform: translateY(var(--parallax-y, 0px));
-  }
-
-  .separator {
-    display: none;
-  }
-
-  section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  article {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem;
-    background-color: white;
-    margin: 2rem 0;
-    border-radius: 15px;
-    min-height: 255px;
-    max-width: 400px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-
-  p {
-    font-size: 16px;
-    color: #27333a;
-    line-height: 25px;
-  }
-
-  .button-row {
-    display: flex;
-    justify-content: center;
-  }
-
-  @media screen and (min-width: 768px) {
+    /* ─── Formes décoratives ─────────────────────────────── */
     .deco {
-      display: block;
+        display: none; /* masquées en mobile */
+        position: absolute;
+        border-radius: 14px;
+        filter: blur(2px);
+        pointer-events: none;
+        will-change: transform;
     }
 
-    section {
-      display: grid;
-      grid-template-columns: 1fr 56px 1fr;
-      grid-template-rows: 1fr auto;
-      align-items: start;
-      margin: 0 auto;
+    .deco-blue {
+        background: linear-gradient(
+                116deg,
+                rgba(2, 73, 101, 0.5) 9.7%,
+                rgba(65, 119, 140, 0.5) 104%
+        );
     }
 
-    .first-class {
-      grid-column: 1;
-      grid-row: 1;
+    .deco-teal {
+        background: linear-gradient(
+                122deg,
+                rgba(18, 161, 154, 0.5) 9.7%,
+                rgba(18, 161, 154, 0.25) 104%
+        );
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    /* bleu haut-gauche : z-index bas */
+    .deco-blue--1 {
+        width: 145px;
+        height: 300px;
+        top: -30px;
+        left: -20px;
+        z-index: 0;
+        transform: translateY(var(--parallax-y, 0px)) rotate(-10deg);
+    }
+
+    /* teal gauche-milieu : 177×266, rotation ~5° */
+    .deco-teal--1 {
+        width: 177px;
+        height: 266px;
+        top: 30%;
+        left: 14%;
+        z-index: 0;
+        /* translateY d'abord : le déplacement parallaxe reste vertical malgré la rotation */
+        transform: translateY(var(--parallax-y, 0px)) rotate(4.9deg);
+    }
+
+    /* teal droite-haut : 177×266, rotation ~5° */
+    .deco-teal--2 {
+        width: 177px;
+        height: 266px;
+        top: 14%;
+        right: -15px;
+        z-index: 0;
+        transform: translateY(var(--parallax-y, 0px)) rotate(5deg);
+    }
+
+    /* bleu droite-bas : 179×235 */
+    .deco-blue--2 {
+        width: 179px;
+        height: 235px;
+        bottom: 20%;
+        right: 7%;
+        z-index: 0;
+        transform: translateY(var(--parallax-y, 0px));
     }
 
     .separator {
-      display: block;
-      grid-column: 2;
-      grid-row: 1;
-      align-self: stretch;
-      position: relative;
+        display: none;
     }
 
-    .separator::before,
-    .separator::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      border-left: 2px dashed rgba(154, 180, 188, 0.8);
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
     }
 
-    .separator::before {
-      top: 10%;
-      bottom: 60%;
-    }
-
-    .separator::after {
-      top: 48%;
-      bottom: 10%;
-    }
-
-    .second-class {
-      grid-column: 3;
-      grid-row: 1;
-      margin-top: 220px;
-    }
-
-    .button-row {
-      grid-column: 1 / 4;
-      grid-row: 2;
+    ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        z-index: 1;
     }
 
     article {
-      min-height: 290px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 1rem;
+        background-color: white;
+        margin: 2rem 0;
+        border-radius: 15px;
+        min-height: 255px;
+        max-width: 400px;
+        width: 100%;
+        position: relative;
+        z-index: 1;
     }
-  }
 
-  @media screen and (min-width: 1024px) {
-    section {
-      max-width: 60%;
+    p {
+        font-size: 16px;
+        color: #27333a;
+        line-height: 25px;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .deco {
-      will-change: auto;
+    .button-row {
+        display: flex;
+        justify-content: center;
     }
-  }
+
+    @media screen and (min-width: 768px) {
+        .deco {
+            display: block;
+        }
+
+        section {
+            display: grid;
+            grid-template-columns: 1fr 56px 1fr;
+            grid-template-rows: 1fr auto;
+            align-items: start;
+            margin: 0 auto;
+        }
+
+        .first-class {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .separator {
+            display: block;
+            grid-column: 2;
+            grid-row: 1;
+            align-self: stretch;
+            position: relative;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            border-left: 2px dashed rgba(154, 180, 188, 0.8);
+        }
+
+        .separator::before {
+            top: 10%;
+            bottom: 60%;
+        }
+
+        .separator::after {
+            top: 48%;
+            bottom: 10%;
+        }
+
+        .second-class {
+            grid-column: 3;
+            grid-row: 1;
+            margin-top: 220px;
+        }
+
+        .button-row {
+            grid-column: 1 / 4;
+            grid-row: 2;
+        }
+
+        article {
+            min-height: 290px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        section {
+            max-width: 60%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .deco {
+            will-change: auto;
+        }
+    }
 </style>

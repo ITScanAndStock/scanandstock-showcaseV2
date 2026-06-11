@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import {Image} from "astro:assets";
 import GradientTitle from "./ui/GradientTitle.astro";
 import Laulan from "../assets/photos/Camille_LAULAN.jpg";
 import Dischant from "../assets/photos/Claire_DISCHANT.png";
@@ -7,114 +7,120 @@ import Raux from "../assets/photos/Frederic_RAUX.png";
 import Toth from "../assets/photos/Kevin_TOTH.png";
 import Camaleonte from "../assets/photos/Gregory_CAMALEONTE.jpg";
 import Colin from "../assets/photos/Matthieu_COLIN.png";
-import Keller from "../assets/photos/Pierre_kELLER.png";
 
 const clients = [
-  { src: Laulan, alt: "Camille Laulan" },
-  { src: Dischant, alt: "Claire Dischant" },
-  { src: Raux, alt: "Frédéric Raux" },
-  { src: Toth, alt: "Kevin Toth", class: "card--lower" },
-  { src: Camaleonte, alt: "Grégory Camaleonte" },
-  { src: Colin, alt: "Matthieu Colin", class: "card--lower" },
-  { src: Keller, alt: "Pierre Keller" },
+    {src: Laulan, alt: "Camille Laulan"},
+    {src: Dischant, alt: "Claire Dischant"},
+    {src: Raux, alt: "Frédéric Raux"},
+    {src: Toth, alt: "Kevin Toth", class: "card--lower"},
+    {src: Camaleonte, alt: "Grégory Camaleonte"},
+    {src: Colin, alt: "Matthieu Colin", class: "card--lower"},
 ];
 ---
 
 <section class="clients">
-  <GradientTitle>Ils utilisent Scan&amp;Stock</GradientTitle>
-  <div class="carousel">
-    <div class="group">
-      {
-        clients.map((c) => (
-          <Image
-            draggable="false"
-            class:list={["card", c.class]}
-            src={c.src}
-            alt={c.alt}
-          />
-        ))
-      }
+    <GradientTitle>Ils utilisent Scan&amp;Stock</GradientTitle>
+    <div class="carousel">
+        <div class="group">
+            {
+                clients.map((c) => (
+                        <Image
+                                draggable="false"
+                                class:list={["card", c.class]}
+                                src={c.src}
+                                alt={c.alt}
+                        />
+                ))
+            }
+        </div>
+        <div aria-hidden="true" class="group">
+            {
+                clients.map((c) => (
+                        <Image
+                                draggable="false"
+                                class:list={["card", c.class]}
+                                src={c.src}
+                                alt=""
+                        />
+                ))
+            }
+        </div>
     </div>
-    <div aria-hidden="true" class="group">
-      {
-        clients.map((c) => (
-          <Image
-            draggable="false"
-            class:list={["card", c.class]}
-            src={c.src}
-            alt=""
-          />
-        ))
-      }
-    </div>
-  </div>
 </section>
 
 <style>
-  .clients {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-    gap: 10px;
-  }
-  .carousel {
-    margin: 4rem 0;
-    display: flex;
-    overflow-x: auto;
-    flex: 1;
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent
-    );
-  }
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-  .group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1em;
-    padding-right: 1em;
-    animation: spin 20s infinite linear;
-  }
-  .card {
-    flex: 0 0 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-  }
-  .card--lower {
-    object-position: center 10%;
-  }
-  @keyframes spin {
-    from {
-      translate: 0;
-    }
-    to {
-      translate: -100%;
-    }
-  }
-  @media screen and (min-width: 768px) {
     .clients {
-      flex-direction: row;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        gap: 10px;
     }
-  }
-  @media (prefers-reduced-motion: reduce) {
+
+    .carousel {
+        margin: 4rem 0;
+        display: flex;
+        overflow-x: auto;
+        flex: 1;
+        mask-image: linear-gradient(
+                to right,
+                transparent,
+                black 15%,
+                black 85%,
+                transparent
+        );
+        -webkit-mask-image: linear-gradient(
+                to right,
+                transparent,
+                black 15%,
+                black 85%,
+                transparent
+        );
+    }
+
+    .carousel::-webkit-scrollbar {
+        display: none;
+    }
+
     .group {
-      animation: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+        padding-right: 1em;
+        animation: spin 20s infinite linear;
     }
-  }
+
+    .card {
+        flex: 0 0 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .card--lower {
+        object-position: center 10%;
+    }
+
+    @keyframes spin {
+        from {
+            translate: 0;
+        }
+        to {
+            translate: -100%;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .clients {
+            flex-direction: row;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .group {
+            animation: none;
+        }
+    }
 </style>
