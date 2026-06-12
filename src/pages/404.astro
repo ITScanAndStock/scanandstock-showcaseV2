@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MainBox from "../components/ui/Main-box.astro";
+import HeroBox from "../components/ui/Hero-box.astro";
+
+// Préfixe de base : "" en prod, "/scanandstock-showcaseV2" sur GitHub Pages.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+        title="Scan&Stock | Page introuvable"
+        description="La page que vous cherchez n'existe pas ou a été déplacée."
+>
+    <MainBox>
+        <HeroBox>
+            <div class="notfound">
+                <p class="notfound__code">404</p>
+                <h1 class="notfound__title">Cette page n'existe pas</h1>
+                <p class="notfound__text">
+                    Le lien est peut-être erroné ou la page a été déplacée.
+                </p>
+                <div class="notfound__actions">
+                    <a class="notfound__btn" href={base || "/"}>Retour à l'accueil</a>
+                    <a class="notfound__btn notfound__btn--ghost" href={`${base}/blogs`}>
+                        Voir le blog
+                    </a>
+                </div>
+            </div>
+        </HeroBox>
+    </MainBox>
+</BaseLayout>
+
+<style>
+    .notfound {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+        padding: 3rem 1rem;
+        color: #fff;
+    }
+
+    .notfound__code {
+        font-size: clamp(72px, 18vw, 160px);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 2px;
+    }
+
+    .notfound__title {
+        font-size: clamp(20px, 3vw, 34px);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .notfound__text {
+        font-size: clamp(14px, 1.6vw, 18px);
+        font-weight: 400;
+        max-width: 40ch;
+    }
+
+    .notfound__actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .notfound__btn {
+        padding: 0.6rem 1.75rem;
+        border-radius: 100px;
+        font-weight: 700;
+        font-size: 1rem;
+        background-color: #fff;
+        color: #496f7f;
+        transition: transform 0.2s ease;
+    }
+
+    .notfound__btn--ghost {
+        background-color: transparent;
+        color: #fff;
+        border: 1.5px solid #fff;
+    }
+
+    .notfound__btn:hover {
+        transform: scale(1.03);
+    }
+
+    .notfound__btn:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .notfound__btn {
+            transition: none;
+        }
+    }
+</style>

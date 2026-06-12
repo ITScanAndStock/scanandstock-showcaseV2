@@ -54,6 +54,10 @@ const jsonLd = {
     },
     mainEntityOfPage: {"@type": "WebPage", "@id": articleURL},
 };
+
+// Échappe `<` pour empêcher qu'un titre/extrait Notion contenant
+// « </script> » ne ferme prématurément la balise (risque d'injection).
+const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
 ---
 
 <BaseLayout
@@ -65,7 +69,7 @@ const jsonLd = {
     <script
             type="application/ld+json"
             slot="head"
-            set:html={JSON.stringify(jsonLd)}
+            set:html={jsonLdHtml}
     />
     <MainBox>
         <article class="article">
