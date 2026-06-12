@@ -5,8 +5,8 @@ import GradientTitle from "../components/ui/GradientTitle.astro";
 import ContactForm from "../components/ContactForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import BlogFilters from "../components/BlogFilters.astro";
-import { getCollection } from "astro:content";
-import { readFile } from "node:fs/promises";
+import {getCollection} from "astro:content";
+import {readFile} from "node:fs/promises";
 
 const entries = await getCollection("blog");
 // Tri antéchronologique (copie pour ne pas muter la collection)
@@ -16,37 +16,37 @@ const sorted = [...entries].sort((a, b) => b.data.date.localeCompare(a.data.date
 // repli sur les catégories présentes si le fichier n'a pas encore été généré.
 let categories: string[];
 try {
-  const raw = await readFile(
-    new URL("../content/blog/_categories.json", import.meta.url),
-    "utf8",
-  );
-  categories = JSON.parse(raw);
+    const raw = await readFile(
+        new URL("../content/blog/_categories.json", import.meta.url),
+        "utf8",
+    );
+    categories = JSON.parse(raw);
 } catch {
-  categories = [...new Set(entries.map((e) => e.data.category))];
+    categories = [...new Set(entries.map((e) => e.data.category))];
 }
 ---
 
 <BaseLayout
-    title="Scan&Stock | Blog"
-    description="Conseils, actualités et nouveautés sur la gestion de stock et de commandes en cabinet dentaire — le blog Scan&Stock."
+        title="Scan&Stock | Blog"
+        description="Conseils, actualités et nouveautés sur la gestion de stock et de commandes en cabinet dentaire — le blog Scan&Stock."
 >
     <MainBox>
-        <GradientTitle as="h1">Blog Scan & Stock</GradientTitle>
+        <GradientTitle as="h1" class:list={"mv1"}>Blog Scan & Stock</GradientTitle>
         <h2 class="blog__subtitle">Nos derniers articles</h2>
 
-        <BlogFilters categories={categories} />
+        <BlogFilters categories={categories}/>
 
         <div class="blog__grid" id="blog-grid">
             {
                 sorted.map((entry) => (
-                    <BlogCard
-                        slug={entry.data.slug}
-                        title={entry.data.title}
-                        category={entry.data.category}
-                        excerpt={entry.data.excerpt}
-                        cover={entry.data.cover}
-                        coverAlt={entry.data.coverAlt}
-                    />
+                        <BlogCard
+                                slug={entry.data.slug}
+                                title={entry.data.title}
+                                category={entry.data.category}
+                                excerpt={entry.data.excerpt}
+                                cover={entry.data.cover}
+                                coverAlt={entry.data.coverAlt}
+                        />
                 ))
             }
         </div>
