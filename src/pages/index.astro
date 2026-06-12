@@ -26,31 +26,32 @@ import MyCoompy from "../assets/photos/carousel/mycoompy.png";
 import MyscanScan from "../assets/photos/carousel/myscanandstock_scan.png";
 import MyscanStock from "../assets/photos/carousel/myscanandstock_stock.png";
 import ScannerApp from "../assets/photos/carousel/scanner_et_app.png";
-import TestimonialCharlotte from "../assets/video/testimonial_charlotte.mp4";
-import TestimonialJeanChristophe from "../assets/video/testimonial_jean-Christophe.mp4";
-import TestimonialKevin from "../assets/video/testimonial_Kevin.mp4";
 import PosterCharlotte from "../assets/video/poster/charlotte.png";
 import PosterJeanChristophe from "../assets/video/poster/jean-christophe.png";
 import PosterKevin from "../assets/video/poster/kevin.png";
 import ContactForm from "../components/ContactForm.astro";
 
+// Vidéos de témoignages hébergées sur S3 (comme celles de FeaturesTabs) :
+// elles ne sont ni versionnées dans le repo ni copiées dans dist/.
+const S3_VIDEOS = "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos";
+
 const testimonials = [
     {
-        src: TestimonialJeanChristophe,
+        src: `${S3_VIDEOS}/testimonial_jean-Christophe.mp4`,
         poster: PosterJeanChristophe.src,
         label: "Témoignage vidéo de Jean-Christophe, utilisateur de Scan & Stock",
         name: "Jean-Christophe Gilbert",
         role: "Chirurgien-dentiste",
     },
     {
-        src: TestimonialCharlotte,
+        src: `${S3_VIDEOS}/testimonial_charlotte.mp4`,
         poster: PosterCharlotte.src,
         label: "Témoignage vidéo de Charlotte, utilisatrice de Scan & Stock",
         name: "Charlotte Farges",
         role: "Chirurgien-dentiste",
     },
     {
-        src: TestimonialKevin,
+        src: `${S3_VIDEOS}/testimonial_Kevin.mp4`,
         poster: PosterKevin.src,
         label: "Témoignage vidéo de Kevin, utilisateur de Scan & Stock",
         name: "Cabinet dentaire république",
