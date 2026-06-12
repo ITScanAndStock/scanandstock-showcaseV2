@@ -151,7 +151,10 @@ const carouselCards = [
         <GradientTitle>
             Un logiciel <span class="underline">flexible et sécurisé</span>
         </GradientTitle>
-        <ul class="info-list">
+        <ul class="info-list info-list--deco">
+            <!-- Formes décoratives en parallaxe, ancrées à la liste de cartes -->
+            <div class="deco deco-blue deco-blue--flex" aria-hidden="true" data-parallax-speed="0.07"></div>
+            <div class="deco deco-teal deco-teal--flex" aria-hidden="true" data-parallax-speed="-0.08"></div>
             <li>
                 <article class="info-article">
                     <Image src={Sas} alt="image" width={100} height={100}/>
@@ -250,13 +253,19 @@ const carouselCards = [
         </GradientTitle>
 
         <section class="presentation__ceo">
-            <Image
-                    class="presentation__photo"
-                    src={PJ2}
-                    alt="Pierre-Jean Vandoorne, fondateur de Scan & Stock"
-                    width={440}
-                    height={520}
-            />
+            <div class="presentation__media">
+                <!-- Formes décoratives en parallaxe, accrochées à la photo du fondateur -->
+                <div class="deco deco-teal deco-teal--ceo" aria-hidden="true" data-parallax-speed="0.16"></div>
+                <div class="deco deco-blue deco-blue--ceo" aria-hidden="true" data-parallax-speed="-0.17"></div>
+
+                <Image
+                        class="presentation__photo"
+                        src={PJ2}
+                        alt="Pierre-Jean Vandoorne, fondateur de Scan & Stock"
+                        width={440}
+                        height={520}
+                />
+            </div>
             <div class="separator"></div>
             <div class="presentation__text">
                 <p>
@@ -278,10 +287,12 @@ const carouselCards = [
 
         <section>
             <ul class="info-list">
-                <li>
+                <li class="li--deco">
+                    <div class="deco deco-blue deco-blue--values" aria-hidden="true" data-parallax-speed="0.10"></div>
+
                     <article class="info-article">
                         <Image src={Reliability} alt="image" width={100} height={100}/>
-                        <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                        <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             La fiabilité
                         </GradientTitle>
                         <p>
@@ -294,7 +305,7 @@ const carouselCards = [
                 <li>
                     <article class="info-article">
                         <Image src={Rocket} alt="image" width={100} height={100}/>
-                        <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                        <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             La réactivité
                         </GradientTitle>
                         <p>
@@ -304,10 +315,12 @@ const carouselCards = [
                     </article>
                 </li>
                 <div class="separator"></div>
-                <li>
+                <li class="li--deco">
+                    <!-- Forme décorative accrochée à la dernière carte -->
+                    <div class="deco deco-teal deco-teal--values" aria-hidden="true" data-parallax-speed="0.18"></div>
                     <article class="info-article">
                         <Image src={Innovation} alt="image" width={100} height={100}/>
-                        <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                        <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             L’innovation
                         </GradientTitle>
                         <p>
@@ -423,6 +436,10 @@ const carouselCards = [
         <ContactForm/>
     </MainBox>
 </BaseLayout>
+
+<script>
+    import "../js/parallax";
+</script>
 
 <style>
     .hero {
@@ -658,6 +675,111 @@ const carouselCards = [
         margin: 1rem auto;
     }
 
+    /* ─── Formes décoratives de « Un logiciel flexible et sécurisé » ──
+       isolate : les formes en z-index: -1 restent au-dessus du fond de
+       page mais derrière les cartes blanches. */
+    .info-list--deco {
+        position: relative;
+        isolation: isolate;
+    }
+
+    .deco-blue {
+        background: linear-gradient(
+                116deg,
+                rgba(2, 73, 101, 0.5) 9.7%,
+                rgba(65, 119, 140, 0.5) 104%
+        );
+    }
+
+    .deco-teal {
+        background: linear-gradient(
+                122deg,
+                rgba(18, 161, 154, 0.5) 9.7%,
+                rgba(18, 161, 154, 0.25) 104%
+        );
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    /* masquées en mobile : les cartes occupent toute la largeur */
+    .deco-blue--flex,
+    .deco-teal--flex,
+    .deco-blue--ceo,
+    .deco-teal--ceo,
+    .deco-teal--values,
+    .deco-blue--values {
+        display: none;
+    }
+
+    @media screen and (min-width: 768px) {
+        /* bleu haut-gauche, déborde au-dessus de la première carte */
+        .deco-blue--flex {
+            display: block;
+            width: 145px;
+            height: 280px;
+            top: -40px;
+            left: -20px;
+            /* translateY d'abord : le déplacement parallaxe reste vertical malgré la rotation */
+            transform: translateY(var(--parallax-y, 0px)) rotate(-10deg);
+        }
+
+        /* teal haut-droite, derrière la dernière carte */
+        .deco-teal--flex {
+            display: block;
+            width: 170px;
+            height: 250px;
+            top: -30px;
+            right: -15px;
+            transform: translateY(var(--parallax-y, 0px)) rotate(5deg);
+        }
+
+        /* ── Section « L'histoire » ── */
+        /* bleu le long du bord gauche de la photo, dépasse en haut et à gauche ;
+           le reste est masqué par la photo (z-index: -1) */
+        .deco-blue--ceo {
+            display: block;
+            width: 145px;
+            height: 350px;
+            bottom: -45px;
+            right: -22px;
+            transform: translateY(var(--parallax-y, 0px)) rotate(3deg);
+        }
+
+        /* petit teal qui dépasse sous le coin bas-gauche de la photo */
+        .deco-teal--ceo {
+            display: block;
+            width: 140px;
+            height: 86%;
+            top: -22px;
+            left: -5px;
+            transform: translateY(var(--parallax-y, 0px)) rotate(-8deg);
+        }
+
+        /* teal accroché au coin bas-droit de la carte « L'innovation » */
+        .deco-teal--values {
+            display: block;
+            width: 140px;
+            height: 210px;
+            bottom: -50px;
+            right: -45px;
+            transform: translateY(var(--parallax-y, 0px)) rotate(12deg);
+        }
+
+        .deco-blue--values {
+            display: block;
+            width: 140px;
+            height: 210px;
+            top: -50px;
+            left: 10px;
+            transform: translateY(var(--parallax-y, 0px)) rotate(-12deg);
+        }
+    }
+
+    /* référentiel de la forme accrochée à la dernière carte des valeurs */
+    .li--deco {
+        position: relative;
+        isolation: isolate;
+    }
+
     .info-list .separator {
         display: none;
     }
@@ -738,7 +860,7 @@ const carouselCards = [
         align-items: center;
         gap: 2rem;
         width: 100%;
-        margin: 2rem auto;
+        margin: 2rem auto 10rem auto;
 
         .presentation__text {
             display: flex;
@@ -753,10 +875,19 @@ const carouselCards = [
         }
     }
 
-    .presentation__photo {
+    /* Wrapper de la photo : référentiel des formes décoratives,
+       qui restent accrochées à la photo sur tous les écrans. */
+    .presentation__media {
         flex-shrink: 0;
         width: 100%;
         max-width: 400px;
+        position: relative;
+        isolation: isolate;
+    }
+
+    .presentation__photo {
+        display: block;
+        width: 100%;
         height: auto;
     }
 
