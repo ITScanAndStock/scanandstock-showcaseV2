@@ -6,86 +6,93 @@ import localisationIcon from "../assets/icones/localisation.svg";
 import sendIcon from "../assets/icones/send.svg";
 ---
 
-<section>
-    <div class="reserve">
-        <h3>Vous souhaitez une demo du logiciel ?</h3>
-        <p>
-            Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes avec
-            l’un de nos experts :
-        </p>
-        <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})">
-            <img src={calendarIcon.src} alt="icône de calendrier"/>
-            Prendre rendez-vous
-        </button>
-    </div>
-    <div class="contact">
-        <h3>Nous contacter</h3>
-        <address>
-            <a href="tel:+0784078048" class="phone-number">
-                <img src={phoneIcon.src} alt=""/>
-                07 84 07 80 48
-            </a>
-            <a href="mailto:contact@scanandstock.fr">
-                <img src={mailIcon.src} alt=""/>
-                contact@scanandstock.fr
-            </a>
-            <a
-                    href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
-                    class="address-street"
-            >
-                <img src={localisationIcon.src} alt=""/>
-                360 Rue Marc Lefrancq, 59300 Valenciennes
-            </a>
-        </address>
-    </div>
-    <form action="https://formspree.io/f/xdavdlde" method="post" class="form">
-        <h3>Demande de contact</h3>
-        <ul class="form__list">
-            <li class="list__item firstname">
-                <label for="firstname">Prénom</label>
-                <input
-                        type="text"
-                        id="firstname"
-                        name="firstname"
-                        autocomplete="given-name"
-                        required
-                />
-            </li>
-            <li class="list__item lastname">
-                <label for="lastname">Nom</label>
-                <input
-                        type="text"
-                        id="lastname"
-                        name="lastname"
-                        autocomplete="family-name"
-                        required
-                />
-            </li>
-            <li class="list__item mail">
-                <label for="mail">Adresse mail</label>
-                <input
-                        type="email"
-                        id="mail"
-                        name="email"
-                        autocomplete="email"
-                        required
-                />
-            </li>
-            <li class="list__item phone">
-                <label for="phone">Téléphone</label>
-                <input type="tel" id="phone" name="phone" autocomplete="tel"/>
-            </li>
-            <li class="list__item content">
-                <label for="content">Message</label>
-                <textarea name="content" id="content" required></textarea>
-            </li>
-        </ul>
-        <button class="submit-btn" type="submit">
-            <img src={sendIcon.src} alt="icône d'avion en papier"/>
-            Envoyer
-        </button>
-    </form>
-</section>
+<div class="form-wrapper">
+    <!-- Formes décoratives ancrées à la carte du formulaire -->
+    <div class="deco deco-teal deco-teal--top-left" aria-hidden="true"></div>
+    <div class="deco deco-blue deco-blue--top" aria-hidden="true"></div>
+    <div class="deco deco-teal deco-teal--bottom-right" aria-hidden="true"></div>
+
+    <section>
+        <div class="reserve">
+            <h3>Vous souhaitez une demo du logiciel ?</h3>
+            <p>
+                Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes avec
+                l’un de nos experts :
+            </p>
+            <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})">
+                <img src={calendarIcon.src} alt="icône de calendrier"/>
+                Prendre rendez-vous
+            </button>
+        </div>
+        <div class="contact">
+            <h3>Nous contacter</h3>
+            <address>
+                <a href="tel:+0784078048" class="phone-number">
+                    <img src={phoneIcon.src} alt=""/>
+                    07 84 07 80 48
+                </a>
+                <a href="mailto:contact@scanandstock.fr">
+                    <img src={mailIcon.src} alt=""/>
+                    contact@scanandstock.fr
+                </a>
+                <a
+                        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
+                        class="address-street"
+                >
+                    <img src={localisationIcon.src} alt=""/>
+                    360 Rue Marc Lefrancq, 59300 Valenciennes
+                </a>
+            </address>
+        </div>
+        <form action="https://formspree.io/f/xdavdlde" method="post" class="form">
+            <h3>Demande de contact</h3>
+            <ul class="form__list">
+                <li class="list__item firstname">
+                    <label for="firstname">Prénom</label>
+                    <input
+                            type="text"
+                            id="firstname"
+                            name="firstname"
+                            autocomplete="given-name"
+                            required
+                    />
+                </li>
+                <li class="list__item lastname">
+                    <label for="lastname">Nom</label>
+                    <input
+                            type="text"
+                            id="lastname"
+                            name="lastname"
+                            autocomplete="family-name"
+                            required
+                    />
+                </li>
+                <li class="list__item mail">
+                    <label for="mail">Adresse mail</label>
+                    <input
+                            type="email"
+                            id="mail"
+                            name="email"
+                            autocomplete="email"
+                            required
+                    />
+                </li>
+                <li class="list__item phone">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" autocomplete="tel"/>
+                </li>
+                <li class="list__item content">
+                    <label for="content">Message</label>
+                    <textarea name="content" id="content" required></textarea>
+                </li>
+            </ul>
+            <button class="submit-btn" type="submit">
+                <img src={sendIcon.src} alt="icône d'avion en papier"/>
+                Envoyer
+            </button>
+        </form>
+    </section>
+</div>
 <style>
     h3 {
         font-size: 1.375rem;
@@ -118,14 +125,82 @@ import sendIcon from "../assets/icones/send.svg";
         color: #fff;
     }
 
+    /* Le wrapper porte le dimensionnement et sert de référentiel aux formes :
+       elles restent ancrées à la carte sur tous les écrans. */
+    .form-wrapper {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
     section {
         display: flex;
         flex-direction: column;
         background-color: #fff;
         border-radius: 12px;
         padding: 1rem;
-        max-width: 600px;
-        margin: 0 auto;
+        /* au-dessus des formes : la carte blanche masque la partie recouverte */
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ─── Formes décoratives (masquées en mobile) ────────── */
+    .deco {
+        display: none;
+        position: absolute;
+        border-radius: 14px;
+        filter: blur(2px);
+        pointer-events: none;
+    }
+
+    .deco-blue {
+        background: linear-gradient(
+                110deg,
+                rgba(2, 73, 101, 0.5) 9.7%,
+                rgba(65, 119, 140, 0.5) 104%
+        );
+    }
+
+    .deco-teal {
+        background: linear-gradient(
+                122deg,
+                rgba(18, 161, 154, 0.5) 9.7%,
+                rgba(18, 161, 154, 0.25) 104%
+        );
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    @media screen and (min-width: 768px) {
+        /* coin haut-gauche de la carte, rotation ~-5° */
+        .deco-teal--top-left {
+            display: block;
+            width: 208px;
+            aspect-ratio: 209 / 348;
+            top: -98px;
+            left: 19px;
+            transform: rotate(-4.97deg);
+        }
+
+        /* dépasse au-dessus de la carte, côté gauche */
+        .deco-blue--top {
+            display: block;
+            width: 180px;
+            aspect-ratio: 338 / 623;
+            top: -50px;
+            left: 18%;
+            transform: rotate(4.97deg);
+        }
+
+
+        /* coin bas-droit de la carte, sans rotation */
+        .deco-teal--bottom-right {
+            display: block;
+            width: 163px;
+            aspect-ratio: 214 / 368;
+            bottom: -35px;
+            right: -6px;
+            transform: rotate(8.97deg);
+        }
     }
 
     .reserve {
@@ -230,17 +305,19 @@ import sendIcon from "../assets/icones/send.svg";
     }
 
     @media screen and (min-width: 1240px) {
-        section {
+        .form-wrapper {
             width: 75%;
             max-width: none;
+            margin: 0 auto 3rem;
+        }
+
+        section {
             display: grid;
             padding: 2rem;
             grid-template-columns: 1.5fr 1fr;
             grid-template-areas:
         "form reserve"
         "form contact";
-            margin: 0 auto;
-            margin-bottom: 3rem;
         }
 
         .form {

@@ -101,9 +101,10 @@ const imageCarousel = [
             </p>
 
             <div class="parallax-container">
-                <div class="deco deco-white deco-white--a" aria-hidden="true" data-parallax-speed="0.12"></div>
-                <div class="deco deco-white deco-white--b" aria-hidden="true" data-parallax-speed="-0.08"></div>
-                <div class="deco deco-white deco-white--c" aria-hidden="true" data-parallax-speed="0.16"></div>
+                <!-- Carrés en flottement libre (animation CSS), indépendants du scroll -->
+                <div class="deco deco-white deco-white--a" aria-hidden="true"></div>
+                <div class="deco deco-white deco-white--b" aria-hidden="true"></div>
+                <div class="deco deco-white deco-white--c" aria-hidden="true"></div>
                 <Image class="stats" src={Stats} alt="statistique"/>
                 <Image class="order" src={Order} alt="commande" data-parallax-speed="0.18"/>
                 <Image class="stock" src={Stock} alt="stock" data-parallax-speed="-0.14"/>
@@ -199,13 +200,19 @@ const imageCarousel = [
         >Ils <span class="underline">utilisent Scan & Stock</span></GradientTitle
         >
         <div class="testimonials">
-            <!-- Formes décoratives derrière les vidéos témoignages -->
-            <div class="deco deco-teal deco-teal--testim-top" aria-hidden="true"></div>
-            <div class="deco deco-teal deco-teal--testim-left" aria-hidden="true"></div>
-            <div class="deco deco-blue deco-blue--testim-right" aria-hidden="true"></div>
             {
-                testimonials.map((testimonial) => (
+                testimonials.map((testimonial, index) => (
                         <figure class="testimonial-card">
+                            {/* Formes décoratives ancrées à la 1re et à la dernière vidéo */}
+                            {index === 0 && (
+                                    <div class="deco deco-teal deco-teal--testim-left" aria-hidden="true"></div>
+                            )}
+                            {index === testimonials.length - 1 && (
+                                    <>
+                                        <div class="deco deco-teal deco-teal--testim-top" aria-hidden="true"></div>
+                                        <div class="deco deco-blue deco-blue--testim-right" aria-hidden="true"></div>
+                                    </>
+                            )}
                             <video
                                     class="testimonial-video"
                                     src={testimonial.src}
@@ -223,15 +230,8 @@ const imageCarousel = [
                 ))
             }
         </div>
-        <div class="contact-zone">
-            <!-- Formes décoratives derrière le formulaire de contact -->
-            <div class="deco deco-teal deco-teal--contact-top" aria-hidden="true"></div>
-            <div class="deco deco-blue deco-blue--contact-left" aria-hidden="true"></div>
-            <div class="deco deco-teal deco-teal--contact-right" aria-hidden="true"></div>
-
-            <GradientTitle> Nous contacter</GradientTitle>
-            <ContactForm/>
-        </div>
+        <GradientTitle> Nous contacter</GradientTitle>
+        <ContactForm/>
     </MainBox>
 </BaseLayout>
 
@@ -312,32 +312,90 @@ const imageCarousel = [
         background: rgba(255, 255, 255, 0.07);
     }
 
-    /* haut-droite, ~140×138 */
+    /* Flottement libre : chaque carré voyage à travers toute la hero box
+       (trajets en vw → adaptés à la largeur d'écran) avec une rotation
+       complète par cycle. Boucles fermées (100% = 0%) pour un mouvement
+       continu sans à-coup. */
+    @keyframes deco-roam-a {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(-30vw, 8vw) rotate(110deg);
+        }
+        55% {
+            transform: translate(-56vw, 14vw) rotate(200deg);
+        }
+        80% {
+            transform: translate(-22vw, 17vw) rotate(290deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg);
+        }
+    }
+
+    @keyframes deco-roam-b {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(26vw, -7vw) rotate(-100deg);
+        }
+        55% {
+            transform: translate(50vw, 5vw) rotate(-190deg);
+        }
+        80% {
+            transform: translate(18vw, -11vw) rotate(-280deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(-360deg);
+        }
+    }
+
+    @keyframes deco-roam-c {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(-34vw, -9vw) rotate(95deg);
+        }
+        55% {
+            transform: translate(-58vw, -3vw) rotate(190deg);
+        }
+        80% {
+            transform: translate(-20vw, -13vw) rotate(285deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg);
+        }
+    }
+
+    /* haut-droite, ~140×138 — traverse vers la gauche et le bas */
     .deco-white--a {
         width: clamp(90px, 8vw, 140px);
         height: clamp(88px, 8vw, 138px);
         top: 5%;
         right: 8%;
-        transform: translateY(var(--parallax-y, 0px));
+        animation: deco-roam-a 22s ease-in-out infinite;
     }
 
-    /* milieu-gauche, ~149×145 */
+    /* milieu-gauche, ~149×145 — traverse vers la droite */
     .deco-white--b {
         width: clamp(90px, 8.6vw, 149px);
         height: clamp(88px, 8.4vw, 145px);
         top: 40%;
         left: 8%;
-        transform: translateY(var(--parallax-y, 0px));
+        animation: deco-roam-b 28s ease-in-out -10s infinite;
     }
 
-    /* bas-droite, ~129×125, légèrement plus opaque */
+    /* bas-droite, ~129×125, légèrement plus opaque — traverse vers la gauche et le haut */
     .deco-white--c {
         background: rgba(255, 255, 255, 0.11);
         width: clamp(80px, 7.5vw, 129px);
         height: clamp(78px, 7.2vw, 125px);
         bottom: 5%;
         right: 10%;
-        transform: translateY(var(--parallax-y, 0px));
+        animation: deco-roam-c 34s ease-in-out -20s infinite;
     }
 
     .order,
@@ -425,96 +483,48 @@ const imageCarousel = [
     .testimonials {
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 40px;
         flex-wrap: wrap;
         position: relative;
         margin: 2rem 0;
     }
 
-    /* ─── Formes décoratives témoignages + contact ────────── */
-    .contact-zone {
-        position: relative;
-    }
-
-    /* Le titre et le formulaire passent au-dessus des formes */
-    .contact-zone > :global(h2),
-    .contact-zone > :global(section) {
-        position: relative;
-        z-index: 1;
-    }
-
-    /* Masquées en mobile, comme les autres zones décorées.
-       Ces 6 formes sont statiques (pas de parallaxe). */
+    /* ─── Formes ancrées aux cartes vidéo (tous écrans) ──────
+       Positionnées DANS la 1re et la dernière carte : elles suivent
+       les vidéos sur tous les devices. z-index: -1 = derrière la
+       vidéo, dans le contexte d'empilement de la carte (z-index: 1). */
     .deco-teal--testim-top,
     .deco-teal--testim-left,
-    .deco-blue--testim-right,
-    .deco-teal--contact-top,
-    .deco-blue--contact-left,
-    .deco-teal--contact-right {
-        display: none;
+    .deco-blue--testim-right {
+        z-index: -1;
         will-change: auto;
     }
 
-    /* La rangée de vidéos fait 1120px (3×360 + 2×20), centrée :
-       les formes se calent sur ses bords via calc(50% - …),
-       avec max() pour rester dans la zone sur les écrans étroits. */
-    @media screen and (min-width: 768px) {
-        /* coin haut-droit de la dernière vidéo (droite) */
-        .deco-teal--testim-top {
-            display: block;
-            width: clamp(60px, 15%, 210px);
-            aspect-ratio: 209 / 348;
-            top: -26px;
-            right: max(-12px, calc(50% - 600px));
-            transform: rotate(-4.97deg);
-        }
+    /* coin haut-droit de la dernière vidéo */
+    .deco-teal--testim-top {
+        width: 200px;
+        aspect-ratio: 209 / 348;
+        top: -43px;
+        right: 19px;
+        transform: rotate(-4.97deg);
+    }
 
-        /* coin haut-gauche de la 1re vidéo (gauche) */
-        .deco-teal--testim-left {
-            display: block;
-            width: clamp(60px, 7.5%, 105px);
-            aspect-ratio: 184 / 347;
-            top: -25px;
-            left: max(-12px, calc(50% - 600px));
-            transform: rotate(-11deg);
-        }
+    /* coin haut-gauche de la 1re vidéo */
+    .deco-teal--testim-left {
+        width: 105px;
+        aspect-ratio: 184 / 347;
+        top: 90px;
+        left: -23px;
+        transform: rotate(-11deg);
+    }
 
-        /* coin bas-droit de la dernière vidéo (droite) */
-        .deco-blue--testim-right {
-            display: block;
-            width: clamp(70px, 8.5%, 130px);
-            aspect-ratio: 261 / 481;
-            bottom: -25px;
-            right: max(-15px, calc(50% - 610px));
-        }
-
-        /* haut-gauche : rotation ~-5°, derrière le titre */
-        .deco-teal--contact-top {
-            display: block;
-            width: clamp(60px, 7%, 105px);
-            aspect-ratio: 209 / 348;
-            top: -20px;
-            left: 13%;
-            transform: rotate(-4.97deg);
-        }
-
-        /* gauche-centre : dépasse au-dessus du formulaire */
-        .deco-blue--contact-left {
-            display: block;
-            width: clamp(80px, 11%, 170px);
-            aspect-ratio: 338 / 623;
-            top: -30px;
-            left: 25%;
-        }
-
-        /* bas-droite : sans rotation, derrière les coordonnées */
-        .deco-teal--contact-right {
-            display: block;
-            width: clamp(55px, 7%, 108px);
-            aspect-ratio: 214 / 368;
-            bottom: -4%;
-            right: -1%;
-        }
+    /* coin bas-droit de la dernière vidéo */
+    .deco-blue--testim-right {
+        width: 160px;
+        aspect-ratio: 261 / 481;
+        top: -20px;
+        right: -35px;
+        transform: rotate(13deg);
     }
 
     .testimonial-card {
@@ -524,7 +534,8 @@ const imageCarousel = [
         width: 360px;
         margin: 0;
         border-radius: 35px;
-        overflow: hidden;
+        /* pas d'overflow: hidden : les formes décoratives ancrées à la carte
+           doivent pouvoir dépasser ; la vidéo porte son propre border-radius */
     }
 
     .testimonial-video {
@@ -610,6 +621,13 @@ const imageCarousel = [
         .warning,
         .compare {
             will-change: auto;
+        }
+
+        /* stoppe le flottement libre des carrés du hero */
+        .deco-white--a,
+        .deco-white--b,
+        .deco-white--c {
+            animation: none;
         }
     }
 
