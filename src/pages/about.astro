@@ -95,6 +95,11 @@ const carouselCards = [
     <MainBox>
         <HeroBox>
             <div class="hero">
+                <!-- Carrés blancs en flottement libre, comme sur la page d'accueil -->
+                <div class="deco deco-white deco-white--a" aria-hidden="true"></div>
+                <div class="deco deco-white deco-white--b" aria-hidden="true"></div>
+                <div class="deco deco-white deco-white--c" aria-hidden="true"></div>
+
                 <h1>Scan & Stock, le logiciel pour cabinets dentaires 100% en ligne</h1>
                 <p class="hero__testimonial">
                     Découvrez le témoignage du Dr Grégory CAMALEONTE.
@@ -150,7 +155,7 @@ const carouselCards = [
             <li>
                 <article class="info-article">
                     <Image src={Sas} alt="image" width={100} height={100}/>
-                    <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                    <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Connexion simple
                     </GradientTitle>
                     <p>
@@ -164,7 +169,7 @@ const carouselCards = [
             <li>
                 <article class="info-article">
                     <Image src={Security} alt="image" width={100} height={100}/>
-                    <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                    <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Sécurité des données
                     </GradientTitle>
                     <p>
@@ -178,7 +183,7 @@ const carouselCards = [
             <li>
                 <article class="info-article">
                     <Image src={Compatibility} alt="image" width={100} height={100}/>
-                    <GradientTitle as="h4" class:list={"gradient-subtitle"}>
+                    <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Compatibilité tablette
                     </GradientTitle>
                     <p>
@@ -428,6 +433,10 @@ const carouselCards = [
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        /* référentiel des carrés décoratifs ; isolate garde leur z-index: -1
+           au-dessus du dégradé de la HeroBox mais derrière le contenu */
+        position: relative;
+        isolation: isolate;
 
         h1 {
             font-size: 1.5rem;
@@ -445,6 +454,113 @@ const carouselCards = [
             border-radius: 25px;
             width: 100%;
             aspect-ratio: 16/9;
+        }
+    }
+
+    /* ─── Carrés décoratifs du hero (mêmes que la page d'accueil) ── */
+    .deco {
+        position: absolute;
+        z-index: -1;
+        border-radius: 14px;
+        filter: blur(2px);
+        pointer-events: none;
+        will-change: transform;
+    }
+
+    .deco-white {
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* Flottement libre : chaque carré voyage à travers toute la hero box
+       (trajets en vw → adaptés à la largeur d'écran) avec une rotation
+       complète par cycle. Boucles fermées (100% = 0%) pour un mouvement
+       continu sans à-coup. */
+    @keyframes deco-roam-a {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(-30vw, 8vw) rotate(110deg);
+        }
+        55% {
+            transform: translate(-56vw, 14vw) rotate(200deg);
+        }
+        80% {
+            transform: translate(-22vw, 17vw) rotate(290deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg);
+        }
+    }
+
+    @keyframes deco-roam-b {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(26vw, -7vw) rotate(-100deg);
+        }
+        55% {
+            transform: translate(50vw, 5vw) rotate(-190deg);
+        }
+        80% {
+            transform: translate(18vw, -11vw) rotate(-280deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(-360deg);
+        }
+    }
+
+    @keyframes deco-roam-c {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        30% {
+            transform: translate(-34vw, -9vw) rotate(95deg);
+        }
+        55% {
+            transform: translate(-58vw, -3vw) rotate(190deg);
+        }
+        80% {
+            transform: translate(-20vw, -13vw) rotate(285deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg);
+        }
+    }
+
+    /* haut-droite — traverse vers la gauche et le bas */
+    .deco-white--a {
+        width: clamp(90px, 8vw, 140px);
+        height: clamp(88px, 8vw, 138px);
+        top: 5%;
+        right: 8%;
+        animation: deco-roam-a 22s ease-in-out infinite;
+    }
+
+    /* milieu-gauche — traverse vers la droite */
+    .deco-white--b {
+        width: clamp(90px, 8.6vw, 149px);
+        height: clamp(88px, 8.4vw, 145px);
+        top: 40%;
+        left: 8%;
+        animation: deco-roam-b 28s ease-in-out -10s infinite;
+    }
+
+    /* bas-droite, légèrement plus opaque — traverse vers la gauche et le haut */
+    .deco-white--c {
+        background: rgba(255, 255, 255, 0.11);
+        width: clamp(80px, 7.5vw, 129px);
+        height: clamp(78px, 7.2vw, 125px);
+        bottom: 5%;
+        right: 10%;
+        animation: deco-roam-c 34s ease-in-out -20s infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .deco {
+            will-change: auto;
+            animation: none;
         }
     }
 
