@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
 import sitemap from '@astrojs/sitemap';
 
@@ -15,6 +15,18 @@ export default defineConfig({
     : "https://www.scanandstock.fr",
   base: isGitHubPages ? "/scanandstock-showcaseV2/" : undefined,
   integrations: [sitemap()],
+  // Montserrat auto-hébergée via la Fonts API (RGPD : plus d'appel au CDN
+  // Google Fonts) ; seules les graisses réellement utilisées sont incluses.
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Montserrat",
+      cssVariable: "--font-montserrat",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin"],
+    },
+  ],
   markdown: {
     // Retire le <p> qui enveloppe les images seules dans le Markdown des articles
     rehypePlugins: [rehypeUnwrapImages],

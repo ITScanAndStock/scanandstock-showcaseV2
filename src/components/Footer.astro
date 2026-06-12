@@ -113,8 +113,19 @@ const legalNotices = `${base}/legal-notices`;
         <a href={`${base}/cgv`}>CGV</a>
         <span aria-hidden="true"> | </span>
         <a href={`${base}/cgu`}>CGU</a>
+        <span aria-hidden="true"> | </span>
+        <button type="button" class="cookie-settings" id="cookie-settings">
+            Gérer les cookies
+        </button>
     </div>
 </footer>
+
+<script>
+    // Rouvre la bannière de consentement (CookieConsent.astro)
+    document.getElementById("cookie-settings")?.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("cookie-consent:open"));
+    });
+</script>
 
 <style>
     footer {
@@ -255,6 +266,24 @@ const legalNotices = `${base}/legal-notices`;
 
     .footer-bottom span {
         color: #ffffff;
+    }
+
+    /* Bouton « Gérer les cookies » : même apparence que les liens voisins */
+    .cookie-settings {
+        color: #ffffff;
+        font-size: 16px;
+        transition: color 150ms ease;
+    }
+
+    .cookie-settings:hover {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: underline;
+    }
+
+    .cookie-settings:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+        border-radius: 2px;
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -2,485 +2,486 @@
 import ReserveButton from "./ReserveButton.astro";
 
 interface Props {
-  label?: string;
-  withReserveBtn?: boolean;
-  variant?: "card" | "image" | "testimonial";
+    label?: string;
+    withReserveBtn?: boolean;
+    variant?: "card" | "image" | "testimonial";
 }
 
 const {
-  label = "Carousel de présentation",
-  withReserveBtn = false,
-  variant = "card",
+    label = "Carousel de présentation",
+    withReserveBtn = false,
+    variant = "card",
 } = Astro.props;
 ---
 
 <section
-  class:list={["carousel-section", `carousel-section--${variant}`]}
-  aria-label={label}
+        class:list={["carousel-section", `carousel-section--${variant}`]}
+        aria-label={label}
 >
-  <div class="carousel-container" role="group" aria-roledescription="carrousel">
-    <ol class="carousel-track" aria-live="polite">
-      <slot />
-    </ol>
-  </div>
-
-  <div class="carousel-controls">
-    {
-      withReserveBtn && (
-        <div class="carousel-reserve">
-          <ReserveButton class="dark" />
-        </div>
-      )
-    }
-
-    <div class="carousel-nav">
-      <button
-        class="carousel-btn carousel-btn--prev"
-        aria-label="Diapositive précédente"
-        type="button"
-      >
-        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-      </button>
-      <button
-        class="carousel-btn carousel-btn--next"
-        aria-label="Diapositive suivante"
-        type="button"
-      >
-        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-      </button>
+    <div class="carousel-container" role="group" aria-roledescription="carrousel">
+        <ol class="carousel-track" aria-live="polite">
+            <slot/>
+        </ol>
     </div>
-  </div>
+
+    <div class="carousel-controls">
+        {
+            withReserveBtn && (
+                        <div class="carousel-reserve">
+                            <ReserveButton class="dark"/>
+                        </div>
+            )
+        }
+
+        <div class="carousel-nav">
+            <button
+                    class="carousel-btn carousel-btn--prev"
+                    aria-label="Diapositive précédente"
+                    type="button"
+            >
+                <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button
+                    class="carousel-btn carousel-btn--next"
+                    aria-label="Diapositive suivante"
+                    type="button"
+            >
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 </section>
 
 <style>
-  .carousel-section {
-    width: 100%;
-    margin: 2rem 0;
-  }
-
-  .carousel-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    cursor: grab;
-  }
-
-  .carousel-container.dragging {
-    cursor: grabbing;
-  }
-
-  /* Dégradé sur le bord droit — révèle le début de la card suivante */
-  .carousel-container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 80px;
-    height: 100%;
-    background: linear-gradient(to right, transparent, #f0f6fe);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .carousel-track {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    transition: transform 0.4s ease;
-    user-select: none;
-  }
-
-  .carousel-track img {
-    pointer-events: none;
-  }
-
-  /* ─── Variant card (défaut) ───────────────────────────── */
-  :global(.carousel-section--card .carousel-slide) {
-    flex: 0 0 90%;
-    width: 90%;
-    padding: 1rem;
-  }
-
-  /* ─── Variant image — largeur naturelle ──────────────── */
-  :global(.carousel-section--image .carousel-slide) {
-    flex: 0 0 auto;
-    width: auto;
-    padding: 0 0.5rem;
-  }
-
-  /* ─── Variant testimonial — multi-cards responsive ────── */
-  :global(.carousel-section--testimonial .carousel-slide) {
-    position: relative;
-    flex: 0 0 85%;
-    width: 85%;
-    padding: 0 0.75rem;
-  }
-
-  @media screen and (min-width: 768px) {
-    :global(.carousel-section--testimonial .carousel-slide) {
-      flex: 0 0 50%;
-      width: 50%;
+    .carousel-section {
+        width: 100%;
+        margin: 2rem 0;
     }
-  }
 
-  @media screen and (min-width: 1024px) {
-    :global(.carousel-section--testimonial .carousel-slide) {
-      flex: 0 0 33.333%;
-      width: 33.333%;
+    .carousel-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        cursor: grab;
     }
-  }
 
-  /* Séparateur pointillé vertical dans la gouttière droite */
-  @media screen and (min-width: 768px) {
-    :global(.carousel-section--testimonial .carousel-slide::after) {
-      content: "";
-      position: absolute;
-      top: 1.5rem;
-      bottom: 1.5rem;
-      right: 0;
-      border-right: 2px dashed rgba(154, 180, 188, 0.8);
-      pointer-events: none;
+    .carousel-container.dragging {
+        cursor: grabbing;
     }
-  }
 
-  /* ─── Zone sous les cards ─────────────────────────────── */
-  .carousel-controls {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    margin-top: 2rem;
-    min-height: 52px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    .carousel-controls {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0 1rem;
-      margin-top: 2rem;
-      min-height: 52px;
+    /* Dégradé sur le bord droit — révèle le début de la card suivante */
+    .carousel-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 80px;
+        height: 100%;
+        background: linear-gradient(to right, transparent, #f0f6fe);
+        pointer-events: none;
+        z-index: 2;
     }
-  }
 
-  /* Centré par rapport à la largeur totale de la section */
-  .carousel-reserve {
-    margin-top: 2rem;
-  }
-
-  @media screen and (min-width: 1024px) {
-    .carousel-reserve {
-      position: absolute;
-      right: 50%;
-      transform: translateX(50%);
-      margin-top: unset;
-    }
-  }
-
-  /* ─── Pilule de navigation ────────────────────────────── */
-  .carousel-nav {
-    background: #476e7e;
-    border-radius: 75px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    padding: 0 4px;
-    gap: 0;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-  @media screen and (min-width: 1024px) {
-    .carousel-nav {
-      gap: 0.5rem;
-      margin-right: unset;
-    }
-  }
-
-  .carousel-btn {
-    background: transparent;
-    border: none;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: white;
-    font-size: 1rem;
-    transition: opacity 0.15s ease;
-    border-radius: 75px;
-  }
-
-  .carousel-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  .carousel-btn:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px #476e7e,
-      0 0 0 4px white;
-  }
-
-  @media screen and (min-width: 1024px) {
-    .carousel-btn {
-      width: 52px;
-      height: 52px;
-      font-size: 1.1rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
     .carousel-track {
-      transition: none;
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        transition: transform 0.4s ease;
+        user-select: none;
     }
-  }
 
-  @media (forced-colors: active) {
+    .carousel-track img {
+        pointer-events: none;
+    }
+
+    /* ─── Variant card (défaut) ───────────────────────────── */
+    :global(.carousel-section--card .carousel-slide) {
+        flex: 0 0 90%;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    /* ─── Variant image — largeur naturelle ──────────────── */
+    :global(.carousel-section--image .carousel-slide) {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0 0.5rem;
+    }
+
+    /* ─── Variant testimonial — multi-cards responsive ────── */
+    :global(.carousel-section--testimonial .carousel-slide) {
+        position: relative;
+        flex: 0 0 85%;
+        width: 85%;
+        padding: 0 0.75rem;
+    }
+
+    @media screen and (min-width: 768px) {
+        :global(.carousel-section--testimonial .carousel-slide) {
+            flex: 0 0 50%;
+            width: 50%;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        :global(.carousel-section--testimonial .carousel-slide) {
+            flex: 0 0 33.333%;
+            width: 33.333%;
+        }
+    }
+
+    /* Séparateur pointillé vertical dans la gouttière droite */
+    @media screen and (min-width: 768px) {
+        :global(.carousel-section--testimonial .carousel-slide::after) {
+            content: "";
+            position: absolute;
+            top: 1.5rem;
+            bottom: 1.5rem;
+            right: 0;
+            border-right: 2px dashed rgba(154, 180, 188, 0.8);
+            pointer-events: none;
+        }
+    }
+
+    /* ─── Zone sous les cards ─────────────────────────────── */
+    .carousel-controls {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-top: 2rem;
+        min-height: 52px;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .carousel-controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 0 1rem;
+            margin-top: 2rem;
+            min-height: 52px;
+        }
+    }
+
+    /* Centré par rapport à la largeur totale de la section */
+    .carousel-reserve {
+        margin-top: 2rem;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .carousel-reserve {
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            margin-top: unset;
+        }
+    }
+
+    /* ─── Pilule de navigation ────────────────────────────── */
     .carousel-nav {
-      background: ButtonFace;
-      border: 2px solid ButtonText;
+        background: #476e7e;
+        border-radius: 75px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        gap: 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .carousel-nav {
+            gap: 0.5rem;
+            margin-right: unset;
+        }
     }
 
     .carousel-btn {
-      color: ButtonText;
+        background: transparent;
+        border: none;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        font-size: 1rem;
+        transition: opacity 0.15s ease;
+        border-radius: 75px;
     }
 
-    .carousel-btn:hover,
-    .carousel-btn:focus-visible {
-      background: Highlight;
-      color: HighlightText;
+    .carousel-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
     }
 
     .carousel-btn:focus-visible {
-      box-shadow:
-        0 0 0 2px ButtonFace,
-        0 0 0 4px Highlight;
+        outline: none;
+        box-shadow: 0 0 0 2px #476e7e,
+        0 0 0 4px white;
     }
-  }
+
+    @media screen and (min-width: 1024px) {
+        .carousel-btn {
+            width: 52px;
+            height: 52px;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .carousel-track {
+            transition: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .carousel-nav {
+            background: ButtonFace;
+            border: 2px solid ButtonText;
+        }
+
+        .carousel-btn {
+            color: ButtonText;
+        }
+
+        .carousel-btn:hover,
+        .carousel-btn:focus-visible {
+            background: Highlight;
+            color: HighlightText;
+        }
+
+        .carousel-btn:focus-visible {
+            box-shadow: 0 0 0 2px ButtonFace,
+            0 0 0 4px Highlight;
+        }
+    }
 </style>
 
-<script is:inline>
-  (function () {
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+<script>
+    (function () {
+        const reduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
 
-    document.querySelectorAll(".carousel-section").forEach(function (section) {
-      const track = section.querySelector(".carousel-track");
-      const btnPrev = section.querySelector(".carousel-btn--prev");
-      const btnNext = section.querySelector(".carousel-btn--next");
+        document.querySelectorAll(".carousel-section").forEach(function (section) {
+            const track = section.querySelector(".carousel-track");
+            const btnPrev = section.querySelector(".carousel-btn--prev");
+            const btnNext = section.querySelector(".carousel-btn--next");
 
-      if (!track || !btnPrev || !btnNext) return;
+            if (!track || !btnPrev || !btnNext) return;
 
-      const slides = Array.from(section.querySelectorAll(".carousel-slide"));
-      const total = slides.length;
-      if (total === 0) return;
+            const slides = Array.from(section.querySelectorAll(".carousel-slide"));
+            const total = slides.length;
+            if (total === 0) return;
 
-      // Clone toutes les slides à la fin pour remplir la zone visible et
-      // éviter l'espace blanc en fin de course (notamment variant "image" où
-      // plusieurs slides à largeur naturelle sont visibles en même temps).
-      // Le bouclage se fait à currentIndex === total : le 1er clone est aligné
-      // avec la vraie slide 0, donc le retour reste invisible.
-      slides.forEach(function (slide) {
-        const clone = slide.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        clone.removeAttribute("aria-label");
-        clone.dataset.clone = "true";
-        track.appendChild(clone);
-      });
-
-      let currentIndex = 0;
-      let autoplayTimer = null;
-      let smoothScrollOffset = 0;
-      let smoothScrollAnimationId = null;
-      let isHovering = false;
-      const SCROLL_SPEED = 0.8;
-
-      // Initialiser les attributs ARIA sur les vraies slides
-      slides.forEach(function (slide, i) {
-        slide.setAttribute("role", "group");
-        slide.setAttribute("aria-roledescription", "diapositive");
-        slide.setAttribute("aria-label", i + 1 + " sur " + total);
-        slide.setAttribute("aria-hidden", i !== 0 ? "true" : "false");
-      });
-
-      let isAnimating = false;
-
-      function startSmoothScroll() {
-        if (smoothScrollAnimationId !== null) return;
-        function scroll() {
-          if (isHovering || isMouseDown) {
-            smoothScrollAnimationId = requestAnimationFrame(scroll);
-            return;
-          }
-          smoothScrollOffset += SCROLL_SPEED;
-          const totalWidth = slides.reduce(function (sum, slide) {
-            return sum + slide.offsetWidth;
-          }, 0);
-          if (smoothScrollOffset >= totalWidth) {
-            smoothScrollOffset = 0;
-          }
-          track.style.transform = "translateX(-" + smoothScrollOffset + "px)";
-          smoothScrollAnimationId = requestAnimationFrame(scroll);
-        }
-        smoothScrollAnimationId = requestAnimationFrame(scroll);
-      }
-
-      function stopSmoothScroll() {
-        if (smoothScrollAnimationId !== null) {
-          cancelAnimationFrame(smoothScrollAnimationId);
-          smoothScrollAnimationId = null;
-        }
-      }
-
-      function goTo(n) {
-        if (isAnimating) return;
-        isAnimating = true;
-        stopSmoothScroll();
-        currentIndex = n;
-
-        // Recalcul offsetLeft à chaque appel — tient compte des images chargées après init
-        const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
-        const target = allSlides[n];
-        const offset = target ? target.offsetLeft : 0;
-        track.style.transform = "translateX(-" + offset + "px)";
-        smoothScrollOffset = offset;
-
-        // Mise à jour ARIA uniquement sur les vraies slides
-        const realIndex = ((n % total) + total) % total;
-        slides.forEach(function (slide, i) {
-          slide.setAttribute("aria-hidden", i !== realIndex ? "true" : "false");
-        });
-
-        // Fallback si transitionend ne se déclenche pas (reduced motion, transition: none)
-        if (reduced) isAnimating = false;
-      }
-
-      // Après la transition vers le clone, revenir silencieusement à la slide 0
-      track.addEventListener("transitionend", function () {
-        if (currentIndex === total) {
-          track.style.transition = "none";
-          currentIndex = 0;
-          track.style.transform = "translateX(0)";
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              track.style.transition = "transform 0.4s ease";
+            // Clone toutes les slides à la fin pour remplir la zone visible et
+            // éviter l'espace blanc en fin de course (notamment variant "image" où
+            // plusieurs slides à largeur naturelle sont visibles en même temps).
+            // Le bouclage se fait à currentIndex === total : le 1er clone est aligné
+            // avec la vraie slide 0, donc le retour reste invisible.
+            slides.forEach(function (slide) {
+                const clone = slide.cloneNode(true);
+                clone.setAttribute("aria-hidden", "true");
+                clone.removeAttribute("aria-label");
+                clone.dataset.clone = "true";
+                track.appendChild(clone);
             });
-          });
-        }
-        isAnimating = false;
-      });
 
-      function goNext() {
-        goTo(currentIndex + 1);
-      }
+            let currentIndex = 0;
+            let autoplayTimer = null;
+            let smoothScrollOffset = 0;
+            let smoothScrollAnimationId = null;
+            let isHovering = false;
+            const SCROLL_SPEED = 0.8;
 
-      function goPrev() {
-        goTo((((currentIndex - 1) % total) + total) % total);
-      }
+            // Initialiser les attributs ARIA sur les vraies slides
+            slides.forEach(function (slide, i) {
+                slide.setAttribute("role", "group");
+                slide.setAttribute("aria-roledescription", "diapositive");
+                slide.setAttribute("aria-label", i + 1 + " sur " + total);
+                slide.setAttribute("aria-hidden", i !== 0 ? "true" : "false");
+            });
 
-      btnNext.addEventListener("click", goNext);
-      btnPrev.addEventListener("click", goPrev);
+            let isAnimating = false;
 
-      function startAutoplay() {
-        if (reduced) return;
-        autoplayTimer = setInterval(goNext, 5000);
-      }
+            function startSmoothScroll() {
+                if (reduced) return;
+                if (smoothScrollAnimationId !== null) return;
 
-      function stopAutoplay() {
-        if (autoplayTimer !== null) {
-          clearInterval(autoplayTimer);
-          autoplayTimer = null;
-        }
-      }
+                function scroll() {
+                    if (isHovering || isMouseDown) {
+                        smoothScrollAnimationId = requestAnimationFrame(scroll);
+                        return;
+                    }
+                    smoothScrollOffset += SCROLL_SPEED;
+                    const totalWidth = slides.reduce(function (sum, slide) {
+                        return sum + slide.offsetWidth;
+                    }, 0);
+                    if (smoothScrollOffset >= totalWidth) {
+                        smoothScrollOffset = 0;
+                    }
+                    track.style.transform = "translateX(-" + smoothScrollOffset + "px)";
+                    smoothScrollAnimationId = requestAnimationFrame(scroll);
+                }
 
-      const container = section.querySelector(".carousel-container");
+                smoothScrollAnimationId = requestAnimationFrame(scroll);
+            }
 
-      container.addEventListener("mouseenter", function () {
-        isHovering = true;
-        stopAutoplay();
-        stopSmoothScroll();
-      });
-      container.addEventListener("mouseleave", function () {
-        isHovering = false;
-        startAutoplay();
-        startSmoothScroll();
-      });
-      container.addEventListener("focusin", stopAutoplay);
-      container.addEventListener("focusout", startAutoplay);
+            function stopSmoothScroll() {
+                if (smoothScrollAnimationId !== null) {
+                    cancelAnimationFrame(smoothScrollAnimationId);
+                    smoothScrollAnimationId = null;
+                }
+            }
 
-      let touchStartX = 0;
-      let mouseStartX = 0;
-      let isMouseDown = false;
-      let dragOffset = 0;
+            function goTo(n) {
+                if (isAnimating) return;
+                isAnimating = true;
+                stopSmoothScroll();
+                currentIndex = n;
 
-      container.addEventListener(
-        "touchstart",
-        function (e) {
-          touchStartX = e.changedTouches[0].clientX;
-          stopAutoplay();
-        },
-        { passive: true },
-      );
-      container.addEventListener(
-        "touchend",
-        function (e) {
-          const delta = e.changedTouches[0].clientX - touchStartX;
-          if (Math.abs(delta) > 50) {
-            delta < 0 ? goNext() : goPrev();
-          }
-          startAutoplay();
-        },
-        { passive: true },
-      );
+                // Recalcul offsetLeft à chaque appel — tient compte des images chargées après init
+                const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
+                const target = allSlides[n];
+                const offset = target ? target.offsetLeft : 0;
+                track.style.transform = "translateX(-" + offset + "px)";
+                smoothScrollOffset = offset;
 
-      container.addEventListener("dragstart", function (e) {
-        e.preventDefault();
-      });
+                // Mise à jour ARIA uniquement sur les vraies slides
+                const realIndex = ((n % total) + total) % total;
+                slides.forEach(function (slide, i) {
+                    slide.setAttribute("aria-hidden", i !== realIndex ? "true" : "false");
+                });
 
-      container.addEventListener("mousedown", function (e) {
-        if (e.button !== 0) return;
-        isMouseDown = true;
-        mouseStartX = e.clientX;
-        dragOffset = 0;
-        stopAutoplay();
-        stopSmoothScroll();
-        container.classList.add("dragging");
-        track.style.transition = "none";
-      });
+                // Fallback si transitionend ne se déclenche pas (reduced motion, transition: none)
+                if (reduced) isAnimating = false;
+            }
 
-      document.addEventListener("mousemove", function (e) {
-        if (!isMouseDown) return;
-        const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
-        const target = allSlides[currentIndex];
-        const baseOffset = target ? target.offsetLeft : 0;
-        dragOffset = e.clientX - mouseStartX;
-        track.style.transform = "translateX(-" + (baseOffset - dragOffset) + "px)";
-      });
+            // Après la transition vers le clone, revenir silencieusement à la slide 0
+            track.addEventListener("transitionend", function () {
+                if (currentIndex === total) {
+                    track.style.transition = "none";
+                    currentIndex = 0;
+                    track.style.transform = "translateX(0)";
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            track.style.transition = "transform 0.4s ease";
+                        });
+                    });
+                }
+                isAnimating = false;
+            });
 
-      document.addEventListener("mouseup", function () {
-        if (!isMouseDown) return;
-        isMouseDown = false;
-        container.classList.remove("dragging");
-        track.style.transition = "transform 0.4s ease";
+            function goNext() {
+                goTo(currentIndex + 1);
+            }
 
-        if (Math.abs(dragOffset) > 50) {
-          dragOffset < 0 ? goNext() : goPrev();
-        } else {
-          goTo(currentIndex);
-        }
-        if (!isHovering) {
-          startAutoplay();
-          startSmoothScroll();
-        }
-      });
+            function goPrev() {
+                goTo((((currentIndex - 1) % total) + total) % total);
+            }
 
-      goTo(0);
-      startAutoplay();
-      startSmoothScroll();
-    });
-  })();
+            btnNext.addEventListener("click", goNext);
+            btnPrev.addEventListener("click", goPrev);
+
+            function startAutoplay() {
+                if (reduced) return;
+                autoplayTimer = setInterval(goNext, 5000);
+            }
+
+            function stopAutoplay() {
+                if (autoplayTimer !== null) {
+                    clearInterval(autoplayTimer);
+                    autoplayTimer = null;
+                }
+            }
+
+            const container = section.querySelector(".carousel-container");
+
+            container.addEventListener("mouseenter", function () {
+                isHovering = true;
+                stopAutoplay();
+                stopSmoothScroll();
+            });
+            container.addEventListener("mouseleave", function () {
+                isHovering = false;
+                startAutoplay();
+                startSmoothScroll();
+            });
+            container.addEventListener("focusin", stopAutoplay);
+            container.addEventListener("focusout", startAutoplay);
+
+            let touchStartX = 0;
+            let mouseStartX = 0;
+            let isMouseDown = false;
+            let dragOffset = 0;
+
+            container.addEventListener(
+                "touchstart",
+                function (e) {
+                    touchStartX = e.changedTouches[0].clientX;
+                    stopAutoplay();
+                },
+                {passive: true},
+            );
+            container.addEventListener(
+                "touchend",
+                function (e) {
+                    const delta = e.changedTouches[0].clientX - touchStartX;
+                    if (Math.abs(delta) > 50) {
+                        delta < 0 ? goNext() : goPrev();
+                    }
+                    startAutoplay();
+                },
+                {passive: true},
+            );
+
+            container.addEventListener("dragstart", function (e) {
+                e.preventDefault();
+            });
+
+            container.addEventListener("mousedown", function (e) {
+                if (e.button !== 0) return;
+                isMouseDown = true;
+                mouseStartX = e.clientX;
+                dragOffset = 0;
+                stopAutoplay();
+                stopSmoothScroll();
+                container.classList.add("dragging");
+                track.style.transition = "none";
+            });
+
+            document.addEventListener("mousemove", function (e) {
+                if (!isMouseDown) return;
+                const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
+                const target = allSlides[currentIndex];
+                const baseOffset = target ? target.offsetLeft : 0;
+                dragOffset = e.clientX - mouseStartX;
+                track.style.transform = "translateX(-" + (baseOffset - dragOffset) + "px)";
+            });
+
+            document.addEventListener("mouseup", function () {
+                if (!isMouseDown) return;
+                isMouseDown = false;
+                container.classList.remove("dragging");
+                track.style.transition = "transform 0.4s ease";
+
+                if (Math.abs(dragOffset) > 50) {
+                    dragOffset < 0 ? goNext() : goPrev();
+                } else {
+                    goTo(currentIndex);
+                }
+                if (!isHovering) {
+                    startAutoplay();
+                    startSmoothScroll();
+                }
+            });
+
+            goTo(0);
+            startAutoplay();
+            startSmoothScroll();
+        });
+    })();
 </script>

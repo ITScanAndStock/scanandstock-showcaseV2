@@ -1,7 +1,9 @@
 @import "./reset.css";
 
 body {
-    font-family: "Montserrat", sans-serif;
+    /* Variable fournie par la Fonts API (astro.config.mjs),
+       avec fallbacks optimisés intégrés. */
+    font-family: var(--font-montserrat);
     max-width: 1580px;
     padding: 0 5px;
     margin: auto;

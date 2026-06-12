@@ -3,7 +3,9 @@
 import "../styles/global.css";
 
 /** Import Components */
+import { Font } from "astro:assets";
 import ThirdPartyScripts from "../components/ThirdPartyScripts.astro";
+import CookieConsent from "../components/CookieConsent.astro";
 import NavigationBar from "../components/NavigationBar.astro";
 import Footer from "../components/Footer.astro";
 import logo from "../assets/logo.svg";
@@ -28,9 +30,11 @@ const {
 const ogImageSrc = typeof image === "string" ? image : (image?.src ?? logo.src);
 const ogImageURL = new URL(ogImageSrc, Astro.site).href;
 
-// L'environnement de staging est marqué noindex pour éviter
-// l'indexation et le contenu dupliqué (même base Notion que la prod).
+// Le staging et la démo GitHub Pages sont marqués noindex pour éviter
+// l'indexation et le contenu dupliqué avec la prod (même base Notion).
 const isStaging = import.meta.env.SYNC_TARGET === "staging";
+const isDemo = import.meta.env.GITHUB_PAGES === "true";
+const noindex = isStaging || isDemo;
 ---
 
 <html lang="fr">
@@ -42,7 +46,7 @@ const isStaging = import.meta.env.SYNC_TARGET === "staging";
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    {isStaging && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
@@ -60,13 +64,8 @@ const isStaging = import.meta.env.SYNC_TARGET === "staging";
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- FONT FAMILY Montserrat -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Montserrat auto-hébergée (Fonts API Astro, voir astro.config.mjs) -->
+    <Font cssVariable="--font-montserrat" preload />
     <!-- Calendly badge widget -->
     <link
       href="https://assets.calendly.com/assets/external/widget.css"
@@ -86,5 +85,6 @@ const isStaging = import.meta.env.SYNC_TARGET === "staging";
     <slot />
     <ThirdPartyScripts />
     <Footer />
+    <CookieConsent />
   </body>
 </html>

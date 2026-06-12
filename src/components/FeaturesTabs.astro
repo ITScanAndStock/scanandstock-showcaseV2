@@ -55,15 +55,12 @@ const videos = [
             <video
               class:list={["video-item", { active: i === 0 }]}
               data-index={i}
-              controls="fasle"
+              data-src={v.src}
               width="100%"
               playsinline
-              preload="auto"
-              autoplay="true"
+              preload="none"
               muted
-            >
-              <source src={v.src} type="video/mp4" />
-            </video>
+            ></video>
           ))
         }
       </div>
@@ -178,6 +175,14 @@ const videos = [
     ".features-tabs .video-item",
   );
 
+  // Lazy loading : les vidéos n'ont pas de src au chargement (data-src).
+  // On ne télécharge une vidéo qu'au moment où elle doit être lue.
+  function loadVideo(video: HTMLVideoElement) {
+    if (!video.src && video.dataset.src) {
+      video.src = video.dataset.src;
+    }
+  }
+
   function activateTab(index: number) {
     tabs.forEach((t) => {
       t.classList.remove("active");
@@ -189,7 +194,8 @@ const videos = [
     videoEls.forEach((v, i) => {
       if (i === index) {
         v.classList.add("active");
-        v.play();
+        loadVideo(v);
+        v.play().catch(() => {});
       } else {
         v.classList.remove("active");
         v.pause();
@@ -206,4 +212,24 @@ const videos = [
       activateTab((i + 1) % videoEls.length);
     });
   });
+
+  // La 1re vidéo n'est chargée et lancée que lorsque la section
+  // devient visible (même pattern que VideoPresentation).
+  const section = document.querySelector(".features-tabs");
+  const firstVideo = videoEls[0];
+  if (section && firstVideo) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadVideo(firstVideo);
+            firstVideo.play().catch(() => {});
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(section);
+  }
 </script>
