@@ -676,14 +676,11 @@ const imageCarousel = [
         const play = () => {
             // Masque le nom/profession pendant la lecture.
             card?.classList.add("is-playing");
-            // Tente toujours avec son d'abord (l'utilisateur a peut-être interagi depuis).
-            video.muted = false;
-            video.play().catch(() => {
-                // Le navigateur bloque la lecture avec son sans geste : repli en muet.
-                video.muted = true;
-                video.play().catch(() => {
-                });
-            });
+            // Sur iOS, play() doit être appelé en premier dans le geste utilisateur,
+            // puis on désactive le muet après — l'inverse bloque la lecture.
+            video.play().then(() => {
+                video.muted = false;
+            }).catch(() => {});
         };
 
         const stop = () => {
@@ -696,8 +693,19 @@ const imageCarousel = [
         video.addEventListener("mouseenter", play);
         video.addEventListener("mouseleave", stop);
 
-        // Support tactile : pas de hover, on bascule lecture/pause au tap.
+        // Click desktop : bascule lecture/pause.
         video.addEventListener("click", () => {
+            if (video.paused) {
+                play();
+            } else {
+                stop();
+            }
+        });
+
+        // Touch mobile : iOS intercepte les taps sur <video> sans controls.
+        // On écoute sur la card parente pour contourner ce comportement.
+        card?.addEventListener("touchend", (e) => {
+            e.preventDefault(); // empêche le click ghost après touchend
             if (video.paused) {
                 play();
             } else {
