@@ -676,8 +676,10 @@ const imageCarousel = [
         const play = () => {
             // Masque le nom/profession pendant la lecture.
             card?.classList.add("is-playing");
+            // Tente toujours avec son d'abord (l'utilisateur a peut-être interagi depuis).
+            video.muted = false;
             video.play().catch(() => {
-                // Le navigateur bloque la lecture avec son sans geste : nous replions en muet.
+                // Le navigateur bloque la lecture avec son sans geste : repli en muet.
                 video.muted = true;
                 video.play().catch(() => {
                 });
