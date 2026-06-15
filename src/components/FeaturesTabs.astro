@@ -60,7 +60,7 @@ const videos = [
               playsinline
               preload="none"
               muted
-            ></video>
+            />
           ))
         }
       </div>
@@ -190,6 +190,10 @@ const videos = [
     });
     tabs[index].classList.add("active");
     tabs[index].setAttribute("aria-selected", "true");
+    tabs[index].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
 
     videoEls.forEach((v, i) => {
       if (i === index) {
