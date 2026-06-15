@@ -107,29 +107,19 @@ const imageCarousel = [
         <div class="deco deco-white deco-white--a" aria-hidden="true"></div>
         <div class="deco deco-white deco-white--b" aria-hidden="true"></div>
         <div class="deco deco-white deco-white--c" aria-hidden="true"></div>
-        <Image class="stats" src={Stats} alt="statistique" />
-        <Image
-          class="order"
-          src={Order}
-          alt="commande"
-          data-parallax-speed="0.18"
-        />
-        <Image
-          class="stock"
-          src={Stock}
-          alt="stock"
-          data-parallax-speed="-0.14"
-        />
+        <Image class="stats" src={Stats} alt="" />
+        <Image class="order" src={Order} alt="" data-parallax-speed="0.18" />
+        <Image class="stock" src={Stock} alt="" data-parallax-speed="-0.14" />
         <Image
           class="warning"
           src={Warning}
-          alt="stock"
+          alt=""
           data-parallax-speed="0.24"
         />
         <Image
           class="compare"
           src={Compare}
-          alt="stock"
+          alt=""
           data-parallax-speed="-0.1"
         />
       </div>
@@ -139,9 +129,8 @@ const imageCarousel = [
     <ClientsCarousel />
     <VideoPresentation />
 
-    <GradientTitle as="h3">
-      Une gestion des
-      <span class="underline"> stocks et des commandes optimale </span>
+    <GradientTitle as="h2">
+      Découvrez <span class="underline">Scan & Stock en vidéo</span>
     </GradientTitle>
     <FeaturesTabs />
   </MainBox>
@@ -264,7 +253,7 @@ const imageCarousel = [
                 class="testimonial-video"
                 src={testimonial.src}
                 poster={testimonial.poster}
-                preload="none"
+                preload="metadata"
                 loop
                 playsinline
                 aria-label={testimonial.label}
@@ -720,9 +709,25 @@ const imageCarousel = [
   const testimonialVideos =
     document.querySelectorAll<HTMLVideoElement>(".testimonial-video");
 
+  // Appareils tactiles (mobile/tablette) : pas de survol possible.
+  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
   testimonialVideos.forEach((video) => {
     const card = video.closest(".testimonial-card");
 
+    if (isTouch) {
+      // Mobile/tablette : on confie la lecture au lecteur natif. Combiné à
+      // `playsinline`, le bouton play natif décode et peint la 1re frame —
+      // le poster disparaît correctement (ce que le play() programmatique
+      // ne faisait pas sur iOS). Bonus accessibilité : contrôles natifs.
+      video.setAttribute("controls", "");
+      // La légende (nom/profession) se masque pendant la lecture.
+      video.addEventListener("play", () => card?.classList.add("is-playing"));
+      video.addEventListener("pause", () => card?.classList.remove("is-playing"));
+      return;
+    }
+
+    // Desktop : lecture au survol, son activé une fois la lecture lancée.
     const play = () => {
       // Masque le nom/profession pendant la lecture.
       card?.classList.add("is-playing");
@@ -738,6 +743,7 @@ const imageCarousel = [
 
     const stop = () => {
       card?.classList.remove("is-playing");
+
       video.pause();
       // Recharge la vidéo pour réafficher le poster (et non la 1re frame).
       video.load();
@@ -748,17 +754,6 @@ const imageCarousel = [
 
     // Click desktop : bascule lecture/pause.
     video.addEventListener("click", () => {
-      if (video.paused) {
-        play();
-      } else {
-        stop();
-      }
-    });
-
-    // Touch mobile : iOS intercepte les taps sur <video> sans controls.
-    // On écoute sur la card parente pour contourner ce comportement.
-    card?.addEventListener("touchend", (e) => {
-      e.preventDefault(); // empêche le click ghost après touchend
       if (video.paused) {
         play();
       } else {

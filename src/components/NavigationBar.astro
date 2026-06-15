@@ -25,22 +25,27 @@ const links = [
 ---
 
 <!-- MOBILE navigation bar -->
-<div class="mobile-nav">
-    <input type="checkbox" id="burger"/>
-
-    <nav class="navigation">
+<div class="mobile-nav" data-mobile-nav>
+    <nav class="navigation" aria-label="Navigation principale">
         <Image src={logo} height={50} quality={100} alt="Logo Scan&Stock"/>
-        <label for="burger" class="burger__btn" aria-label="menu">
-            <i class="fa-solid fa-bars"></i>
-        </label>
+        <button
+                type="button"
+                class="burger__btn"
+                aria-label="Ouvrir le menu"
+                aria-expanded="false"
+                aria-controls="mobile-drawer"
+                data-nav-open
+        >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
     </nav>
 
-    <label for="burger" class="nav__overlay"></label>
+    <div class="nav__overlay" data-nav-close></div>
 
-    <div class="navigation__drawer">
-        <label class="drawer__close" for="burger" aria-label="Fermer le menu">
-            <i class="fa-solid fa-x"></i>
-        </label>
+    <div class="navigation__drawer" id="mobile-drawer">
+        <button type="button" class="drawer__close" aria-label="Fermer le menu" data-nav-close>
+            <i class="fa-solid fa-x" aria-hidden="true"></i>
+        </button>
         <ul class="navigation__list">
             {
                 links.map((link) => (
@@ -145,16 +150,12 @@ const links = [
         padding: 13px 11px 15px 11px;
     }
 
-    #burger {
-        display: none;
-    }
-
-    #burger:checked ~ .nav__overlay {
+    .mobile-nav.is-open .nav__overlay {
         opacity: 1;
         pointer-events: all;
     }
 
-    #burger:checked ~ .navigation__drawer {
+    .mobile-nav.is-open .navigation__drawer {
         transform: translateX(0);
     }
 
@@ -165,6 +166,14 @@ const links = [
         gap: 5px;
         cursor: pointer;
         padding: 8px;
+        color: inherit;
+        font-size: 22px;
+    }
+
+    .burger__btn:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+        border-radius: 6px;
     }
 
     .burger__btn span {
@@ -349,3 +358,67 @@ const links = [
         }
     }
 </style>
+
+<script>
+    // Menu mobile accessible : ouverture/fermeture au clavier et à la souris,
+    // aria-expanded synchronisé, fermeture via Escape / clic overlay / clic lien,
+    // gestion du focus + piège à focus léger pendant que le tiroir est ouvert.
+    const nav = document.querySelector<HTMLElement>("[data-mobile-nav]");
+    const openBtn = nav?.querySelector<HTMLButtonElement>("[data-nav-open]");
+    const drawer = nav?.querySelector<HTMLElement>(".navigation__drawer");
+    const closeEls = nav?.querySelectorAll<HTMLElement>("[data-nav-close]");
+
+    if (nav && openBtn && drawer && closeEls) {
+        const focusable = () =>
+            Array.from(
+                drawer.querySelectorAll<HTMLElement>(
+                    'a[href], button:not([disabled])',
+                ),
+            );
+
+        const open = () => {
+            nav.classList.add("is-open");
+            openBtn.setAttribute("aria-expanded", "true");
+            document.body.style.overflow = "hidden";
+            focusable()[0]?.focus();
+        };
+
+        const close = () => {
+            nav.classList.remove("is-open");
+            openBtn.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+            openBtn.focus();
+        };
+
+        openBtn.addEventListener("click", open);
+        closeEls.forEach((el) => el.addEventListener("click", close));
+        // Fermer après navigation vers un lien du menu
+        drawer
+            .querySelectorAll("a[href]")
+            .forEach((a) => a.addEventListener("click", close));
+
+        document.addEventListener("keydown", (e) => {
+            if (!nav.classList.contains("is-open")) return;
+
+            if (e.key === "Escape") {
+                close();
+                return;
+            }
+
+            // Piège à focus : maintient la tabulation dans le tiroir ouvert
+            if (e.key === "Tab") {
+                const items = focusable();
+                if (items.length === 0) return;
+                const first = items[0];
+                const last = items[items.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+    }
+</script>

@@ -14,7 +14,7 @@ const {src: imgSources, alt, title, text} = Astro.props;
 <article class="card">
     <Image class="img" src={imgSources} alt={alt}/>
     <div class="description">
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{text}</p>
     </div>
 </article>
@@ -50,7 +50,7 @@ const {src: imgSources, alt, title, text} = Astro.props;
         line-height: 1.6;
     }
 
-    .description h2 {
+    .description h3 {
         font-size: clamp(16px, 2.5vw, 22px);
         font-weight: 700;
         margin: 0;

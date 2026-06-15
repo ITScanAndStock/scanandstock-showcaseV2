@@ -106,7 +106,11 @@ const carouselCards = [
                 </p>
                 <iframe
                         class="hero__video"
-                        src="https://www.youtube.com/embed/L0pJrd-BRQM?autoplay=1&mute=1"></iframe>
+                        src="https://www.youtube.com/embed/L0pJrd-BRQM"
+                        title="Témoignage vidéo du Dr Grégory Camaleonte, utilisateur de Scan&Stock"
+                        loading="lazy"
+                        allow="encrypted-media; picture-in-picture; fullscreen"
+                        allowfullscreen></iframe>
                 <p class="hero__description">
                     Vous hésitez et souhaitez avoir le sentiment de vos consoeurs et
                     confrères sur les bienfaits de l'utilisation de Scan&Stock ?
@@ -153,11 +157,11 @@ const carouselCards = [
         </GradientTitle>
         <ul class="info-list info-list--deco">
             <!-- Formes décoratives en parallaxe, ancrées à la liste de cartes -->
-            <div class="deco deco-blue deco-blue--flex" aria-hidden="true" data-parallax-speed="0.07"></div>
-            <div class="deco deco-teal deco-teal--flex" aria-hidden="true" data-parallax-speed="-0.08"></div>
+            <li class="deco deco-blue deco-blue--flex" role="presentation" aria-hidden="true" data-parallax-speed="0.07"></li>
+            <li class="deco deco-teal deco-teal--flex" role="presentation" aria-hidden="true" data-parallax-speed="-0.08"></li>
             <li>
                 <article class="info-article">
-                    <Image src={Sas} alt="image" width={100} height={100}/>
+                    <Image src={Sas} alt="" width={100} height={100}/>
                     <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Connexion simple
                     </GradientTitle>
@@ -168,10 +172,10 @@ const carouselCards = [
                     </p>
                 </article>
             </li>
-            <div class="separator"></div>
+            <li class="separator" role="presentation"></li>
             <li>
                 <article class="info-article">
-                    <Image src={Security} alt="image" width={100} height={100}/>
+                    <Image src={Security} alt="" width={100} height={100}/>
                     <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Sécurité des données
                     </GradientTitle>
@@ -182,10 +186,10 @@ const carouselCards = [
                     </p>
                 </article>
             </li>
-            <div class="separator"></div>
+            <li class="separator" role="presentation"></li>
             <li>
                 <article class="info-article">
-                    <Image src={Compatibility} alt="image" width={100} height={100}/>
+                    <Image src={Compatibility} alt="" width={100} height={100}/>
                     <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                         Compatibilité tablette
                     </GradientTitle>
@@ -291,7 +295,7 @@ const carouselCards = [
                     <div class="deco deco-blue deco-blue--values" aria-hidden="true" data-parallax-speed="0.10"></div>
 
                     <article class="info-article">
-                        <Image src={Reliability} alt="image" width={100} height={100}/>
+                        <Image src={Reliability} alt="" width={100} height={100}/>
                         <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             La fiabilité
                         </GradientTitle>
@@ -301,10 +305,10 @@ const carouselCards = [
                         </p>
                     </article>
                 </li>
-                <div class="separator"></div>
+                <li class="separator" role="presentation"></li>
                 <li>
                     <article class="info-article">
-                        <Image src={Rocket} alt="image" width={100} height={100}/>
+                        <Image src={Rocket} alt="" width={100} height={100}/>
                         <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             La réactivité
                         </GradientTitle>
@@ -314,12 +318,12 @@ const carouselCards = [
                         </p>
                     </article>
                 </li>
-                <div class="separator"></div>
+                <li class="separator" role="presentation"></li>
                 <li class="li--deco">
                     <!-- Forme décorative accrochée à la dernière carte -->
                     <div class="deco deco-teal deco-teal--values" aria-hidden="true" data-parallax-speed="0.18"></div>
                     <article class="info-article">
-                        <Image src={Innovation} alt="image" width={100} height={100}/>
+                        <Image src={Innovation} alt="" width={100} height={100}/>
                         <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
                             L’innovation
                         </GradientTitle>
