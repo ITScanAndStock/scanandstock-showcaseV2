@@ -7,405 +7,407 @@ import sendIcon from "../assets/icones/send.svg";
 ---
 
 <div class="form-wrapper">
-    <!-- Formes décoratives ancrées à la carte du formulaire -->
-    <div class="deco deco-teal deco-teal--top-left" aria-hidden="true"></div>
-    <div class="deco deco-blue deco-blue--top" aria-hidden="true"></div>
-    <div class="deco deco-teal deco-teal--bottom-right" aria-hidden="true"></div>
+  <!-- Formes décoratives ancrées à la carte du formulaire -->
+  <div class="deco deco-teal deco-teal--top-left" aria-hidden="true"></div>
+  <div class="deco deco-blue deco-blue--top" aria-hidden="true"></div>
+  <div class="deco deco-teal deco-teal--bottom-right" aria-hidden="true"></div>
 
-    <section>
-        <div class="reserve">
-            <h3>Vous souhaitez une demo du logiciel ?</h3>
-            <p>
-                Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes avec
-                l’un de nos experts :
-            </p>
-            <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})">
-                <img src={calendarIcon.src} alt="icône de calendrier"/>
-                Prendre rendez-vous
-            </button>
-        </div>
-        <div class="contact">
-            <h3>Nous contacter</h3>
-            <address>
-                <a href="tel:+0784078048" class="phone-number">
-                    <img src={phoneIcon.src} alt=""/>
-                    07 84 07 80 48
-                </a>
-                <a href="mailto:contact@scanandstock.fr">
-                    <img src={mailIcon.src} alt=""/>
-                    contact@scanandstock.fr
-                </a>
-                <a
-                        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
-                        class="address-street"
-                >
-                    <img src={localisationIcon.src} alt=""/>
-                    360 Rue Marc Lefrancq, 59300 Valenciennes
-                </a>
-            </address>
-        </div>
-        <form action="https://formspree.io/f/xdavdlde" method="post" class="form">
-            <h3>Demande de contact</h3>
-            <ul class="form__list">
-                <li class="list__item firstname">
-                    <label for="firstname">Prénom</label>
-                    <input
-                            type="text"
-                            id="firstname"
-                            name="firstname"
-                            autocomplete="given-name"
-                            required
-                    />
-                </li>
-                <li class="list__item lastname">
-                    <label for="lastname">Nom</label>
-                    <input
-                            type="text"
-                            id="lastname"
-                            name="lastname"
-                            autocomplete="family-name"
-                            required
-                    />
-                </li>
-                <li class="list__item mail">
-                    <label for="mail">Adresse mail</label>
-                    <input
-                            type="email"
-                            id="mail"
-                            name="email"
-                            autocomplete="email"
-                            required
-                    />
-                </li>
-                <li class="list__item phone">
-                    <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" name="phone" autocomplete="tel"/>
-                </li>
-                <li class="list__item content">
-                    <label for="content">Message</label>
-                    <textarea name="content" id="content" required></textarea>
-                </li>
-            </ul>
-            <button class="submit-btn" type="submit">
-                <img src={sendIcon.src} alt="icône d'avion en papier"/>
-                Envoyer
-            </button>
-        </form>
-    </section>
+  <section>
+    <div class="reserve">
+      <h3>Vous souhaitez une demo du logiciel ?</h3>
+      <p>
+        Prenez rendez-vous pour une démo personnalisée gratuite de 15 minutes
+        avec l’un de nos experts :
+      </p>
+      <button
+        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})"
+      >
+        <img src={calendarIcon.src} alt="icône de calendrier" />
+        Prendre rendez-vous
+      </button>
+    </div>
+    <div class="contact">
+      <h3>Nous contacter</h3>
+      <address>
+        <a href="tel:+0784078048" class="phone-number">
+          <img src={phoneIcon.src} alt="" />
+          07 84 07 80 48
+        </a>
+        <a href="mailto:contact@scanandstock.fr">
+          <img src={mailIcon.src} alt="" />
+          contact@scanandstock.fr
+        </a>
+        <a
+          href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47c2ed286ad8ba2d:0xc0c17414a953a734?sa=X&ved=1t:8290&ictx=111"
+          class="address-street"
+        >
+          <img src={localisationIcon.src} alt="" />
+          360 Rue Marc Lefrancq, 59300 Valenciennes
+        </a>
+      </address>
+    </div>
+    <form action="https://formspree.io/f/xdavdlde" method="post" class="form">
+      <h3>Demande de contact</h3>
+      <ul class="form__list">
+        <li class="list__item firstname">
+          <label for="firstname">Prénom</label>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            autocomplete="given-name"
+            required
+          />
+        </li>
+        <li class="list__item lastname">
+          <label for="lastname">Nom</label>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            autocomplete="family-name"
+            required
+          />
+        </li>
+        <li class="list__item mail">
+          <label for="mail">Adresse mail</label>
+          <input
+            type="email"
+            id="mail"
+            name="email"
+            autocomplete="email"
+            required
+          />
+        </li>
+        <li class="list__item phone">
+          <label for="phone">Téléphone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" />
+        </li>
+        <li class="list__item content">
+          <label for="content">Message</label>
+          <textarea name="content" id="content" required></textarea>
+        </li>
+      </ul>
+      <button class="submit-btn" type="submit">
+        <img src={sendIcon.src} alt="icône d'avion en papier" />
+        Envoyer
+      </button>
+    </form>
+  </section>
 </div>
 <style>
-    h3 {
-        font-size: 1.375rem;
-        line-height: normal;
-        margin-bottom: 1rem;
-        font-weight: 600;
-        background-size: 1300px;
-        background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%) left;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+  h3 {
+    font-size: 1.375rem;
+    line-height: normal;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    background-size: 1300px;
+    background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%)
+      left;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  p {
+    font-size: 1.0625rem;
+    line-height: 25px;
+    font-weight: 400;
+    color: #27333a;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #12a19a;
+    border-radius: 100px;
+    padding: 0.5rem 2rem;
+    font-size: clamp(1rem, 1vw, 2rem);
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* Le wrapper porte le dimensionnement et sert de référentiel aux formes :
+       elles restent ancrées à la carte sur tous les écrans. */
+  .form-wrapper {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    /* au-dessus des formes : la carte blanche masque la partie recouverte */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── Formes décoratives (masquées en mobile) ────────── */
+  .deco {
+    display: none;
+    position: absolute;
+    border-radius: 14px;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  .deco-blue {
+    background: linear-gradient(
+      110deg,
+      rgba(2, 73, 101, 0.5) 9.7%,
+      rgba(65, 119, 140, 0.5) 104%
+    );
+  }
+
+  .deco-teal {
+    background: linear-gradient(
+      122deg,
+      rgba(18, 161, 154, 0.5) 9.7%,
+      rgba(18, 161, 154, 0.25) 104%
+    );
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  @media screen and (min-width: 768px) {
+    /* coin haut-gauche de la carte, rotation ~-5° */
+    .deco-teal--top-left {
+      display: block;
+      width: 208px;
+      aspect-ratio: 209 / 348;
+      top: -98px;
+      left: 19px;
+      transform: rotate(-4.97deg);
     }
 
-    p {
+    /* dépasse au-dessus de la carte, côté gauche */
+    .deco-blue--top {
+      display: block;
+      width: 180px;
+      aspect-ratio: 338 / 623;
+      top: -50px;
+      left: 18%;
+      transform: rotate(4.97deg);
+    }
+
+    /* coin bas-droit de la carte, sans rotation */
+    .deco-teal--bottom-right {
+      display: block;
+      width: 163px;
+      aspect-ratio: 214 / 368;
+      bottom: -35px;
+      right: -6px;
+      transform: rotate(8.97deg);
+    }
+  }
+
+  .reserve {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+
+    button {
+      margin: 2rem auto 0;
+      width: fit-content;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    button:hover {
+      scale: 1.01;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .contact {
+    margin-bottom: 2rem;
+
+    address {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      a {
+        display: flex;
+        gap: 2rem;
         font-size: 1.0625rem;
-        line-height: 25px;
+        font-style: normal;
+        font-weight: 500;
+        color: #27333a;
+      }
+
+      a:hover {
+        color: #12a19a;
+      }
+
+      .phone-number,
+      .address-street {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px dashed rgba(154, 180, 188, 0.8);
+
+    .list__item {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+
+      label {
         font-weight: 400;
         color: #27333a;
+      }
+
+      input,
+      textarea {
+        background-color: #f0f6fe;
+        border-radius: 6px;
+        border: unset;
+        padding: 0.5rem;
+      }
+
+      textarea {
+        height: 120px;
+        margin-bottom: 2rem;
+      }
     }
 
     button {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        background-color: #12a19a;
-        border-radius: 100px;
-        padding: 0.5rem 2rem;
-        font-size: 24px;
-        font-weight: 600;
-        color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: #12a19a;
+      border-radius: 100px;
+      padding: 0.5rem 2rem;
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      width: fit-content;
+      margin: 1rem auto 0;
+      transition: all 0.3s ease;
     }
 
-    /* Le wrapper porte le dimensionnement et sert de référentiel aux formes :
-       elles restent ancrées à la carte sur tous les écrans. */
+    button:hover {
+      scale: 1.02;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  @media screen and (min-width: 1240px) {
     .form-wrapper {
-        position: relative;
-        max-width: 600px;
-        margin: 0 auto;
+      width: 75%;
+      max-width: none;
+      margin: 0 auto 3rem;
     }
 
     section {
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        border-radius: 12px;
-        padding: 1rem;
-        /* au-dessus des formes : la carte blanche masque la partie recouverte */
-        position: relative;
-        z-index: 1;
-    }
-
-    /* ─── Formes décoratives (masquées en mobile) ────────── */
-    .deco {
-        display: none;
-        position: absolute;
-        border-radius: 14px;
-        filter: blur(2px);
-        pointer-events: none;
-    }
-
-    .deco-blue {
-        background: linear-gradient(
-                110deg,
-                rgba(2, 73, 101, 0.5) 9.7%,
-                rgba(65, 119, 140, 0.5) 104%
-        );
-    }
-
-    .deco-teal {
-        background: linear-gradient(
-                122deg,
-                rgba(18, 161, 154, 0.5) 9.7%,
-                rgba(18, 161, 154, 0.25) 104%
-        );
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    }
-
-    @media screen and (min-width: 768px) {
-        /* coin haut-gauche de la carte, rotation ~-5° */
-        .deco-teal--top-left {
-            display: block;
-            width: 208px;
-            aspect-ratio: 209 / 348;
-            top: -98px;
-            left: 19px;
-            transform: rotate(-4.97deg);
-        }
-
-        /* dépasse au-dessus de la carte, côté gauche */
-        .deco-blue--top {
-            display: block;
-            width: 180px;
-            aspect-ratio: 338 / 623;
-            top: -50px;
-            left: 18%;
-            transform: rotate(4.97deg);
-        }
-
-
-        /* coin bas-droit de la carte, sans rotation */
-        .deco-teal--bottom-right {
-            display: block;
-            width: 163px;
-            aspect-ratio: 214 / 368;
-            bottom: -35px;
-            right: -6px;
-            transform: rotate(8.97deg);
-        }
-    }
-
-    .reserve {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 0;
-
-        button {
-            margin: 2rem auto 0;
-            width: fit-content;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-
-            img {
-                width: 32px;
-                height: 32px;
-            }
-        }
-
-        button:hover {
-            scale: 1.01;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-    }
-
-    .contact {
-        margin-bottom: 2rem;
-
-        address {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            a {
-                display: flex;
-                gap: 2rem;
-                font-size: 1.0625rem;
-                font-style: normal;
-                font-weight: 500;
-                color: #27333a;
-            }
-
-            a:hover {
-                color: #12a19a;
-            }
-
-            .phone-number,
-            .address-street {
-                text-decoration: underline;
-            }
-        }
+      display: grid;
+      padding: 2rem;
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-areas:
+        "form reserve"
+        "form contact";
     }
 
     .form {
-        display: flex;
-        flex-direction: column;
-        border-top: 2px dashed rgba(154, 180, 188, 0.8);
+      grid-area: form;
+      border-top: unset;
+      border-right: 2px dashed rgba(154, 180, 188, 0.8);
+      padding-right: 2rem;
 
-        .list__item {
-            display: flex;
-            flex-direction: column;
-            margin-top: 1rem;
-
-            label {
-                font-weight: 400;
-                color: #27333a;
-            }
-
-            input,
-            textarea {
-                background-color: #f0f6fe;
-                border-radius: 6px;
-                border: unset;
-                padding: 0.5rem;
-            }
-
-            textarea {
-                height: 120px;
-                margin-bottom: 2rem;
-            }
-        }
-
-        button {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background-color: #12a19a;
-            border-radius: 100px;
-            padding: 0.5rem 2rem;
-            font-size: 24px;
-            font-weight: 600;
-            color: #fff;
-            width: fit-content;
-            margin: 1rem auto 0;
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            scale: 1.02;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-    }
-
-    @media screen and (min-width: 1240px) {
-        .form-wrapper {
-            width: 75%;
-            max-width: none;
-            margin: 0 auto 3rem;
-        }
-
-        section {
-            display: grid;
-            padding: 2rem;
-            grid-template-columns: 1.5fr 1fr;
-            grid-template-areas:
-        "form reserve"
-        "form contact";
-        }
-
-        .form {
-            grid-area: form;
-            border-top: unset;
-            border-right: 2px dashed rgba(154, 180, 188, 0.8);
-            padding-right: 2rem;
-
-            .form__list {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-template-areas:
+      .form__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
           "firstname lastname"
           "mail phone"
           "content content";
-                column-gap: 2rem;
+        column-gap: 2rem;
 
-                .list__item {
-                    textarea {
-                        height: 195px;
-                    }
-                }
-
-                .firstname {
-                    grid-area: firstname;
-                }
-
-                .lastname {
-                    grid-area: lastname;
-                }
-
-                .mail {
-                    grid-area: mail;
-                }
-
-                .phone {
-                    grid-area: phone;
-                }
-
-                .content {
-                    grid-area: content;
-                }
-            }
-
-            button {
-                margin: 0 auto;
-                margin-top: 0.5%;
-            }
+        .list__item {
+          textarea {
+            height: 195px;
+          }
         }
 
-        .reserve {
-            grid-area: reserve;
-            height: 310px;
-            padding: 0 0 2rem 2rem;
-            border-bottom: 2px dashed rgba(154, 180, 188, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            button {
-                width: fit-content;
-                font-size: 24px;
-
-                img {
-                    width: 32px;
-                    height: 32px;
-                }
-            }
+        .firstname {
+          grid-area: firstname;
         }
 
-        .contact {
-            grid-area: contact;
-            height: 310px;
-            padding: 2rem 0 2rem 2rem;
-
-            address {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-
-                a {
-                    display: flex;
-                    gap: 1.5rem;
-                    font-size: 1rem;
-                    font-style: normal;
-                    font-weight: 600;
-                }
-            }
+        .lastname {
+          grid-area: lastname;
         }
+
+        .mail {
+          grid-area: mail;
+        }
+
+        .phone {
+          grid-area: phone;
+        }
+
+        .content {
+          grid-area: content;
+        }
+      }
+
+      button {
+        margin: 0 auto;
+        margin-top: 0.5%;
+      }
     }
+
+    .reserve {
+      grid-area: reserve;
+      height: 310px;
+      padding: 0 0 2rem 2rem;
+      border-bottom: 2px dashed rgba(154, 180, 188, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      button {
+        width: fit-content;
+        font-size: 24px;
+
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    .contact {
+      grid-area: contact;
+      height: 310px;
+      padding: 2rem 0 2rem 2rem;
+
+      address {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        a {
+          display: flex;
+          gap: 1.5rem;
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 600;
+        }
+      }
+    }
+  }
 </style>
