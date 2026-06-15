@@ -723,7 +723,9 @@ const imageCarousel = [
       video.setAttribute("controls", "");
       // La légende (nom/profession) se masque pendant la lecture.
       video.addEventListener("play", () => card?.classList.add("is-playing"));
-      video.addEventListener("pause", () => card?.classList.remove("is-playing"));
+      video.addEventListener("pause", () =>
+        card?.classList.remove("is-playing"),
+      );
       return;
     }
 
