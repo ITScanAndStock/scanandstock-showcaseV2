@@ -135,16 +135,26 @@ const videos = [
     aspect-ratio: 16 / 9;
     overflow: hidden;
   }
+  #features-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
   .video-frame :global(.video-item) {
-    display: none;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     background: transparent;
     object-fit: fill;
     border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
   }
   .video-frame :global(.video-item.active) {
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   /* ─── Tablette / desktop ───────────────────────────────── */
@@ -162,6 +172,9 @@ const videos = [
 
   @media (prefers-reduced-motion: reduce) {
     .tab {
+      transition: none;
+    }
+    .video-frame :global(.video-item) {
       transition: none;
     }
   }
@@ -190,10 +203,12 @@ const videos = [
     });
     tabs[index].classList.add("active");
     tabs[index].setAttribute("aria-selected", "true");
-    tabs[index].scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
+    const bar = tabs[index].closest<HTMLElement>(".tabs-bar");
+    if (bar) {
+      const tab = tabs[index];
+      const tabCenter = tab.offsetLeft + tab.offsetWidth / 2;
+      bar.scrollTo({ left: tabCenter - bar.offsetWidth / 2, behavior: "smooth" });
+    }
 
     videoEls.forEach((v, i) => {
       if (i === index) {
