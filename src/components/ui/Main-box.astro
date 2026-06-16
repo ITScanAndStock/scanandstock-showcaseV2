@@ -27,10 +27,12 @@ const { class: className } = Astro.props;
     border-radius: 20px;
   }
 
-  .bottom-up {
-    padding-bottom: 90px;
-  }
-  .bottom-down {
-    padding-top: 90px;
+  @media (min-width: 768px) {
+    .bottom-up {
+      padding-bottom: 90px;
+    }
+    .bottom-down {
+      padding-top: 90px;
+    }
   }
 </style>
