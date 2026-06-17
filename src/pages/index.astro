@@ -1,9 +1,8 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MainBox from "../components/ui/Main-box.astro";
 import HeroBox from "../components/ui/Hero-box.astro";
-import Stats from "../assets/stats.svg";
 import Order from "../assets/order.svg";
 import Stock from "../assets/stock.svg";
 import Compare from "../assets/compare.svg";
@@ -31,29 +30,43 @@ import PosterJeanChristophe from "../assets/video/poster/jean-christophe.png";
 import PosterKevin from "../assets/video/poster/kevin.png";
 import ContactForm from "../components/ContactForm.astro";
 
-// Vidéos de témoignages hébergées sur S3 (comme celles de FeaturesTabs) :
-// elles ne sont ni versionnées dans le repo ni copiées dans dist/.
-const S3_VIDEOS =
-  "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos";
+// stats.webp servi depuis public/ (BASE_URL gère le sous-dossier GitHub Pages)
+const base = import.meta.env.BASE_URL;
+const statsUrl = base.endsWith("/") ? base + "stats.webp" : base + "/stats.webp";
+
+// Videos testimonials on S3 (like FeaturesTabs) - not versioned in repo.
+const S3_VIDEOS = `https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos`;
+
+// Posters optimises via le pipeline Astro : PNG bruts (576-817 Ko), sortie WebP 360x510
+const [posterJC, posterCharlotte, posterKevin] = await Promise.all([
+  getImage({
+    src: PosterJeanChristophe,
+    format: "webp",
+    width: 360,
+    height: 510,
+  }),
+  getImage({ src: PosterCharlotte, format: "webp", width: 360, height: 510 }),
+  getImage({ src: PosterKevin, format: "webp", width: 360, height: 510 }),
+]);
 
 const testimonials = [
   {
     src: `${S3_VIDEOS}/testimonial_jean-Christophe.mp4`,
-    poster: PosterJeanChristophe.src,
+    poster: posterJC.src,
     label: "Témoignage vidéo de Jean-Christophe, utilisateur de Scan & Stock",
     name: "Jean-Christophe Gilbert",
     role: "Chirurgien-dentiste",
   },
   {
     src: `${S3_VIDEOS}/testimonial_charlotte.mp4`,
-    poster: PosterCharlotte.src,
+    poster: posterCharlotte.src,
     label: "Témoignage vidéo de Charlotte, utilisatrice de Scan & Stock",
     name: "Charlotte Farges",
     role: "Chirurgien-dentiste",
   },
   {
     src: `${S3_VIDEOS}/testimonial_Kevin.mp4`,
-    poster: PosterKevin.src,
+    poster: posterKevin.src,
     label: "Témoignage vidéo de Kevin, utilisateur de Scan & Stock",
     name: "Cabinet dentaire république",
     role: "Villeneuve-d'Ascq",
@@ -107,7 +120,15 @@ const imageCarousel = [
         <div class="deco deco-white deco-white--a" aria-hidden="true"></div>
         <div class="deco deco-white deco-white--b" aria-hidden="true"></div>
         <div class="deco deco-white deco-white--c" aria-hidden="true"></div>
-        <Image class="stats" src={Stats} alt="" />
+        <img
+          class="stats"
+          src={statsUrl}
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          width="673"
+          height="485"
+        />
         <Image class="order" src={Order} alt="" data-parallax-speed="0.18" />
         <Image class="stock" src={Stock} alt="" data-parallax-speed="-0.14" />
         <Image
@@ -257,6 +278,8 @@ const imageCarousel = [
                 loop
                 playsinline
                 aria-label={testimonial.label}
+                width="360"
+                height="510"
               />
             </div>
             <figcaption class="testimonial-caption">
@@ -711,6 +734,10 @@ const imageCarousel = [
 
   // Appareils tactiles (mobile/tablette) : pas de survol possible.
   const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  // Respect de prefers-reduced-motion : pas de lecture auto au survol.
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
   testimonialVideos.forEach((video) => {
     const card = video.closest(".testimonial-card");
@@ -751,10 +778,13 @@ const imageCarousel = [
       video.load();
     };
 
-    video.addEventListener("mouseenter", play);
-    video.addEventListener("mouseleave", stop);
+    // Survol = lecture auto, sauf si l'utilisateur a réduit les animations.
+    if (!prefersReducedMotion) {
+      video.addEventListener("mouseenter", play);
+      video.addEventListener("mouseleave", stop);
+    }
 
-    // Click desktop : bascule lecture/pause.
+    // Click desktop : bascule lecture/pause (toujours actif, action volontaire).
     video.addEventListener("click", () => {
       if (video.paused) {
         play();

@@ -7,9 +7,6 @@ import ReserveButton from "../components/ReserveButton.astro";
 import InUse from "../assets/photos/inUse.png";
 import GradientTitle from "../components/ui/GradientTitle.astro";
 import Carousel from "../components/Carousel.astro";
-import Sas from "../assets/icones/animation/sas.gif";
-import Security from "../assets/icones/animation/security.gif";
-import Compatibility from "../assets/icones/animation/compatibility.gif";
 import StockPlace from "../assets/photos/carousel/stock_place.png";
 import Productivity from "../assets/photos/carousel/productivity.png";
 import CardCarousel from "../components/CardCarousel.astro";
@@ -18,10 +15,37 @@ import Arthur from "../assets/photos/arthur_dausque.png";
 import Nicholas from "../assets/photos/nicholas_larcin.png";
 import PJ from "../assets/photos/pierre-jean_vandoorne.png";
 import PJ2 from "../assets/photos/pj.png";
-import Rocket from "../assets/icones/animation/rocket.gif";
-import Reliability from "../assets/icones/animation/reliability.gif";
-import Innovation from "../assets/icones/animation/innovation.gif";
 import ContactForm from "../components/ContactForm.astro";
+
+// GIF → <video> : les fichiers MP4/WebM/poster sont dans public/animations/
+// BASE_URL gère le sous-dossier GitHub Pages (ex. /scanandstock-showcaseV2/)
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const animations = {
+  sas: {
+    mp4: `${base}/animations/sas.mp4`,
+    poster: `${base}/animations/sas-poster.png`,
+  },
+  security: {
+    mp4: `${base}/animations/security.mp4`,
+    poster: `${base}/animations/security-poster.png`,
+  },
+  compatibility: {
+    mp4: `${base}/animations/compatibility.mp4`,
+    poster: `${base}/animations/compatibility-poster.png`,
+  },
+  rocket: {
+    mp4: `${base}/animations/rocket.mp4`,
+    poster: `${base}/animations/rocket-poster.png`,
+  },
+  reliability: {
+    mp4: `${base}/animations/reliability.mp4`,
+    poster: `${base}/animations/reliability-poster.png`,
+  },
+  innovation: {
+    mp4: `${base}/animations/innovation.mp4`,
+    poster: `${base}/animations/innovation-poster.png`,
+  },
+};
 
 const testimonials = [
   {
@@ -174,7 +198,20 @@ const carouselCards = [
       </li>
       <li>
         <article class="info-article">
-          <Image src={Sas} alt="" width={100} height={100} />
+          <video
+            class="anim-icon"
+            aria-hidden="true"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            width="100"
+            height="100"
+            poster={animations.sas.poster}
+            data-anim
+          >
+            <source src={animations.sas.mp4} type="video/mp4" />
+          </video>
           <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
             Connexion simple
           </GradientTitle>
@@ -188,7 +225,20 @@ const carouselCards = [
       <li class="separator" role="presentation"></li>
       <li>
         <article class="info-article">
-          <Image src={Security} alt="" width={100} height={100} />
+          <video
+            class="anim-icon"
+            aria-hidden="true"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            width="100"
+            height="100"
+            poster={animations.security.poster}
+            data-anim
+          >
+            <source src={animations.security.mp4} type="video/mp4" />
+          </video>
           <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
             Sécurité des données
           </GradientTitle>
@@ -202,7 +252,20 @@ const carouselCards = [
       <li class="separator" role="presentation"></li>
       <li>
         <article class="info-article">
-          <Image src={Compatibility} alt="" width={100} height={100} />
+          <video
+            class="anim-icon"
+            aria-hidden="true"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            width="100"
+            height="100"
+            poster={animations.compatibility.poster}
+            data-anim
+          >
+            <source src={animations.compatibility.mp4} type="video/mp4" />
+          </video>
           <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
             Compatibilité tablette
           </GradientTitle>
@@ -323,7 +386,20 @@ const carouselCards = [
           </div>
 
           <article class="info-article">
-            <Image src={Reliability} alt="" width={100} height={100} />
+            <video
+              class="anim-icon"
+              aria-hidden="true"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              width="100"
+              height="100"
+              poster={animations.reliability.poster}
+              data-anim
+            >
+              <source src={animations.reliability.mp4} type="video/mp4" />
+            </video>
             <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
               La fiabilité
             </GradientTitle>
@@ -336,7 +412,20 @@ const carouselCards = [
         <li class="separator" role="presentation"></li>
         <li>
           <article class="info-article">
-            <Image src={Rocket} alt="" width={100} height={100} />
+            <video
+              class="anim-icon"
+              aria-hidden="true"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              width="100"
+              height="100"
+              poster={animations.rocket.poster}
+              data-anim
+            >
+              <source src={animations.rocket.mp4} type="video/mp4" />
+            </video>
             <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
               La réactivité
             </GradientTitle>
@@ -356,7 +445,20 @@ const carouselCards = [
           >
           </div>
           <article class="info-article">
-            <Image src={Innovation} alt="" width={100} height={100} />
+            <video
+              class="anim-icon"
+              aria-hidden="true"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              width="100"
+              height="100"
+              poster={animations.innovation.poster}
+              data-anim
+            >
+              <source src={animations.innovation.mp4} type="video/mp4" />
+            </video>
             <GradientTitle as="h4" class:list={"gradient-subtitle m0"}>
               L’innovation
             </GradientTitle>
@@ -479,6 +581,17 @@ const carouselCards = [
 
 <script>
   import "../js/parallax";
+
+  // prefers-reduced-motion : ne lance l'animation que si l'utilisateur
+  // n'a pas demandé à réduire les animations. Sinon, la vidéo reste figée
+  // sur son poster (comportement par défaut sans autoplay).
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document
+      .querySelectorAll<HTMLVideoElement>("video[data-anim]")
+      .forEach((v) => {
+        v.play().catch(() => {});
+      });
+  }
 </script>
 
 <style>
@@ -1018,5 +1131,13 @@ const carouselCards = [
       font-size: 1.125rem;
       padding: 1.5rem 0.5rem;
     }
+  }
+
+  /* ─── Icônes animées (vidéo) ──────────────────────────── */
+  .anim-icon {
+    display: block;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
   }
 </style>
