@@ -21,6 +21,8 @@ const {slug, title, category, excerpt, cover, coverAlt = ""} = Astro.props;
                 alt={coverAlt}
                 width={363}
                 height={510}
+                widths={[363, 726]}
+                sizes="363px"
         />
         <span class="card__overlay" aria-hidden="true"></span>
         <span class="card__badge">{category}</span>
