@@ -29,7 +29,11 @@ const videos = [
 ---
 
 <section class="features-tabs">
-  <div class="tabs-bar" role="tablist" aria-label="Fonctionnalités de Scan & Stock">
+  <div
+    class="tabs-bar"
+    role="tablist"
+    aria-label="Fonctionnalités de Scan & Stock"
+  >
     {
       videos.map((v, i) => (
         <button
@@ -115,6 +119,7 @@ const videos = [
     font-weight: 600;
     white-space: nowrap;
     transition: all 150ms ease;
+    line-height: 1.5;
   }
   .tab.active {
     background: #12a19a;
@@ -150,7 +155,6 @@ const videos = [
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 100%;
     background: transparent;
     object-fit: fill;
     border-radius: 20px;
@@ -219,7 +223,10 @@ const videos = [
     if (bar) {
       const tab = tabs[index];
       const tabCenter = tab.offsetLeft + tab.offsetWidth / 2;
-      bar.scrollTo({ left: tabCenter - bar.offsetWidth / 2, behavior: "smooth" });
+      bar.scrollTo({
+        left: tabCenter - bar.offsetWidth / 2,
+        behavior: "smooth",
+      });
     }
 
     videoEls.forEach((v, i) => {
