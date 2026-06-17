@@ -1,5 +1,6 @@
 ---
 import ReserveButton from "./ReserveButton.astro";
+import Icon from "./ui/Icon.astro";
 
 interface Props {
   label?: string;
@@ -39,14 +40,14 @@ const {
         aria-label="Diapositive précédente"
         type="button"
       >
-        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        <Icon name="chevron-left" />
       </button>
       <button
         class="carousel-btn carousel-btn--next"
         aria-label="Diapositive suivante"
         type="button"
       >
-        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        <Icon name="chevron-right" />
       </button>
     </div>
   </div>
@@ -228,7 +229,7 @@ const {
     .carousel-btn {
       width: 52px;
       height: 52px;
-      font-size: 1.1rem;
+      font-size: 1.8rem;
     }
   }
 

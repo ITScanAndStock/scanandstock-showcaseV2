@@ -128,8 +128,6 @@ const imageCarousel = [
           alt=""
           aria-hidden="true"
           decoding="async"
-          width="673"
-          height="485"
         />
         <Image class="order" src={Order} alt="" data-parallax-speed="0.18" />
         <Image class="stock" src={Stock} alt="" data-parallax-speed="-0.14" />
@@ -322,7 +320,8 @@ const imageCarousel = [
 
   .stats {
     padding-top: 20px;
-    width: fit-content;
+    width: 100%;
+    max-width: 700px;
     margin: auto;
   }
 

@@ -48,6 +48,17 @@ import sendIcon from "../assets/icones/send.svg";
     </div>
     <form action="https://formspree.io/f/xdavdlde" method="post" class="form">
       <h3>Demande de contact</h3>
+      <!-- Honeypot anti-spam Formspree : champ masqué que seuls les bots
+           remplissent → Formspree rejette alors la soumission. Hors du flux
+           visuel et du parcours clavier (tabindex=-1, aria-hidden). -->
+      <input
+        type="text"
+        name="_gotcha"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"
+      />
       <ul class="form__list">
         <li class="list__item firstname">
           <label for="firstname">Prénom</label>

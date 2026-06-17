@@ -3,6 +3,7 @@ import {Image} from "astro:assets";
 import logo from "../assets/logo.svg";
 import computerIcon from "../assets/computer.svg";
 import calendarIcon from "../assets/calendar.png";
+import Icon from "./ui/Icon.astro";
 
 const {pathname} = Astro.url;
 // Préfixe de base : "" en prod (scanandstock.fr), "/scanandstock-showcaseV2" sur GitHub Pages.
@@ -36,7 +37,7 @@ const links = [
                 aria-controls="mobile-drawer"
                 data-nav-open
         >
-            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            <Icon name="bars" />
         </button>
     </nav>
 
@@ -44,7 +45,7 @@ const links = [
 
     <div class="navigation__drawer" id="mobile-drawer">
         <button type="button" class="drawer__close" aria-label="Fermer le menu" data-nav-close>
-            <i class="fa-solid fa-x" aria-hidden="true"></i>
+            <Icon name="x" />
         </button>
         <ul class="navigation__list">
             {
