@@ -15,6 +15,14 @@ export default defineConfig({
     : "https://www.scanandstock.fr",
   base: isGitHubPages ? "/scanandstock-showcaseV2/" : undefined,
   integrations: [sitemap()],
+  // Images responsive : génère srcset + sizes automatiquement pour tous les
+  // <Image> (covers blog, carrousels…). `constrained` = l'image se réduit dans
+  // son conteneur sans dépasser ses dimensions. Les styles globaux utilisent
+  // :where() (spécificité 0) → le CSS existant des composants reste prioritaire.
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+  },
   // Montserrat auto-hébergée via la Fonts API (RGPD : plus d'appel au CDN
   // Google Fonts) ; seules les graisses réellement utilisées sont incluses.
   fonts: [
