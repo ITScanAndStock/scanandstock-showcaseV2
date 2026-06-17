@@ -32,7 +32,9 @@ import ContactForm from "../components/ContactForm.astro";
 
 // stats.webp servi depuis public/ (BASE_URL gère le sous-dossier GitHub Pages)
 const base = import.meta.env.BASE_URL;
-const statsUrl = base.endsWith("/") ? base + "stats.webp" : base + "/stats.webp";
+const statsUrl = base.endsWith("/")
+  ? base + "stats.webp"
+  : base + "/stats.webp";
 
 // Videos testimonials on S3 (like FeaturesTabs) - not versioned in repo.
 const S3_VIDEOS = `https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos`;
@@ -320,7 +322,6 @@ const imageCarousel = [
 
   .stats {
     padding-top: 20px;
-    height: fit-content;
     width: fit-content;
     margin: auto;
   }
