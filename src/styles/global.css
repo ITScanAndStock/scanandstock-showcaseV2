@@ -7,7 +7,10 @@ body {
     max-width: 1580px;
     padding: 0 5px;
     margin: auto;
+    /* 100vh d'abord (fallback navigateurs anciens), puis 100dvh : sur iOS la
+       barre d'outils dynamique fausse 100vh (saut de hauteur au scroll). */
     min-height: 100vh;
+    min-height: 100dvh;
     line-height: 30px;
     letter-spacing: 1px;
 

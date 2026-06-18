@@ -145,6 +145,11 @@ const videos = [
     margin: 0 auto;
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    border-radius: 20px;
+    /* Fond de marque visible avant chargement (état au repos sur tactile, où
+       la 1re vidéo n'autoplay pas — voir garde tactile dans le <script>).
+       La vidéo (object-fit: fill) le recouvre entièrement une fois lue. */
+    background: linear-gradient(135deg, #12a19a 0%, #3983a3 100%);
   }
   #features-player {
     position: relative;
@@ -265,11 +270,19 @@ const videos = [
     });
   });
 
-  // La 1re vidéo n'est chargée et lancée que lorsque la section
-  // devient visible (même pattern que VideoPresentation).
+  // Garde tactile : sur mobile/tablette on n'autoplay pas. La 1re vidéo n'est
+  // lancée qu'au tap d'un onglet (geste utilisateur, autorisé par iOS). Évite
+  // de décoder une vidéo non sollicitée au scroll (jank). Cohérent avec le garde
+  // des vidéos témoignages et de VideoPresentation.
+  const isTouch = window.matchMedia(
+    "(hover: none), (pointer: coarse)",
+  ).matches;
+
+  // Desktop : la 1re vidéo est chargée et lancée quand la section devient
+  // visible (même pattern que VideoPresentation).
   const section = document.querySelector(".features-tabs");
   const firstVideo = videoEls[0];
-  if (section && firstVideo) {
+  if (!isTouch && section && firstVideo) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
