@@ -101,12 +101,17 @@ const clients = [
   .group {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 1em;
+    /* flex-start (pas center) : center est le déclencheur du chevauchement sur
+       WebKit si le groupe se comprime — les cartes débordent vers le milieu.
+       Inutile ici (le contenu dupliqué est toujours plus large que le viewport). */
+    justify-content: flex-start;
+    gap: 2em;
     padding-right: 1em;
-    /* Garantit la géométrie du marquee : les deux groupes ne se compriment
-           pas, le translate -100% correspond exactement à une largeur de groupe. */
+    /* Garantit la géométrie du marquee : les deux groupes ne se compriment pas
+       (WebKit peut comprimer sous le min-content), le translate -100%
+       correspond exactement à une largeur de groupe. */
     flex-shrink: 0;
+    min-width: max-content;
     will-change: transform;
     animation: spin 60s infinite linear;
   }
