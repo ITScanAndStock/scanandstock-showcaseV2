@@ -276,29 +276,3 @@ const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
     }
   }
 </style>
-
-<script>
-  // Masque le séparateur pointillé de la 1re carte de chaque rangée
-  // (réutilise `.card.is-row-start::before { display:none }` de BlogCard).
-  const grid = document.getElementById("related-grid");
-  if (grid) {
-    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".card"));
-    const columns = () => {
-      if (window.matchMedia("(min-width: 1024px)").matches) return 3;
-      if (window.matchMedia("(min-width: 768px)").matches) return 2;
-      return 1;
-    };
-    const mark = () => {
-      const cols = columns();
-      cards.forEach((card, i) =>
-        card.classList.toggle("is-row-start", i % cols === 0),
-      );
-    };
-    mark();
-    let timer: ReturnType<typeof setTimeout>;
-    window.addEventListener("resize", () => {
-      clearTimeout(timer);
-      timer = setTimeout(mark, 150);
-    });
-  }
-</script>

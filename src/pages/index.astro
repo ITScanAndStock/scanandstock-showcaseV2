@@ -1,6 +1,6 @@
 ---
 import "../styles/deco.css";
-import { Image, getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MainBox from "../components/ui/Main-box.astro";
 import HeroBox from "../components/ui/Hero-box.astro";
@@ -18,91 +18,16 @@ import InfoUsers from "../components/InfoUsers.astro";
 import ImgPresentation from "../components/ImgPresentation.astro";
 import CardCarousel from "../components/CardCarousel.astro";
 import Carousel from "../components/Carousel.astro";
-import StockPlace from "../assets/photos/carousel/stock_place.png";
-import Scanner from "../assets/photos/carousel/scanner.png";
-import LessStock from "../assets/photos/carousel/less_stock.png";
 import ImageCarousel from "../components/ImageCarousel.astro";
-import MyCoompy from "../assets/photos/carousel/mycoompy.png";
-import MyscanScan from "../assets/photos/carousel/myscanandstock_scan.png";
-import MyscanStock from "../assets/photos/carousel/myscanandstock_stock.png";
-import ScannerApp from "../assets/photos/carousel/scanner_et_app.png";
-import PosterCharlotte from "../assets/video/poster/charlotte.png";
-import PosterJeanChristophe from "../assets/video/poster/jean-christophe.png";
-import PosterKevin from "../assets/video/poster/kevin.png";
+import VideoTestimonials from "../components/VideoTestimonials.astro";
 import ContactForm from "../components/ContactForm.astro";
+import { carouselCards, imageCarousel } from "../data/home";
 
 // stats.webp servi depuis public/ (BASE_URL gère le sous-dossier GitHub Pages)
 const base = import.meta.env.BASE_URL;
 const statsUrl = base.endsWith("/")
   ? base + "stats.webp"
   : base + "/stats.webp";
-
-// Videos testimonials on S3 (like FeaturesTabs) - not versioned in repo.
-const S3_VIDEOS = `https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos`;
-
-// Posters optimises via le pipeline Astro : PNG bruts (576-817 Ko), sortie WebP 360x510
-const [posterJC, posterCharlotte, posterKevin] = await Promise.all([
-  getImage({
-    src: PosterJeanChristophe,
-    format: "webp",
-    width: 360,
-    height: 510,
-  }),
-  getImage({ src: PosterCharlotte, format: "webp", width: 360, height: 510 }),
-  getImage({ src: PosterKevin, format: "webp", width: 360, height: 510 }),
-]);
-
-const testimonials = [
-  {
-    src: `${S3_VIDEOS}/testimonial_jean-Christophe.mp4`,
-    poster: posterJC.src,
-    label: "Témoignage vidéo de Jean-Christophe, utilisateur de Scan & Stock",
-    name: "Jean-Christophe Gilbert",
-    role: "Chirurgien-dentiste",
-  },
-  {
-    src: `${S3_VIDEOS}/testimonial_charlotte.mp4`,
-    poster: posterCharlotte.src,
-    label: "Témoignage vidéo de Charlotte, utilisatrice de Scan & Stock",
-    name: "Charlotte Farges",
-    role: "Chirurgien-dentiste",
-  },
-  {
-    src: `${S3_VIDEOS}/testimonial_Kevin.mp4`,
-    poster: posterKevin.src,
-    label: "Témoignage vidéo de Kevin, utilisateur de Scan & Stock",
-    name: "Cabinet dentaire république",
-    role: "Villeneuve-d'Ascq",
-  },
-];
-
-const carouselCards = [
-  {
-    src: StockPlace,
-    alt: "Espace de stockage dentaire organisé avec les produits Scan&Stock",
-    title: "Economisez jusqu’à 20 % sur le poste achat",
-    text: "Que ce soit dans des cabinets d’omnipraticien ou de spécialités les utilisateurs de Scan & Stock ont économisé de 16 à 20 % sur leur poste achat l’année où ils l’ont mis en place. Dans les cabinets composés d’une équipe plus importante les économies liées à la mise en place de Scan & Stock sont souvent plus importantes.",
-  },
-  {
-    src: Scanner,
-    alt: "Espace de stockage dentaire organisé avec les produits Scan&Stock",
-    title: "Diminuez le temps non clinique de vos assistants dentaires",
-    text: "Nos assistantes dentaires sont rentables à nos côtés, en salle de soins, pas en salle de stérilisation à gérer les commandes ou à éplucher les catalogues de vépécistes pour retrouver les références d’un produit utilisé il y a 6 mois. Les chirurgiens-dentistes utilisateurs de Scan&Stock ont remarqué qu’en moyenne le temps passé par leurs équipes à gérer les stocks et les commandes est passé de plus d’1h15 par semaine à moins de 20 minutes.",
-  },
-  {
-    src: LessStock,
-    alt: "Espace de stockage dentaire organisé avec les produits Scan&Stock",
-    title: "Limitez l’empreinte écologique de votre cabinet dentaire",
-    text: "Le surstockage et les périmés sont les fléaux de nombreux cabinets dentaires. La peur de manquer ou encore les offres attrayantes de fabricants et fournisseurs entraînent trop souvent des commandes inutiles. Ces commandes (et donc cet argent qui dort !) se retrouvent sur nos étagères ou au fin fond de tiroir parfois jusqu’à ce que leurs dates de péremption soient dépassées ! Pensez à la planète et stoppez le surstockage !",
-  },
-];
-
-const imageCarousel = [
-  { src: ScannerApp, alt: "douchette et application Scan&Stock" },
-  { src: MyscanScan, alt: "application MyScan&Stock et scanner" },
-  { src: MyscanStock, alt: "application MyScan&Stock et gestion de stock" },
-  { src: MyCoompy, alt: "application MyCoompy" },
-];
 ---
 
 <BaseLayout
@@ -244,53 +169,7 @@ const imageCarousel = [
   </Carousel>
 
   <MainBox>
-    <GradientTitle as="h2"
-      >Ils <span class="underline">utilisent Scan & Stock</span></GradientTitle
-    >
-    <div class="testimonials">
-      {
-        testimonials.map((testimonial, index) => (
-          <figure class="testimonial-card">
-            {/* Formes décoratives ancrées à la 1re et à la dernière vidéo */}
-            {index === 0 && (
-              <div
-                class="deco deco-teal deco-teal--testim-left"
-                aria-hidden="true"
-              />
-            )}
-            {index === testimonials.length - 1 && (
-              <>
-                <div
-                  class="deco deco-teal deco-teal--testim-top"
-                  aria-hidden="true"
-                />
-                <div
-                  class="deco deco-blue deco-blue--testim-right"
-                  aria-hidden="true"
-                />
-              </>
-            )}
-            <div class="testimonial-media">
-              <video
-                class="testimonial-video"
-                src={testimonial.src}
-                poster={testimonial.poster}
-                preload="metadata"
-                loop
-                playsinline
-                aria-label={testimonial.label}
-                width="360"
-                height="510"
-              />
-            </div>
-            <figcaption class="testimonial-caption">
-              <span class="testimonial-name">{testimonial.name}</span>
-              <span class="testimonial-role">{testimonial.role}</span>
-            </figcaption>
-          </figure>
-        ))
-      }
-    </div>
+    <VideoTestimonials />
     <GradientTitle> Nous contacter</GradientTitle>
     <ContactForm />
   </MainBox>
@@ -453,134 +332,6 @@ const imageCarousel = [
     }
   }
 
-  .testimonials {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    position: relative;
-    margin: 2rem 0;
-  }
-
-  /* ─── Formes ancrées aux cartes vidéo (tous écrans) ──────
-       Positionnées DANS la 1re et la dernière carte : elles suivent
-       les vidéos sur tous les devices. z-index: -1 = derrière la
-       vidéo, dans le contexte d'empilement de la carte (z-index: 1). */
-  .deco-teal--testim-top,
-  .deco-teal--testim-left,
-  .deco-blue--testim-right {
-    z-index: -1;
-    will-change: auto;
-  }
-
-  /* coin haut-droit de la dernière vidéo */
-  .deco-teal--testim-top {
-    width: 200px;
-    aspect-ratio: 209 / 348;
-    top: -43px;
-    right: 19px;
-    transform: rotate(-4.97deg);
-  }
-
-  /* coin haut-gauche de la 1re vidéo */
-  .deco-teal--testim-left {
-    width: 105px;
-    aspect-ratio: 184 / 347;
-    top: 90px;
-    left: -23px;
-    transform: rotate(-11deg);
-  }
-
-  /* coin bas-droit de la dernière vidéo */
-  .deco-blue--testim-right {
-    width: 160px;
-    aspect-ratio: 261 / 481;
-    top: -20px;
-    right: -35px;
-    transform: rotate(13deg);
-  }
-
-  .testimonial-card {
-    position: relative;
-    /* au-dessus des formes décoratives du contact qui débordent vers le haut */
-    z-index: 1;
-    width: 360px;
-    margin: 0;
-    border-radius: 35px;
-    /* pas d'overflow: hidden : les formes décoratives ancrées à la carte
-           doivent pouvoir dépasser ; la vidéo porte son propre border-radius */
-  }
-
-  /* Conteneur porteur de l'arrondi : un border-radius directement sur le
-       <video> casse le compositing GPU de Chrome Android (poster figé, son OK).
-       On clippe via overflow sur le wrapper, la vidéo reste un rectangle plein. */
-  .testimonial-media {
-    display: block;
-    width: 100%;
-    height: 510px;
-    border-radius: 35px;
-    overflow: hidden;
-  }
-
-  .testimonial-video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background: #000;
-    cursor: pointer;
-  }
-
-  .testimonial-caption {
-    position: absolute;
-    inset: auto 0 0 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 70px 24px 22px;
-    color: #fff;
-    text-align: start;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  /* Voile flouté en dégradé : net en bas, s'estompe vers le haut. */
-  .testimonial-caption::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.55) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    mask-image: linear-gradient(to top, black 0%, black 35%, transparent 100%);
-    border-radius: 35px;
-  }
-
-  .testimonial-card.is-playing .testimonial-caption {
-    opacity: 0;
-  }
-
-  .testimonial-name,
-  .testimonial-role {
-    position: relative;
-  }
-
-  .testimonial-name {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.2;
-  }
-
-  .testimonial-role {
-    font-weight: 400;
-    font-size: 14px;
-    opacity: 0.9;
-  }
-
   /* ─── TABLET ───────────────────────────────────────────  */
   @media screen and (min-width: 768px) {
     .text {
@@ -642,69 +393,4 @@ const imageCarousel = [
 
 <script>
   import "../js/parallax";
-
-  const testimonialVideos =
-    document.querySelectorAll<HTMLVideoElement>(".testimonial-video");
-
-  // Appareils tactiles (mobile/tablette) : pas de survol possible.
-  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-  // Respect de prefers-reduced-motion : pas de lecture auto au survol.
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-
-  testimonialVideos.forEach((video) => {
-    const card = video.closest(".testimonial-card");
-
-    if (isTouch) {
-      // Mobile/tablette : on confie la lecture au lecteur natif. Combiné à
-      // `playsinline`, le bouton play natif décode et peint la 1re frame —
-      // le poster disparaît correctement (ce que le play() programmatique
-      // ne faisait pas sur iOS). Bonus accessibilité : contrôles natifs.
-      video.setAttribute("controls", "");
-      // La légende (nom/profession) se masque pendant la lecture.
-      video.addEventListener("play", () => card?.classList.add("is-playing"));
-      video.addEventListener("pause", () =>
-        card?.classList.remove("is-playing"),
-      );
-      return;
-    }
-
-    // Desktop : lecture au survol, son activé une fois la lecture lancée.
-    const play = () => {
-      // Masque le nom/profession pendant la lecture.
-      card?.classList.add("is-playing");
-      // Sur iOS, play() doit être appelé en premier dans le geste utilisateur,
-      // puis on désactive le muet après — l'inverse bloque la lecture.
-      video
-        .play()
-        .then(() => {
-          video.muted = false;
-        })
-        .catch(() => {});
-    };
-
-    const stop = () => {
-      card?.classList.remove("is-playing");
-
-      video.pause();
-      // Recharge la vidéo pour réafficher le poster (et non la 1re frame).
-      video.load();
-    };
-
-    // Survol = lecture auto, sauf si l'utilisateur a réduit les animations.
-    if (!prefersReducedMotion) {
-      video.addEventListener("mouseenter", play);
-      video.addEventListener("mouseleave", stop);
-    }
-
-    // Click desktop : bascule lecture/pause (toujours actif, action volontaire).
-    video.addEventListener("click", () => {
-      if (video.paused) {
-        play();
-      } else {
-        stop();
-      }
-    });
-  });
 </script>
