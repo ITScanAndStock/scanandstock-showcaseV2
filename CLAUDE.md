@@ -64,7 +64,7 @@ Les articles du blog ne sont **pas** écrits dans le repo : ils sont tirés d'un
 ### Composants métier (`src/components/`)
 
 | Composant                 | Rôle                                                                                      |
-|---------------------------|-------------------------------------------------------------------------------------------|
+| ------------------------- | ----------------------------------------------------------------------------------------- |
 | `NavigationBar.astro`     | Barre de navigation avec détection de la route active                                     |
 | `Footer.astro`            | Pied de page                                                                              |
 | `ClientsCarousel.astro`   | Carrousel des logos clients (données statiques internes)                                  |
@@ -85,7 +85,7 @@ Les articles du blog ne sont **pas** écrits dans le repo : ils sont tirés d'un
 ### Composants UI (`src/components/ui/`)
 
 | Composant             | Rôle                                                                                 |
-|-----------------------|--------------------------------------------------------------------------------------|
+| --------------------- | ------------------------------------------------------------------------------------ |
 | `GradientTitle.astro` | Titre avec dégradé de couleur — prop `as?: "h1"\|"h2"\|"h3"\|"h4"` (`h2` par défaut) |
 | `Hero-box.astro`      | Section hero avec parallax au scroll (`requestAnimationFrame`)                       |
 | `Main-box.astro`      | Conteneur de section avec prop `class?`                                              |

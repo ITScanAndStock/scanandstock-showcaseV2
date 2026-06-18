@@ -1,7 +1,7 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
-import rehypeUnwrapImages from 'rehype-unwrap-images';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig, fontProviders } from "astro/config";
+import rehypeUnwrapImages from "rehype-unwrap-images";
+import sitemap from "@astrojs/sitemap";
 
 // Déploiement démo sur GitHub Pages : le site est servi sous un sous-dossier
 // (https://itscanandstock.github.io/scanandstock-showcaseV2/), il faut donc un `base`.
@@ -55,7 +55,11 @@ export default defineConfig({
         // 'unsafe-inline' ici — la présence d'un hash le ferait ignorer par les
         // navigateurs. Les attributs style="" runtime des widgets tiers sont
         // donc à surveiller (voir AUDIT.md § CSP).
-        resources: ["'self'", "https://assets.calendly.com", "https://*.tawk.to"],
+        resources: [
+          "'self'",
+          "https://assets.calendly.com",
+          "https://*.tawk.to",
+        ],
       },
     },
   },
@@ -75,5 +79,10 @@ export default defineConfig({
   markdown: {
     // Retire le <p> qui enveloppe les images seules dans le Markdown des articles
     rehypePlugins: [rehypeUnwrapImages],
+    // Shiki applique des styles inline incompatibles avec la CSP (style-src
+    // hashé → 'unsafe-inline' ignoré). Le blog n'a aucun bloc de code →
+    // coloration désactivée (zéro impact visuel). Pour réactiver un jour avec
+    // CSP, basculer sur Prism (classes CSS) + un thème.
+    syntaxHighlight: false,
   },
 });

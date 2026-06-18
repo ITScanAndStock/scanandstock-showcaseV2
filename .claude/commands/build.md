@@ -49,6 +49,7 @@ Cette étape s'exécute **uniquement si l'utilisateur répond "oui"** à la ques
 Lance l'agent `astro-wireframe` en lui fournissant le chemin du fichier feature (ex. `.features/001-section-temoignages.md`).
 
 L'agent va :
+
 - Produire un fichier HTML/CSS autonome dans `.wireframes/[nom]-wireframe.html`
 - Simuler les couleurs, typographies, espacements, et interactions décrits dans la spec
 - Lister les points à valider visuellement

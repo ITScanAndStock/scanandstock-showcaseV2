@@ -22,7 +22,9 @@ const OUT_DIR = path.resolve("src/content/blog");
 const IMG_DIR = path.join(OUT_DIR, "_images");
 
 if (!TOKEN || !DATABASE_ID) {
-  console.error("✖ NOTION_TOKEN et NOTION_DATABASE_ID sont requis (voir .env).");
+  console.error(
+    "✖ NOTION_TOKEN et NOTION_DATABASE_ID sont requis (voir .env).",
+  );
   process.exit(1);
 }
 
@@ -54,7 +56,8 @@ function frontmatter(data) {
 
 async function downloadImage(url, destPath) {
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`Téléchargement image échoué (${res.status}) : ${url}`);
+  if (!res.ok)
+    throw new Error(`Téléchargement image échoué (${res.status}) : ${url}`);
   const buffer = Buffer.from(await res.arrayBuffer());
   await writeFile(destPath, buffer);
 }
@@ -113,7 +116,9 @@ async function main() {
 
     // 2. Cover obligatoire : un article sans couverture est ignoré (le site reste sain).
     if (!data.coverUrl) {
-      console.warn(`⚠ Article ignoré (aucune image de couverture) : "${data.title}"`);
+      console.warn(
+        `⚠ Article ignoré (aucune image de couverture) : "${data.title}"`,
+      );
       continue;
     }
 
@@ -168,7 +173,12 @@ async function main() {
     }
 
     // 5. Écrire le .md
-    const fm = frontmatter({ ...data, cover: coverPath, heroImage: heroPath, slug });
+    const fm = frontmatter({
+      ...data,
+      cover: coverPath,
+      heroImage: heroPath,
+      slug,
+    });
     await writeFile(path.join(OUT_DIR, `${slug}.md`), fm + body + "\n", "utf8");
     written += 1;
     console.log(`✓ ${slug}.md`);
@@ -181,7 +191,9 @@ async function main() {
     JSON.stringify(categories, null, 2),
     "utf8",
   );
-  console.log(`✓ ${written} article(s) écrit(s), ${categories.length} catégorie(s).`);
+  console.log(
+    `✓ ${written} article(s) écrit(s), ${categories.length} catégorie(s).`,
+  );
 }
 
 main().catch((err) => {

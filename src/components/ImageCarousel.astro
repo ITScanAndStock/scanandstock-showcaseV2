@@ -1,32 +1,26 @@
 ---
-import {Image} from "astro:assets";
+import { Image } from "astro:assets";
 
 interface Props {
-    src: ImageMetadata;
-    alt: string;
+  src: ImageMetadata;
+  alt: string;
 }
 
-const {src: imgSources, alt} = Astro.props;
+const { src: imgSources, alt } = Astro.props;
 ---
 
 <figure class="image-card">
-    <Image
-        class="img"
-        src={imgSources}
-        alt={alt}
-        height={370}
-        quality={70}
-    />
+  <Image class="img" src={imgSources} alt={alt} height={370} quality={70} />
 </figure>
 
 <style>
-    .image-card {
-        margin: 0;
-        border-radius: 20px;
-        overflow: hidden;
-    }
+  .image-card {
+    margin: 0;
+    border-radius: 20px;
+    overflow: hidden;
+  }
 
-    .img {
-        display: block;
-    }
+  .img {
+    display: block;
+  }
 </style>

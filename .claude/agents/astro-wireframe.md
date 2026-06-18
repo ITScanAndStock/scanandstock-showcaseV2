@@ -14,6 +14,7 @@ Ton output est un **fichier HTML autonome** (tout en un : HTML + CSS + JS minima
 Tu travailles sur **scanandstock-showcaseV2**, le site vitrine de Scan&Stock. La maquette doit respecter scrupuleusement l'identité visuelle du site.
 
 ### Palette principale
+
 - Vert-bleu primaire : `#12a19a`
 - Bleu moyen : `#3983a3`
 - Bleu-gris : `#496f7f`
@@ -21,10 +22,12 @@ Tu travailles sur **scanandstock-showcaseV2**, le site vitrine de Scan&Stock. La
 - Violet (dégradés) : `#6065ac`
 
 ### Typographie
+
 - Police : **Montserrat** (chargée depuis Google Fonts via CDN dans la maquette)
 - Responsive via `clamp()`
 
 ### Breakpoints
+
 - Mobile : < 768px
 - Tablette : 768px – 1023px
 - Desktop : ≥ 1024px
@@ -45,6 +48,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
 ### Règles de construction
 
 **Fidelité visuelle**
+
 - Applique les couleurs exactes de la spec (section 5)
 - Utilise les tailles de police `clamp()` de la spec
 - Respecte les espacements (padding, margin, gap) de la spec
@@ -52,6 +56,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
 - Remplace les icônes Font Awesome par des symboles Unicode équivalents si la librairie n'est pas chargée, ou charge Font Awesome via CDN
 
 **Interactivité minimale**
+
 - Les éléments avec des états `hover` doivent les montrer via CSS (`:hover`)
 - Les composants avec des états `focus` doivent avoir un style de focus visible
 - Les animations décrites dans la spec doivent être implémentées avec les durées et easing exacts
@@ -59,6 +64,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
 - Les onglets, accordéons, ou carrousels doivent être fonctionnels (JS vanilla minimal)
 
 **Responsive**
+
 - La maquette doit être responsive selon les breakpoints du projet
 - Ajouter un bandeau de debug en haut de page qui affiche le breakpoint actif (visible uniquement en dev) :
   ```
@@ -67,6 +73,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
   Ce bandeau doit être facilement supprimable (commentaire HTML autour).
 
 **Structure HTML**
+
 - Utiliser du HTML sémantique (même règles que le projet : `<section>`, `<article>`, `<nav>`, etc.)
 - Les composants réutilisés (`GradientTitle`, `MainBox`, etc.) sont simulés via des classes CSS équivalentes
 - Ajouter des commentaires HTML pour délimiter chaque composant :
@@ -77,6 +84,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
   ```
 
 **En-tête du fichier**
+
 ```html
 <!--
   MAQUETTE : [Nom de la fonctionnalité]
@@ -104,6 +112,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
 ## Règles absolues
 
 **Tu ne fais jamais :**
+
 - Inventer des contenus, couleurs, ou comportements non présents dans la spec
 - Produire du code Astro (`.astro`, frontmatter, directives Astro)
 - Créer plusieurs fichiers séparés (tout doit être dans un seul `.html`)
@@ -111,6 +120,7 @@ Un fichier HTML unique sauvegardé dans `.wireframes/[NNN]-[feature-slug]-wirefr
 - Oublier le `@media (prefers-reduced-motion: reduce)` si des animations sont présentes
 
 **Tu fais toujours :**
+
 - Charger Montserrat via Google Fonts CDN
 - Respecter les valeurs exactes de la spec (pas d'arrondis, pas d'estimations)
 - Sauvegarder dans `.wireframes/NNN-[slug]-wireframe.html` en reprenant le numéro du fichier feature

@@ -1,241 +1,241 @@
 ---
 /**
-    * Bannière de consentement aux cookies (RGPD / recommandations CNIL).
-    *
-    * Google Analytics et Tawk.to ne sont chargés qu'après un consentement
-    * explicite. Le choix (accord ou refus) est conservé 6 mois dans le
-    * localStorage, puis la bannière est représentée. Le lien « Gérer les
-    * cookies » du footer rouvre la bannière via l'évènement
-    * `cookie-consent:open`.
-    */
+ * Bannière de consentement aux cookies (RGPD / recommandations CNIL).
+ *
+ * Google Analytics et Tawk.to ne sont chargés qu'après un consentement
+ * explicite. Le choix (accord ou refus) est conservé 6 mois dans le
+ * localStorage, puis la bannière est représentée. Le lien « Gérer les
+ * cookies » du footer rouvre la bannière via l'évènement
+ * `cookie-consent:open`.
+ */
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const legalNotices = `${base}/legal-notices`;
 ---
 
 <div
-        class="cookie-banner"
-        id="cookie-consent"
-        role="region"
-        aria-label="Gestion des cookies"
-        hidden
+  class="cookie-banner"
+  id="cookie-consent"
+  role="region"
+  aria-label="Gestion des cookies"
+  hidden
 >
-    <p class="cookie-banner__text">
-        Nous utilisons des cookies pour mesurer l'audience du site (Google
-        Analytics) et vous proposer un chat d'assistance (Tawk.to). Votre choix
-        est conservé 6 mois et modifiable à tout moment via « Gérer les
-        cookies » en bas de page.
-        <a href={legalNotices}>En savoir plus</a>
-    </p>
-    <div class="cookie-banner__actions">
-        <button type="button" id="cookie-refuse" class="cookie-banner__btn">
-            Tout refuser
-        </button>
-        <button
-                type="button"
-                id="cookie-accept"
-                class="cookie-banner__btn cookie-banner__btn--accept"
-        >
-            Tout accepter
-        </button>
-    </div>
+  <p class="cookie-banner__text">
+    Nous utilisons des cookies pour mesurer l'audience du site (Google
+    Analytics) et vous proposer un chat d'assistance (Tawk.to). Votre choix est
+    conservé 6 mois et modifiable à tout moment via « Gérer les cookies » en bas
+    de page.
+    <a href={legalNotices}>En savoir plus</a>
+  </p>
+  <div class="cookie-banner__actions">
+    <button type="button" id="cookie-refuse" class="cookie-banner__btn">
+      Tout refuser
+    </button>
+    <button
+      type="button"
+      id="cookie-accept"
+      class="cookie-banner__btn cookie-banner__btn--accept"
+    >
+      Tout accepter
+    </button>
+  </div>
 </div>
 
 <style>
+  .cookie-banner {
+    position: fixed;
+    inset: auto 0.75rem 0.75rem;
+    /* au-dessus du drawer mobile (z-index: 300) */
+    z-index: 400;
+    max-width: 680px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(39, 51, 58, 0.25);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-text);
+  }
+
+  .cookie-banner__text a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cookie-banner__text a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  /* CNIL : refuser doit être aussi simple qu'accepter →
+       deux boutons de même taille, côte à côte. */
+  .cookie-banner__btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background-color: #fff;
+    border: 1.5px solid var(--color-tertiary);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .cookie-banner__btn:hover {
+    background-color: var(--color-bg-soft);
+  }
+
+  .cookie-banner__btn--accept {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .cookie-banner__btn--accept:hover {
+    background-color: var(--color-primary-dark);
+  }
+
+  .cookie-banner__btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media screen and (min-width: 768px) {
     .cookie-banner {
-        position: fixed;
-        inset: auto 0.75rem 0.75rem;
-        /* au-dessus du drawer mobile (z-index: 300) */
-        z-index: 400;
-        max-width: 680px;
-        margin-inline: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.25rem 1.5rem;
-        background-color: #fff;
-        border-radius: 16px;
-        box-shadow: 0 8px 30px rgba(39, 51, 58, 0.25);
-    }
-
-    .cookie-banner[hidden] {
-        display: none;
-    }
-
-    .cookie-banner__text {
-        margin: 0;
-        font-size: 0.9375rem;
-        line-height: 1.55;
-        color: #27333a;
-    }
-
-    .cookie-banner__text a {
-        color: #12a19a;
-        text-decoration: underline;
-        text-underline-offset: 3px;
-    }
-
-    .cookie-banner__text a:focus-visible {
-        outline: 2px solid #12a19a;
-        outline-offset: 2px;
+      align-items: center;
     }
 
     .cookie-banner__actions {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 0.75rem;
+      flex-shrink: 0;
     }
+  }
 
-    /* CNIL : refuser doit être aussi simple qu'accepter →
-       deux boutons de même taille, côte à côte. */
+  @media (prefers-reduced-motion: reduce) {
     .cookie-banner__btn {
-        padding: 0.5rem 1.5rem;
-        border-radius: 100px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #27333a;
-        background-color: #fff;
-        border: 1.5px solid #496f7f;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+      transition: none;
     }
-
-    .cookie-banner__btn:hover {
-        background-color: #e8f0f5;
-    }
-
-    .cookie-banner__btn--accept {
-        background-color: #12a19a;
-        border-color: #12a19a;
-        color: #fff;
-    }
-
-    .cookie-banner__btn--accept:hover {
-        background-color: #0e8a84;
-    }
-
-    .cookie-banner__btn:focus-visible {
-        outline: 3px solid #12a19a;
-        outline-offset: 2px;
-    }
-
-    @media screen and (min-width: 768px) {
-        .cookie-banner {
-            align-items: center;
-        }
-
-        .cookie-banner__actions {
-            flex-shrink: 0;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .cookie-banner__btn {
-            transition: none;
-        }
-    }
+  }
 </style>
 
 <script>
-    const STORAGE_KEY = "ss-cookie-consent";
-    // Recommandation CNIL : redemander le consentement au plus tard
-    // tous les 6 mois.
-    const CONSENT_TTL = 1000 * 60 * 60 * 24 * 182;
-    const GA_ID = "G-1L2BLXFF5P";
+  const STORAGE_KEY = "ss-cookie-consent";
+  // Recommandation CNIL : redemander le consentement au plus tard
+  // tous les 6 mois.
+  const CONSENT_TTL = 1000 * 60 * 60 * 24 * 182;
+  const GA_ID = "G-1L2BLXFF5P";
 
-    type Choice = "granted" | "denied";
+  type Choice = "granted" | "denied";
 
-    function readChoice(): Choice | null {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return null;
-            const parsed = JSON.parse(raw) as { value?: string; date?: number };
-            if (parsed.value !== "granted" && parsed.value !== "denied") {
-                return null;
-            }
-            if (!parsed.date || Date.now() - parsed.date > CONSENT_TTL) {
-                return null;
-            }
-            return parsed.value;
-        } catch {
-            return null;
-        }
+  function readChoice(): Choice | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as { value?: string; date?: number };
+      if (parsed.value !== "granted" && parsed.value !== "denied") {
+        return null;
+      }
+      if (!parsed.date || Date.now() - parsed.date > CONSENT_TTL) {
+        return null;
+      }
+      return parsed.value;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveChoice(value: Choice) {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ value, date: Date.now() }),
+      );
+    } catch {
+      // localStorage indisponible (navigation privée stricte) :
+      // le choix ne vaut que pour la page courante.
+    }
+  }
+
+  let trackersLoaded = false;
+
+  function loadTrackers() {
+    if (trackersLoaded) return;
+    trackersLoaded = true;
+
+    // Google Analytics (gtag.js)
+    const ga = document.createElement("script");
+    ga.async = true;
+    ga.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.appendChild(ga);
+
+    const w = window as typeof window & { dataLayer?: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+
+    // GA attend l'objet `arguments`, pas un tableau.
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer!.push(arguments);
     }
 
-    function saveChoice(value: Choice) {
-        try {
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify({value, date: Date.now()}),
-            );
-        } catch {
-            // localStorage indisponible (navigation privée stricte) :
-            // le choix ne vaut que pour la page courante.
-        }
-    }
+    // @ts-expect-error signature volontairement souple, comme le snippet officiel
+    gtag("js", new Date());
+    // @ts-expect-error idem
+    gtag("config", GA_ID);
 
-    let trackersLoaded = false;
+    // Tawk.to (chat) — loader existant dans public/js/
+    const tawk = document.createElement("script");
+    tawk.src = `${import.meta.env.BASE_URL}js/tawkto.js`;
+    document.body.appendChild(tawk);
+  }
 
-    function loadTrackers() {
-        if (trackersLoaded) return;
-        trackersLoaded = true;
+  const banner = document.getElementById("cookie-consent");
+  const acceptBtn = document.getElementById("cookie-accept");
+  const refuseBtn = document.getElementById("cookie-refuse");
 
-        // Google Analytics (gtag.js)
-        const ga = document.createElement("script");
-        ga.async = true;
-        ga.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-        document.head.appendChild(ga);
+  function show() {
+    banner?.removeAttribute("hidden");
+  }
 
-        const w = window as typeof window & { dataLayer?: unknown[] };
-        w.dataLayer = w.dataLayer || [];
+  function hide() {
+    banner?.setAttribute("hidden", "");
+  }
 
-        // GA attend l'objet `arguments`, pas un tableau.
-        function gtag() {
-            // eslint-disable-next-line prefer-rest-params
-            w.dataLayer!.push(arguments);
-        }
+  acceptBtn?.addEventListener("click", () => {
+    saveChoice("granted");
+    loadTrackers();
+    hide();
+  });
 
-        // @ts-expect-error signature volontairement souple, comme le snippet officiel
-        gtag("js", new Date());
-        // @ts-expect-error idem
-        gtag("config", GA_ID);
+  refuseBtn?.addEventListener("click", () => {
+    saveChoice("denied");
+    hide();
+  });
 
-        // Tawk.to (chat) — loader existant dans public/js/
-        const tawk = document.createElement("script");
-        tawk.src = `${import.meta.env.BASE_URL}js/tawkto.js`;
-        document.body.appendChild(tawk);
-    }
+  // Ré-ouverture depuis « Gérer les cookies » (footer)
+  window.addEventListener("cookie-consent:open", show);
 
-    const banner = document.getElementById("cookie-consent");
-    const acceptBtn = document.getElementById("cookie-accept");
-    const refuseBtn = document.getElementById("cookie-refuse");
-
-    function show() {
-        banner?.removeAttribute("hidden");
-    }
-
-    function hide() {
-        banner?.setAttribute("hidden", "");
-    }
-
-    acceptBtn?.addEventListener("click", () => {
-        saveChoice("granted");
-        loadTrackers();
-        hide();
-    });
-
-    refuseBtn?.addEventListener("click", () => {
-        saveChoice("denied");
-        hide();
-    });
-
-    // Ré-ouverture depuis « Gérer les cookies » (footer)
-    window.addEventListener("cookie-consent:open", show);
-
-    const choice = readChoice();
-    if (choice === "granted") {
-        loadTrackers();
-    } else if (choice === null) {
-        show();
-    }
+  const choice = readChoice();
+  if (choice === "granted") {
+    loadTrackers();
+  } else if (choice === null) {
+    show();
+  }
 </script>

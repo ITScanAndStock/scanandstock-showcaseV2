@@ -33,13 +33,21 @@ import { mapProperties } from "./notion-mappers.mjs";
 
 const fullProps = {
   Titre: { title: [{ plain_text: "Gestion manuelle" }] },
-  "Catégorie": { select: { name: "Gestion des stocks" } },
+  Catégorie: { select: { name: "Gestion des stocks" } },
   Extrait: { rich_text: [{ plain_text: "Simplifiez la gestion." }] },
   Date: { date: { start: "2026-05-20" } },
   Slug: { rich_text: [{ plain_text: "gestion-manuelle" }] },
-  Image: { files: [{ type: "file", file: { url: "https://notion.so/img.png?sig=abc" } }] },
+  Image: {
+    files: [
+      { type: "file", file: { url: "https://notion.so/img.png?sig=abc" } },
+    ],
+  },
   "Alt image": { rich_text: [{ plain_text: "Photo d'un cabinet dentaire" }] },
-  "Image hero": { files: [{ type: "file", file: { url: "https://notion.so/hero.jpg?sig=xyz" } }] },
+  "Image hero": {
+    files: [
+      { type: "file", file: { url: "https://notion.so/hero.jpg?sig=xyz" } },
+    ],
+  },
   "Alt hero": { rich_text: [{ plain_text: "Vue d'ensemble du cabinet" }] },
 };
 
@@ -71,7 +79,9 @@ test("mapProperties gère un slug absent (null)", () => {
 test("mapProperties gère une image externe", () => {
   const props = {
     ...fullProps,
-    Image: { files: [{ type: "external", external: { url: "https://cdn.com/x.jpg" } }] },
+    Image: {
+      files: [{ type: "external", external: { url: "https://cdn.com/x.jpg" } }],
+    },
   };
   assert.equal(mapProperties(props).coverUrl, "https://cdn.com/x.jpg");
 });
@@ -82,7 +92,10 @@ test("mapProperties gère une image absente (null)", () => {
 });
 
 test("mapProperties lit Image hero → heroUrl", () => {
-  assert.equal(mapProperties(fullProps).heroUrl, "https://notion.so/hero.jpg?sig=xyz");
+  assert.equal(
+    mapProperties(fullProps).heroUrl,
+    "https://notion.so/hero.jpg?sig=xyz",
+  );
 });
 
 test("mapProperties lit Alt hero → heroAlt", () => {
@@ -98,7 +111,11 @@ test("mapProperties met heroAlt à vide si Alt hero est absente", () => {
 test("mapProperties gère une image hero externe", () => {
   const props = {
     ...fullProps,
-    "Image hero": { files: [{ type: "external", external: { url: "https://cdn.com/hero.jpg" } }] },
+    "Image hero": {
+      files: [
+        { type: "external", external: { url: "https://cdn.com/hero.jpg" } },
+      ],
+    },
   };
   assert.equal(mapProperties(props).heroUrl, "https://cdn.com/hero.jpg");
 });
@@ -142,7 +159,8 @@ test("demoteHeadings n'altère pas un # en milieu de ligne", () => {
 
 import { extractImageUrls, rewriteImageUrls } from "./notion-mappers.mjs";
 
-const mdImages = "Intro\n\n![photo](https://notion.so/a.png?sig=1)\n\n![](https://notion.so/b.jpg?sig=2)";
+const mdImages =
+  "Intro\n\n![photo](https://notion.so/a.png?sig=1)\n\n![](https://notion.so/b.jpg?sig=2)";
 
 test("extractImageUrls renvoie toutes les URLs d'images", () => {
   assert.deepEqual(extractImageUrls(mdImages), [
@@ -196,13 +214,16 @@ test("stripFilenameAlts conserve une vraie légende", () => {
 });
 
 test("stripFilenameAlts vide un alt qui n'est qu'un nom de fichier", () => {
-  const { markdown, blanked } = stripFilenameAlts("![image.png](./_images/a-1.jpg)");
+  const { markdown, blanked } = stripFilenameAlts(
+    "![image.png](./_images/a-1.jpg)",
+  );
   assert.equal(markdown, "![](./_images/a-1.jpg)");
   assert.deepEqual(blanked, ["image.png"]);
 });
 
 test("stripFilenameAlts vide un hash de fichier", () => {
-  const md = "![07fc114e0edef2af166e13d353b8e3889ac7c7a5.jpg](./_images/a-1.jpg)";
+  const md =
+    "![07fc114e0edef2af166e13d353b8e3889ac7c7a5.jpg](./_images/a-1.jpg)";
   const { markdown, blanked } = stripFilenameAlts(md);
   assert.equal(markdown, "![](./_images/a-1.jpg)");
   assert.deepEqual(blanked, ["07fc114e0edef2af166e13d353b8e3889ac7c7a5.jpg"]);

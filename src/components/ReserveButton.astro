@@ -1,72 +1,69 @@
 ---
 interface Props {
-    class?: string;
+  class?: string;
 }
 
-const {class: className} = Astro.props;
+const { class: className } = Astro.props;
 ---
 
 <button
-        class:list={["booking", className]}
-        data-calendly-url="https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio"
+  class:list={["booking", className]}
+  data-calendly-url="https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio"
 >
-    Réserver une démo
+  Réserver une démo
 </button>
 
 <style>
+  .booking {
+    --glow-color: 255, 255, 255;
+    margin: 20px auto;
+    padding: 5px 20px;
+    border-radius: 20px;
+    color: var(--color-tertiary);
+    font-weight: 700;
+    font-size: 20px;
+    background-color: #fff;
+    transition: all 0.8s ease;
+    width: fit-content;
+    animation: booking-glow 5s ease-in-out infinite;
+  }
 
+  @keyframes booking-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(var(--glow-color), 0);
+    }
+    50% {
+      box-shadow: 0 0 10px 4px rgba(var(--glow-color), 0.6);
+    }
+  }
 
+  @media (prefers-reduced-motion: reduce) {
     .booking {
-        --glow-color: 255, 255, 255;
-        margin: 20px auto;
-        padding: 5px 20px;
-        border-radius: 20px;
-        color: #496f7f;
-        font-weight: 700;
-        font-size: 20px;
-        background-color: #fff;
-        transition: all 0.8s ease;
-        width: fit-content;
-        animation: booking-glow 5s ease-in-out infinite;
+      animation: none;
     }
+  }
 
-    @keyframes booking-glow {
-        0%,
-        100% {
-            box-shadow: 0 0 0 0 rgba(var(--glow-color), 0);
-        }
-        50% {
-            box-shadow: 0 0 10px 4px rgba(var(--glow-color), 0.6);
-        }
+  .dark {
+    --glow-color: 51, 101, 126;
+    background: linear-gradient(
+      90deg,
+      #185873 1.73%,
+      #33657e 50.87%,
+      #415b82 100%
+    );
+    color: white;
+  }
+
+  .booking:hover {
+    transform: scale(1.03);
+  }
+
+  @media screen and (min-width: 768px) {
+    .booking {
+      margin: 30px auto;
+      border-radius: 25px;
+      font-size: 24px;
     }
-
-    @media (prefers-reduced-motion: reduce) {
-        .booking {
-            animation: none;
-        }
-    }
-
-    .dark {
-        --glow-color: 51, 101, 126;
-        background: linear-gradient(
-                90deg,
-                #185873 1.73%,
-                #33657e 50.87%,
-                #415b82 100%
-        );
-        color: white;
-    }
-
-    .booking:hover {
-        transform: scale(1.03);
-    }
-
-    @media screen and (min-width: 768px) {
-        .booking {
-            margin: 30px auto;
-            border-radius: 25px;
-            font-size: 24px;
-        }
-    }
-
+  }
 </style>

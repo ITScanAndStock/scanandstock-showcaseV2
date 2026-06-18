@@ -124,7 +124,12 @@ import sendIcon from "../assets/icones/send.svg";
     margin-bottom: 1rem;
     font-weight: 600;
     background-size: 1300px;
-    background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%)
+    background: linear-gradient(
+        90deg,
+        var(--color-primary) 0%,
+        var(--color-secondary) 50%,
+        var(--color-violet) 100%
+      )
       left;
     -webkit-background-clip: text;
     background-clip: text;
@@ -135,14 +140,14 @@ import sendIcon from "../assets/icones/send.svg";
     font-size: 1.0625rem;
     line-height: 25px;
     font-weight: 400;
-    color: #27333a;
+    color: var(--color-text);
   }
 
   button {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: #12a19a;
+    background-color: var(--color-primary);
     border-radius: 100px;
     padding: 0.5rem 2rem;
     font-size: clamp(1rem, 1vw, 2rem);
@@ -264,11 +269,11 @@ import sendIcon from "../assets/icones/send.svg";
         font-size: 1.0625rem;
         font-style: normal;
         font-weight: 500;
-        color: #27333a;
+        color: var(--color-text);
       }
 
       a:hover {
-        color: #12a19a;
+        color: var(--color-primary);
       }
 
       .phone-number,
@@ -290,12 +295,12 @@ import sendIcon from "../assets/icones/send.svg";
 
       label {
         font-weight: 400;
-        color: #27333a;
+        color: var(--color-text);
       }
 
       input,
       textarea {
-        background-color: #f0f6fe;
+        background-color: var(--color-bg-light);
         border-radius: 6px;
         border: unset;
         padding: 0.5rem;
@@ -311,7 +316,7 @@ import sendIcon from "../assets/icones/send.svg";
       display: flex;
       align-items: center;
       gap: 1rem;
-      background-color: #12a19a;
+      background-color: var(--color-primary);
       border-radius: 100px;
       padding: 0.5rem 2rem;
       font-size: 24px;

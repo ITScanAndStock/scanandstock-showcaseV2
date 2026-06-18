@@ -1,0 +1,10 @@
+# Fichiers générés / non formatables
+dist/
+.astro/
+.claude/
+node_modules/
+pnpm-lock.yaml
+src/content/blog/
+public/
+*.svg
+*.ico

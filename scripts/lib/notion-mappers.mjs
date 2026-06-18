@@ -15,7 +15,10 @@ export function makeUniqueSlug(base, usedSet) {
 }
 
 function richText(prop) {
-  return (prop?.rich_text ?? []).map((t) => t.plain_text).join("").trim();
+  return (prop?.rich_text ?? [])
+    .map((t) => t.plain_text)
+    .join("")
+    .trim();
 }
 
 function fileUrl(prop) {
@@ -75,13 +78,16 @@ const FILENAME_ALT_RE = /\.(png|jpe?g|webp|gif|svg|avif)$/i;
 // avertir l'auteur d'ajouter une légende dans Notion.
 export function stripFilenameAlts(markdown) {
   const blanked = [];
-  const out = markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (full, alt, url) => {
-    const trimmed = alt.trim();
-    if (trimmed !== "" && FILENAME_ALT_RE.test(trimmed)) {
-      blanked.push(trimmed);
-      return `![](${url})`;
-    }
-    return full;
-  });
+  const out = markdown.replace(
+    /!\[([^\]]*)\]\(([^)]+)\)/g,
+    (full, alt, url) => {
+      const trimmed = alt.trim();
+      if (trimmed !== "" && FILENAME_ALT_RE.test(trimmed)) {
+        blanked.push(trimmed);
+        return `![](${url})`;
+      }
+      return full;
+    },
+  );
   return { markdown: out, blanked };
 }

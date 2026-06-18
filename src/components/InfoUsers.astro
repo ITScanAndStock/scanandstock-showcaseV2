@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import HeroBox from "./ui/Hero-box.astro";
 import Profile from "../assets/icones/profil.png";
 import Boxes from "../assets/icones/box-and-click.png";
 import Order from "../assets/icones/order.png";
@@ -39,9 +38,9 @@ import Order from "../assets/icones/order.png";
     width: 100%;
     background: linear-gradient(
       270deg,
-      #12a19a -4.3%,
-      #3983a3 51.09%,
-      #496f7f 106.47%
+      var(--color-primary) -4.3%,
+      var(--color-secondary) 51.09%,
+      var(--color-tertiary) 106.47%
     );
     border-radius: 20px;
     z-index: 1;
@@ -61,7 +60,7 @@ import Order from "../assets/icones/order.png";
     font-weight: 700;
   }
   article p:first-of-type {
-    color: #12a19a;
+    color: var(--color-primary);
   }
 
   @media screen and (min-width: 768px) {

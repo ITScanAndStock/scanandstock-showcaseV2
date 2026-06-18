@@ -50,9 +50,9 @@ const { src: imgSources, alt, title, text } = Astro.props;
     padding: 1.5rem;
     background: linear-gradient(
       180deg,
-      #12a19a -4.3%,
-      #3983a3 51.09%,
-      #496f7f 106.47%
+      var(--color-primary) -4.3%,
+      var(--color-secondary) 51.09%,
+      var(--color-tertiary) 106.47%
     );
     color: white;
     line-height: 1.6;
@@ -90,9 +90,9 @@ const { src: imgSources, alt, title, text } = Astro.props;
       height: 100%;
       background: linear-gradient(
         270deg,
-        #12a19a -4.3%,
-        #3983a3 51.09%,
-        #496f7f 106.47%
+        var(--color-primary) -4.3%,
+        var(--color-secondary) 51.09%,
+        var(--color-tertiary) 106.47%
       );
       border-radius: 0 40px 40px 0;
       line-height: 2;

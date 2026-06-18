@@ -17,7 +17,12 @@ const { as: Tag = "h2", class: className } = Astro.props;
     text-align: center;
     -webkit-background-clip: text;
     background-size: 1300px;
-    background: linear-gradient(90deg, #12a19a 0%, #3983a3 50%, #6065ac 100%)
+    background: linear-gradient(
+        90deg,
+        var(--color-primary) 0%,
+        var(--color-secondary) 50%,
+        var(--color-violet) 100%
+      )
       center;
     background-clip: text;
     color: transparent;
@@ -34,7 +39,7 @@ const { as: Tag = "h2", class: className } = Astro.props;
   }
 
   .gradient-title :global(.underline) {
-    text-decoration: underline 3px #12a19a80;
+    text-decoration: underline 3px var(--color-primary) 80;
     text-underline-offset: 5px;
   }
 

@@ -31,8 +31,10 @@ import ReserveButton from "./ReserveButton.astro";
   <div class="separator"></div>
   <div class="img-section">
     <!-- Formes décoratives derrière les images : elles s'écartent au scroll (teal monte, bleu descend) -->
-    <div class="deco deco-teal" aria-hidden="true" data-parallax-speed="-0.06"></div>
-    <div class="deco deco-blue" aria-hidden="true" data-parallax-speed="0.09"></div>
+    <div class="deco deco-teal" aria-hidden="true" data-parallax-speed="-0.06">
+    </div>
+    <div class="deco deco-blue" aria-hidden="true" data-parallax-speed="0.09">
+    </div>
 
     <Image
       class="img scanner"
@@ -48,7 +50,13 @@ import ReserveButton from "./ReserveButton.astro";
       width={400}
       data-parallax-speed="0.04"
     />
-    <Image class="img phone" src={Phone} alt="image de téléphone" width={70} data-parallax-speed="0.08"/>
+    <Image
+      class="img phone"
+      src={Phone}
+      alt="image de téléphone"
+      width={70}
+      data-parallax-speed="0.08"
+    />
   </div>
 </section>
 <ReserveButton class="dark" />
@@ -120,7 +128,7 @@ import ReserveButton from "./ReserveButton.astro";
   .paragraphe {
     font-weight: 500;
     margin: 1rem auto;
-    color: #27333a;
+    color: var(--color-text);
     font-size: 16px;
     letter-spacing: 0.5px;
   }

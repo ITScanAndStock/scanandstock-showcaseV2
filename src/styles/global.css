@@ -1,25 +1,39 @@
 @import "./reset.css";
 
-body {
-    /* Variable fournie par la Fonts API (astro.config.mjs),
-       avec fallbacks optimisés intégrés. */
-    font-family: var(--font-montserrat);
-    max-width: 1580px;
-    padding: 0 5px;
-    margin: auto;
-    /* 100vh d'abord (fallback navigateurs anciens), puis 100dvh : sur iOS la
-       barre d'outils dynamique fausse 100vh (saut de hauteur au scroll). */
-    min-height: 100vh;
-    min-height: 100dvh;
-    line-height: 30px;
-    letter-spacing: 1px;
+/* Palette de marque Scan&Stock. Variables centralisées ici pour éviter les
+   couleurs en dur dispersées dans les composants. Les valeurs sont identiques
+   aux hexes d'origine (aucun changement visuel). */
+:root {
+  --color-primary: #12a19a; /* teal principal */
+  --color-primary-dark: #0e8a84; /* teal foncé (hover) */
+  --color-secondary: #3983a3; /* bleu */
+  --color-tertiary: #496f7f; /* ardoise */
+  --color-quaternary: #41778c; /* bleu-ardoise */
+  --color-violet: #6065ac; /* fin de dégradé (GradientTitle, titres) */
+  --color-text: #27333a; /* texte sombre */
+  --color-bg-light: #f0f6fe; /* fond bleuté clair */
+  --color-bg-soft: #e8f0f5; /* fond bleuté (survol boutons) */
+}
 
+body {
+  /* Variable fournie par la Fonts API (astro.config.mjs),
+       avec fallbacks optimisés intégrés. */
+  font-family: var(--font-montserrat);
+  max-width: 1580px;
+  padding: 0 5px;
+  margin: auto;
+  /* 100vh d'abord (fallback navigateurs anciens), puis 100dvh : sur iOS la
+       barre d'outils dynamique fausse 100vh (saut de hauteur au scroll). */
+  min-height: 100vh;
+  min-height: 100dvh;
+  line-height: 30px;
+  letter-spacing: 1px;
 }
 
 @media screen and (min-width: 1024px) {
-    body {
-        width: 90%;
-        line-height: 45px;
-        padding: 0;
-    }
+  body {
+    width: 90%;
+    line-height: 45px;
+    padding: 0;
+  }
 }

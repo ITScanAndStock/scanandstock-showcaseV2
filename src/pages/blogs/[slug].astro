@@ -1,6 +1,6 @@
 ---
-import {getCollection, render} from "astro:content";
-import {Image} from "astro:assets";
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MainBox from "../../components/ui/Main-box.astro";
 import GradientTitle from "../../components/ui/GradientTitle.astro";
@@ -9,50 +9,56 @@ import BlogCard from "../../components/BlogCard.astro";
 import logo from "../../assets/logo.svg";
 
 export async function getStaticPaths() {
-    const entries = await getCollection("blog");
-    const sorted = [...entries].sort((a, b) => b.data.date.localeCompare(a.data.date));
-    return entries.map((entry) => ({
-        params: {slug: entry.data.slug},
-        props: {
-            entry,
-            // Les 3 articles les plus récents, hors article courant
-            latest: sorted.filter((e) => e.id !== entry.id).slice(0, 3),
-        },
-    }));
+  const entries = await getCollection("blog");
+  const sorted = [...entries].sort((a, b) =>
+    b.data.date.localeCompare(a.data.date),
+  );
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: {
+      entry,
+      // Les 3 articles les plus récents, hors article courant
+      latest: sorted.filter((e) => e.id !== entry.id).slice(0, 3),
+    },
+  }));
 }
 
-const {entry, latest} = Astro.props;
-const {Content} = await render(entry);
-const {title, category, date, excerpt, cover, slug, heroImage, heroAlt} = entry.data;
+const { entry, latest } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, date, excerpt, cover, slug, heroImage, heroAlt } =
+  entry.data;
 const dateLong = new Date(date).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
 });
 
 // Données structurées BlogPosting (articles attribués à la marque Scan&Stock)
-const articleURL = new URL(`${import.meta.env.BASE_URL}blogs/${slug}`, Astro.site).href;
+const articleURL = new URL(
+  `${import.meta.env.BASE_URL}blogs/${slug}`,
+  Astro.site,
+).href;
 const coverURL = new URL(cover.src, Astro.site).href;
 const logoURL = new URL(logo.src, Astro.site).href;
 const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: title,
-    description: excerpt,
-    image: coverURL,
-    datePublished: date,
-    dateModified: date,
-    author: {
-        "@type": "Organization",
-        name: "Scan&Stock",
-        url: "https://www.scanandstock.fr",
-    },
-    publisher: {
-        "@type": "Organization",
-        name: "Scan&Stock",
-        logo: {"@type": "ImageObject", url: logoURL},
-    },
-    mainEntityOfPage: {"@type": "WebPage", "@id": articleURL},
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: excerpt,
+  image: coverURL,
+  datePublished: date,
+  dateModified: date,
+  author: {
+    "@type": "Organization",
+    name: "Scan&Stock",
+    url: "https://www.scanandstock.fr",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Scan&Stock",
+    logo: { "@type": "ImageObject", url: logoURL },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": articleURL },
 };
 
 // Échappe `<` pour empêcher qu'un titre/extrait Notion contenant
@@ -61,232 +67,238 @@ const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
 ---
 
 <BaseLayout
-        title={`Scan&Stock | ${title}`}
-        description={excerpt}
-        image={cover}
-        type="article"
+  title={`Scan&Stock | ${title}`}
+  description={excerpt}
+  image={cover}
+  type="article"
 >
-    <script
-            type="application/ld+json"
-            slot="head"
-            set:html={jsonLdHtml}
-    />
-    <MainBox>
-        <article class="article">
-            <h1 class="article__title">{title}</h1>
-            <p class="article__excerpt">{excerpt}</p>
+  <script type="application/ld+json" slot="head" set:html={jsonLdHtml} />
+  <MainBox>
+    <article class="article">
+      <h1 class="article__title">{title}</h1>
+      <p class="article__excerpt">{excerpt}</p>
 
-            <p class="article__meta">
-                <span class="article__category">{category}</span>
-                <span class="article__sep" aria-hidden="true"></span>
-                <time class="article__date" datetime={date}>{dateLong}</time>
-            </p>
+      <p class="article__meta">
+        <span class="article__category">{category}</span>
+        <span class="article__sep" aria-hidden="true"></span>
+        <time class="article__date" datetime={date}>{dateLong}</time>
+      </p>
 
-            {heroImage && (
-                    <Image class="article__hero" src={heroImage} alt={heroAlt} width={820} height={460}/>
-            )}
+      {
+        heroImage && (
+          <Image
+            class="article__hero"
+            src={heroImage}
+            alt={heroAlt}
+            width={820}
+            height={460}
+          />
+        )
+      }
 
-            <div class="article__body">
-                <Content/>
-            </div>
+      <div class="article__body">
+        <Content />
+      </div>
 
-            <a class="article__back" href={`${import.meta.env.BASE_URL}blogs`}>← Retour au blog</a>
-        </article>
+      <a class="article__back" href={`${import.meta.env.BASE_URL}blogs`}
+        >← Retour au blog</a
+      >
+    </article>
 
-        {
-            latest.length > 0 && (
-                        <section class="related">
-                            <GradientTitle>Nos derniers articles</GradientTitle>
-                            <div class="related__grid" id="related-grid">
-                                {latest.map((a) => (
-                                        <BlogCard
-                                                slug={a.data.slug}
-                                                title={a.data.title}
-                                                category={a.data.category}
-                                                excerpt={a.data.excerpt}
-                                                cover={a.data.cover}
-                                                coverAlt={a.data.coverAlt}
-                                        />
-                                ))}
-                            </div>
-                        </section>
-            )
-        }
+    {
+      latest.length > 0 && (
+        <section class="related">
+          <GradientTitle>Nos derniers articles</GradientTitle>
+          <div class="related__grid" id="related-grid">
+            {latest.map((a) => (
+              <BlogCard
+                slug={a.data.slug}
+                title={a.data.title}
+                category={a.data.category}
+                excerpt={a.data.excerpt}
+                cover={a.data.cover}
+                coverAlt={a.data.coverAlt}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
 
-        <GradientTitle>Nous contacter</GradientTitle>
-        <ContactForm/>
-    </MainBox>
+    <GradientTitle>Nous contacter</GradientTitle>
+    <ContactForm />
+  </MainBox>
 </BaseLayout>
 
 <style>
-    .article {
-        width: 100%;
-        max-width: 1240px;
-        margin-inline: auto;
-    }
+  .article {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+  }
 
-    .article__title {
-        font-size: clamp(1.8rem, 4vw, 2.4rem);
-        font-weight: 600;
-        line-height: 1.26;
-        color: #27333a;
-        text-align: center;
-        margin: 0.5rem 0 1rem;
-    }
+  .article__title {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.26;
+    color: var(--color-text);
+    text-align: center;
+    margin: 0.5rem 0 1rem;
+  }
 
-    .article__excerpt {
-        text-align: center;
-        font-size: clamp(1.05rem, 2.2vw, 1.5rem);
-        font-weight: 500;
-        line-height: 1.6;
-        color: #27333a;
-    }
+  .article__excerpt {
+    text-align: center;
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
 
-    .article__meta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin: 0 0 2.5rem;
-    }
+  .article__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 0 2.5rem;
+  }
 
-    .article__category {
-        background-color: #fff;
-        border-radius: 200px;
-        padding: 0.3rem 1rem;
-        font-size: 0.875rem;
-        font-weight: 700;
-        color: #27333a;
-    }
+  .article__category {
+    background-color: #fff;
+    border-radius: 200px;
+    padding: 0.3rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
 
-    .article__sep {
-        width: 1px;
-        height: 1.4rem;
-        background-color: rgba(39, 51, 58, 0.3);
-    }
+  .article__sep {
+    width: 1px;
+    height: 1.4rem;
+    background-color: rgba(39, 51, 58, 0.3);
+  }
 
-    .article__date {
-        font-size: 0.875rem;
-        font-weight: 700;
-        color: #27333a;
-    }
+  .article__date {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
 
-    .article__hero {
-        display: block;
-        width: 100%;
-        height: auto;
-        border-radius: 35px;
-        margin: 0 0 2.5rem;
+  .article__hero {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 35px;
+    margin: 0 0 2.5rem;
+  }
+
+  .article__body {
+    font-size: 1.1rem;
+    line-height: 28px;
+    color: var(--color-text);
+    padding-left: 1rem;
+    border-left: 2px dashed var(--color-text);
+  }
+
+  .article__body :global(h2) {
+    font-size: 1.6rem;
+    color: var(--color-text);
+  }
+
+  .article__body :global(h3) {
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin-top: 1.5rem;
+  }
+
+  .article__body :global(p) {
+    margin: 1.5rem 0;
+  }
+
+  .article__body :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 35px;
+    margin: 1.5rem 0;
+  }
+
+  .article__body :global(a) {
+    color: var(--color-primary);
+  }
+
+  .article__back {
+    display: inline-block;
+    margin: 2rem 0 0;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .article__back:hover {
+    text-decoration: underline;
+  }
+
+  .article__back:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Section « Nos derniers articles » */
+  .related {
+    margin-top: 0.5rem;
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 4rem;
+    margin-top: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .related__grid {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: calc(363px * 2 + 4rem);
+      margin-inline: auto;
     }
 
     .article__body {
-        font-size: 1.1rem;
-        line-height: 28px;
-        color: #27333a;
-        padding-left: 1rem;
-        border-left: 2px dashed #27333A;
+      max-width: 860px;
+      margin-inline: auto;
+      padding-left: 2rem;
     }
+  }
 
-    .article__body :global(h2) {
-        font-size: 1.6rem;
-        color: #27333a;
-    }
-
-    .article__body :global(h3) {
-        font-size: 1.3rem;
-        color: #27333a;
-        margin-top: 1.5rem;
-    }
-
-    .article__body :global(p) {
-        margin: 1.5rem 0;
-    }
-
-    .article__body :global(img) {
-        width: 100%;
-        height: auto;
-        border-radius: 35px;
-        margin: 1.5rem 0;
-    }
-
-    .article__body :global(a) {
-        color: #12a19a;
-    }
-
-    .article__back {
-        display: inline-block;
-        margin: 2rem 0 0;
-        color: #12a19a;
-        font-weight: 600;
-        text-decoration: none;
-    }
-
-    .article__back:hover {
-        text-decoration: underline;
-    }
-
-    .article__back:focus-visible {
-        outline: 3px solid #12a19a;
-        outline-offset: 2px;
-    }
-
-    /* Section « Nos derniers articles » */
-    .related {
-        margin-top: 0.5rem;
-    }
-
+  @media screen and (min-width: 1024px) {
     .related__grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem 4rem;
-        margin-top: 1.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: calc(363px * 3 + 8rem);
+      margin-inline: auto;
     }
-
-    @media screen and (min-width: 768px) {
-        .related__grid {
-            grid-template-columns: repeat(2, 1fr);
-            max-width: calc(363px * 2 + 4rem);
-            margin-inline: auto;
-        }
-
-        .article__body {
-            max-width: 860px;
-            margin-inline: auto;
-            padding-left: 2rem;
-        }
-    }
-
-    @media screen and (min-width: 1024px) {
-        .related__grid {
-            grid-template-columns: repeat(3, 1fr);
-            max-width: calc(363px * 3 + 8rem);
-            margin-inline: auto;
-        }
-    }
+  }
 </style>
 
 <script>
-    // Masque le séparateur pointillé de la 1re carte de chaque rangée
-    // (réutilise `.card.is-row-start::before { display:none }` de BlogCard).
-    const grid = document.getElementById("related-grid");
-    if (grid) {
-        const cards = Array.from(grid.querySelectorAll<HTMLElement>(".card"));
-        const columns = () => {
-            if (window.matchMedia("(min-width: 1024px)").matches) return 3;
-            if (window.matchMedia("(min-width: 768px)").matches) return 2;
-            return 1;
-        };
-        const mark = () => {
-            const cols = columns();
-            cards.forEach((card, i) =>
-                card.classList.toggle("is-row-start", i % cols === 0),
-            );
-        };
-        mark();
-        let timer: ReturnType<typeof setTimeout>;
-        window.addEventListener("resize", () => {
-            clearTimeout(timer);
-            timer = setTimeout(mark, 150);
-        });
-    }
+  // Masque le séparateur pointillé de la 1re carte de chaque rangée
+  // (réutilise `.card.is-row-start::before { display:none }` de BlogCard).
+  const grid = document.getElementById("related-grid");
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".card"));
+    const columns = () => {
+      if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+      if (window.matchMedia("(min-width: 768px)").matches) return 2;
+      return 1;
+    };
+    const mark = () => {
+      const cols = columns();
+      cards.forEach((card, i) =>
+        card.classList.toggle("is-row-start", i % cols === 0),
+      );
+    };
+    mark();
+    let timer: ReturnType<typeof setTimeout>;
+    window.addEventListener("resize", () => {
+      clearTimeout(timer);
+      timer = setTimeout(mark, 150);
+    });
+  }
 </script>

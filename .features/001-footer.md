@@ -34,9 +34,9 @@
 
 ### Composants réutilisés
 
-| Composant | Props utilisées | Notes |
-|-----------|----------------|-------|
-| Aucun composant existant réutilisé | — | Voir section Décisions |
+| Composant                          | Props utilisées | Notes                  |
+| ---------------------------------- | --------------- | ---------------------- |
+| Aucun composant existant réutilisé | —               | Voir section Décisions |
 
 ### Nouveaux composants à créer
 
@@ -79,17 +79,17 @@
 ### Barre de bas de page (sous les colonnes)
 
 - Ligne de séparation (bordure CSS)
-- Texte : deux liens côte à côte — "CGV" (href `#`) et "CGU" (href `#`), séparés par le caractère ` | ` (texte statique, non cliquable)
+- Texte : deux liens côte à côte — "CGV" (href `#`) et "CGU" (href `#`), séparés par le caractère `|` (texte statique, non cliquable)
 - Alignement : centré horizontalement
 
 ### Assets
 
-| Asset | Chemin | Texte alternatif |
-|-------|--------|-----------------|
-| Icône Facebook | `src/assets/icones/network/facebook.svg` | "Scan&Stock sur Facebook" |
+| Asset           | Chemin                                    | Texte alternatif           |
+| --------------- | ----------------------------------------- | -------------------------- |
+| Icône Facebook  | `src/assets/icones/network/facebook.svg`  | "Scan&Stock sur Facebook"  |
 | Icône Instagram | `src/assets/icones/network/instagram.svg` | "Scan&Stock sur Instagram" |
-| Icône LinkedIn | `src/assets/icones/network/linkedin.svg` | "Scan&Stock sur LinkedIn" |
-| Icône YouTube | `src/assets/icones/network/youtube.svg` | "Scan&Stock sur YouTube" |
+| Icône LinkedIn  | `src/assets/icones/network/linkedin.svg`  | "Scan&Stock sur LinkedIn"  |
+| Icône YouTube   | `src/assets/icones/network/youtube.svg`   | "Scan&Stock sur YouTube"   |
 
 Les icônes sont importées et rendues via le composant `<Image />` d'Astro avec optimisation automatique.
 
@@ -99,25 +99,25 @@ Les icônes sont importées et rendues via le composant `<Image />` d'Astro avec
 
 ### Couleurs
 
-| Élément | Couleur | Code hex |
-|---------|---------|----------|
-| Fond du footer | Bleu-gris | `#496f7f` |
-| Fond des icônes réseau | Bleu-gris foncé (overlay sombre) | `rgba(0, 0, 0, 0.20)` sur `#496f7f` — résultat visuel : `#3b5a6a` |
-| Tous les textes | Blanc | `#ffffff` |
-| Tous les liens (repos) | Blanc | `#ffffff` |
-| Tous les liens (hover) | Blanc semi-transparent | `rgba(255, 255, 255, 0.70)` |
-| Ligne de séparation basse | Blanc semi-transparent | `rgba(255, 255, 255, 0.25)` |
+| Élément                   | Couleur                          | Code hex                                                          |
+| ------------------------- | -------------------------------- | ----------------------------------------------------------------- |
+| Fond du footer            | Bleu-gris                        | `#496f7f`                                                         |
+| Fond des icônes réseau    | Bleu-gris foncé (overlay sombre) | `rgba(0, 0, 0, 0.20)` sur `#496f7f` — résultat visuel : `#3b5a6a` |
+| Tous les textes           | Blanc                            | `#ffffff`                                                         |
+| Tous les liens (repos)    | Blanc                            | `#ffffff`                                                         |
+| Tous les liens (hover)    | Blanc semi-transparent           | `rgba(255, 255, 255, 0.70)`                                       |
+| Ligne de séparation basse | Blanc semi-transparent           | `rgba(255, 255, 255, 0.25)`                                       |
 
 ### Typographie
 
-| Élément | Taille | Poids | Valeur clamp si responsive |
-|---------|--------|-------|---------------------------|
-| Titre colonne Brand | 20px | 700 (bold) | non responsive — fixe 20px |
-| Titres colonnes 2, 3, 4 | 20px | 700 (bold) | non responsive — fixe 20px |
-| Textes courants (paragraphe, adresse) | 16px | 400 | non responsive — fixe 16px |
-| Liens (colonnes 2, 3) | 16px | 400 | non responsive — fixe 16px |
-| Liens CGV / CGU | 16px | 400 | non responsive — fixe 16px |
-| Line-height global dans le footer | — | — | 1.6 |
+| Élément                               | Taille | Poids      | Valeur clamp si responsive |
+| ------------------------------------- | ------ | ---------- | -------------------------- |
+| Titre colonne Brand                   | 20px   | 700 (bold) | non responsive — fixe 20px |
+| Titres colonnes 2, 3, 4               | 20px   | 700 (bold) | non responsive — fixe 20px |
+| Textes courants (paragraphe, adresse) | 16px   | 400        | non responsive — fixe 16px |
+| Liens (colonnes 2, 3)                 | 16px   | 400        | non responsive — fixe 16px |
+| Liens CGV / CGU                       | 16px   | 400        | non responsive — fixe 16px |
+| Line-height global dans le footer     | —      | —          | 1.6                        |
 
 Police : Montserrat (héritée de `body` via `global.css`, aucune déclaration supplémentaire nécessaire).
 
@@ -160,34 +160,35 @@ Cela casse le max-width du body sans modifier `global.css`. Le padding interne (
 
 ### Interactions
 
-| Déclencheur | Action | Notes |
-|-------------|--------|-------|
-| Clic sur "07 84 07 80 48" | Ouvre le composeur téléphonique | `href="tel:0784078048"` |
-| Clic sur "contact@scanandstock.fr" | Ouvre le client mail | `href="mailto:contact@scanandstock.fr"` |
-| Clic sur lien utile (La vitrine, etc.) | Navigation vers `#` | Placeholder — sera mis à jour ultérieurement |
-| Clic sur icône réseau social | Navigation vers `#` | Placeholder — `target="_blank" rel="noopener noreferrer"` (préparé pour les vraies URLs) |
-| Clic sur CGV | Navigation vers `#` | Placeholder |
-| Clic sur CGU | Navigation vers `#` | Placeholder |
+| Déclencheur                            | Action                          | Notes                                                                                    |
+| -------------------------------------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Clic sur "07 84 07 80 48"              | Ouvre le composeur téléphonique | `href="tel:0784078048"`                                                                  |
+| Clic sur "contact@scanandstock.fr"     | Ouvre le client mail            | `href="mailto:contact@scanandstock.fr"`                                                  |
+| Clic sur lien utile (La vitrine, etc.) | Navigation vers `#`             | Placeholder — sera mis à jour ultérieurement                                             |
+| Clic sur icône réseau social           | Navigation vers `#`             | Placeholder — `target="_blank" rel="noopener noreferrer"` (préparé pour les vraies URLs) |
+| Clic sur CGV                           | Navigation vers `#`             | Placeholder                                                                              |
+| Clic sur CGU                           | Navigation vers `#`             | Placeholder                                                                              |
 
 ### États
 
-| Composant | État | Style |
-|-----------|------|-------|
-| Liens colonnes (Liens utiles, Nous contacter, CGV, CGU) | repos | `color: #ffffff; text-decoration: none` |
-| Liens colonnes (Liens utiles, Nous contacter, CGV, CGU) | hover | `color: rgba(255,255,255,0.70); text-decoration: underline` |
-| Liens colonnes | focus-visible | `outline: 2px solid #ffffff; outline-offset: 3px; border-radius: 2px` |
-| Conteneur icône réseau social | repos | `background: rgba(0,0,0,0.20)` |
-| Conteneur icône réseau social | hover | `background: rgba(0,0,0,0.35); transform: scale(1.08)` |
-| Conteneur icône réseau social | focus-visible | `outline: 2px solid #ffffff; outline-offset: 3px` |
+| Composant                                               | État          | Style                                                                 |
+| ------------------------------------------------------- | ------------- | --------------------------------------------------------------------- |
+| Liens colonnes (Liens utiles, Nous contacter, CGV, CGU) | repos         | `color: #ffffff; text-decoration: none`                               |
+| Liens colonnes (Liens utiles, Nous contacter, CGV, CGU) | hover         | `color: rgba(255,255,255,0.70); text-decoration: underline`           |
+| Liens colonnes                                          | focus-visible | `outline: 2px solid #ffffff; outline-offset: 3px; border-radius: 2px` |
+| Conteneur icône réseau social                           | repos         | `background: rgba(0,0,0,0.20)`                                        |
+| Conteneur icône réseau social                           | hover         | `background: rgba(0,0,0,0.35); transform: scale(1.08)`                |
+| Conteneur icône réseau social                           | focus-visible | `outline: 2px solid #ffffff; outline-offset: 3px`                     |
 
 ### Animations et transitions
 
-| Élément | Animation | Durée | Easing | Version réduite (`prefers-reduced-motion`) |
-|---------|-----------|-------|--------|--------------------------------------------|
-| Liens texte (hover) | changement de couleur | 150ms | `ease` | pas de transition — changement instantané |
-| Conteneur icône (hover) | `transform: scale(1.08)` + changement de fond | 200ms | `ease` | pas de transition — changement instantané |
+| Élément                 | Animation                                     | Durée | Easing | Version réduite (`prefers-reduced-motion`) |
+| ----------------------- | --------------------------------------------- | ----- | ------ | ------------------------------------------ |
+| Liens texte (hover)     | changement de couleur                         | 150ms | `ease` | pas de transition — changement instantané  |
+| Conteneur icône (hover) | `transform: scale(1.08)` + changement de fond | 200ms | `ease` | pas de transition — changement instantané  |
 
 Implémentation du media query :
+
 ```
 @media (prefers-reduced-motion: reduce) {
   /* supprimer toutes les transitions dans le footer */
@@ -196,16 +197,17 @@ Implémentation du media query :
 
 ### Responsive
 
-| Breakpoint | Comportement |
-|------------|-------------|
-| Mobile (< 768px) | 1 colonne, colonnes empilées dans l'ordre Brand → Contact → Liens utiles → Réseaux sociaux. Les 4 icônes réseau en ligne horizontale (`display: flex; flex-direction: row; gap: 0.75rem`). Grille 2×2 désactivée. |
-| Tablette (768px – 1023px) | 2 colonnes (grid 2×2) : Brand + Contact en ligne 1, Liens utiles + Réseaux sociaux en ligne 2 |
-| Desktop (≥ 1024px) | 4 colonnes côte à côte (`display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr`) |
-| Large (≥ 1240px) | Identique au desktop. Le max-width du body s'applique, le footer déborde via `margin-inline: calc(-50vw + 50%)` |
+| Breakpoint                | Comportement                                                                                                                                                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mobile (< 768px)          | 1 colonne, colonnes empilées dans l'ordre Brand → Contact → Liens utiles → Réseaux sociaux. Les 4 icônes réseau en ligne horizontale (`display: flex; flex-direction: row; gap: 0.75rem`). Grille 2×2 désactivée. |
+| Tablette (768px – 1023px) | 2 colonnes (grid 2×2) : Brand + Contact en ligne 1, Liens utiles + Réseaux sociaux en ligne 2                                                                                                                     |
+| Desktop (≥ 1024px)        | 4 colonnes côte à côte (`display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr`)                                                                                                                                |
+| Large (≥ 1240px)          | Identique au desktop. Le max-width du body s'applique, le footer déborde via `margin-inline: calc(-50vw + 50%)`                                                                                                   |
 
 **Détail de la colonne Brand (colonne 1) :** sur desktop, elle est visuellement plus large que les autres (proportion `2fr`) pour accommoder le texte long du paragraphe descriptif.
 
 **Détail des icônes réseau social :**
+
 - Mobile et tablette : `display: flex; flex-direction: row; flex-wrap: wrap; gap: 0.75rem`
 - Desktop : `display: grid; grid-template-columns: repeat(2, 48px); gap: 0.75rem`
 
@@ -258,13 +260,13 @@ Aucune — toutes les informations ont été fournies dans la demande initiale.
 
 ## Décisions
 
-| Décision | Alternative écartée | Raison |
-|----------|---------------------|--------|
-| Pas de `GradientTitle` pour les titres de colonnes | Utiliser `GradientTitle` avec prop `as="h3"` | `GradientTitle` applique un dégradé vert-bleu-violet et un style centré conçus pour des titres de sections sur fond blanc ou clair. Sur fond `#496f7f`, le dégradé serait illisible. Les titres de colonnes du footer doivent être blancs, sans dégradé. |
-| Pas de `MainBox` comme conteneur | Utiliser `MainBox` pour la largeur de contenu | `MainBox` est conçu pour des sections de contenu centrées dans le flux du `body`. Le footer nécessite de casser ce flux pour obtenir l'effet pleine largeur. Le CSS scopé directement dans `Footer.astro` donne un contrôle total sans créer d'effets de bord. |
-| Technique `margin-inline: calc(-50vw + 50%)` pour le plein-écran | Modifier `global.css` ou créer un wrapper hors-flux | Modifier `global.css` crée des effets de bord sur l'ensemble des pages. La technique margin-inline est scopée au composant, sans impact sur les autres éléments. |
-| `<address>` pour les données de contact | `<ul>` ou `<p>` bruts | `<address>` est la balise sémantique HTML5 correcte pour les informations de contact d'une organisation. Elle améliore l'accessibilité et le SEO. |
-| Icônes réseaux en `display: flex` horizontal sur mobile | Grille 2×2 sur tous les formats | La grille 2×2 sur mobile prend davantage de hauteur. La ligne horizontale est plus compacte et conforme aux conventions de footer mobile courantes. |
+| Décision                                                         | Alternative écartée                                 | Raison                                                                                                                                                                                                                                                         |
+| ---------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pas de `GradientTitle` pour les titres de colonnes               | Utiliser `GradientTitle` avec prop `as="h3"`        | `GradientTitle` applique un dégradé vert-bleu-violet et un style centré conçus pour des titres de sections sur fond blanc ou clair. Sur fond `#496f7f`, le dégradé serait illisible. Les titres de colonnes du footer doivent être blancs, sans dégradé.       |
+| Pas de `MainBox` comme conteneur                                 | Utiliser `MainBox` pour la largeur de contenu       | `MainBox` est conçu pour des sections de contenu centrées dans le flux du `body`. Le footer nécessite de casser ce flux pour obtenir l'effet pleine largeur. Le CSS scopé directement dans `Footer.astro` donne un contrôle total sans créer d'effets de bord. |
+| Technique `margin-inline: calc(-50vw + 50%)` pour le plein-écran | Modifier `global.css` ou créer un wrapper hors-flux | Modifier `global.css` crée des effets de bord sur l'ensemble des pages. La technique margin-inline est scopée au composant, sans impact sur les autres éléments.                                                                                               |
+| `<address>` pour les données de contact                          | `<ul>` ou `<p>` bruts                               | `<address>` est la balise sémantique HTML5 correcte pour les informations de contact d'une organisation. Elle améliore l'accessibilité et le SEO.                                                                                                              |
+| Icônes réseaux en `display: flex` horizontal sur mobile          | Grille 2×2 sur tous les formats                     | La grille 2×2 sur mobile prend davantage de hauteur. La ligne horizontale est plus compacte et conforme aux conventions de footer mobile courantes.                                                                                                            |
 
 ---
 

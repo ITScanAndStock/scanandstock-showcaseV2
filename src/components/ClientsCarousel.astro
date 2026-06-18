@@ -90,12 +90,20 @@ const clients = [
 
   .carousel::before {
     left: 0;
-    background: linear-gradient(to right, #f0f6fe, rgba(240, 246, 254, 0));
+    background: linear-gradient(
+      to right,
+      var(--color-bg-light),
+      rgba(240, 246, 254, 0)
+    );
   }
 
   .carousel::after {
     right: 0;
-    background: linear-gradient(to left, #f0f6fe, rgba(240, 246, 254, 0));
+    background: linear-gradient(
+      to left,
+      var(--color-bg-light),
+      rgba(240, 246, 254, 0)
+    );
   }
 
   .group {

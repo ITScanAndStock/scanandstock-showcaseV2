@@ -133,11 +133,15 @@ const links = [
     justify-content: space-between;
     align-items: center;
     background:
-      linear-gradient(0deg, #41778cf3, #41778cf3),
+      linear-gradient(
+        0deg,
+        var(--color-quaternary) f3,
+        var(--color-quaternary) f3
+      ),
       linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
     border-radius: 20px;
     color: white;
-    box-shadow: #41778c 0 0 2px 1px;
+    box-shadow: var(--color-quaternary) 0 0 2px 1px;
   }
 
   .navigation__list {
@@ -212,7 +216,7 @@ const links = [
     right: 0;
     width: 215px;
     height: 100vh;
-    background: #41778c;
+    background: var(--color-quaternary);
     z-index: 300;
     transform: translateX(100%);
     transition: transform ease 0.3s;
@@ -235,7 +239,7 @@ const links = [
     padding: 1rem 0.5rem;
     font-size: 18px;
     font-weight: 500;
-    color: #f0f6fe;
+    color: var(--color-bg-light);
     text-decoration: none;
     transition: all ease 0.2s;
     text-align: center;
@@ -282,7 +286,7 @@ const links = [
     background-color: white;
     border-radius: 20px;
     box-shadow: white 0 0 2px 2px;
-    color: #496f7f;
+    color: var(--color-tertiary);
     font-weight: 700;
     font-size: 15px;
     cursor: pointer;
@@ -341,7 +345,7 @@ const links = [
       background-color: white;
       border-radius: 20px;
       box-shadow: white 0 0 2px 2px;
-      color: #496f7f;
+      color: var(--color-tertiary);
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;

@@ -16,6 +16,7 @@ Tu utilises le MCP Astro (`mcp__claude_ai_Astro__search_astro_docs`) pour vérif
 Tu travailles sur **scanandstock-showcaseV2**, le site vitrine de Scan&Stock (logiciel de gestion de stocks dentaires). Ce site est une application **Astro 6** déployée sur `https://www.scanandstock.fr`.
 
 ### Stack technique
+
 - **Framework** : Astro 6, TypeScript
 - **Styles** : CSS vanilla, mobile-first, breakpoints 768px / 1024px / 1240px
 - **Typographie** : Montserrat (Google Fonts), responsive via `clamp()`
@@ -24,9 +25,11 @@ Tu travailles sur **scanandstock-showcaseV2**, le site vitrine de Scan&Stock (lo
 - **Commandes** : `pnpm dev` (port 4200), `pnpm build`, `pnpm preview`
 
 ### Palette principale
+
 `#12a19a`, `#3983a3`, `#496f7f`, `#41778c`, `#6065ac` (violet pour les dégradés)
 
 ### Composants existants (ne pas recréer)
+
 - `GradientTitle.astro` — titre avec dégradé, prop `as?: "h1"|"h2"|"h3"|"h4"`
 - `HeroBox.astro` — hero avec parallax
 - `MainBox.astro` — conteneur de section, prop `class?`
@@ -47,35 +50,42 @@ L'accessibilité n'est pas une option. Chaque composant, chaque modification de 
 ### Checklist accessibilité obligatoire pour chaque implémentation
 
 **Structure et sémantique**
+
 - [ ] HTML sémantique : `<header>`, `<main>`, `<nav>`, `<section>`, `<article>`, `<footer>`, `<button>`, `<a>` utilisés correctement
 - [ ] Hiérarchie de titres cohérente (un seul `<h1>` par page, pas de saut de niveau)
 - [ ] Landmarks ARIA présents si nécessaire (`role="region"`, `aria-label`, `aria-labelledby`)
 
 **Images et médias**
+
 - [ ] Chaque `<Image />` ou `<img>` a un `alt` pertinent (vide `alt=""` pour les images décoratives)
 - [ ] Les vidéos ont des sous-titres ou une transcription
 - [ ] Pas d'information transmise uniquement par la couleur
 
 **Interactions et navigation**
+
 - [ ] Tous les éléments interactifs sont accessibles au clavier (Tab, Enter, Espace, Échap)
 - [ ] Focus visible sur tous les éléments interactifs (ne jamais `outline: none` sans alternative)
 - [ ] `aria-expanded`, `aria-selected`, `aria-current` sur les composants interactifs (onglets, accordéons, navigation)
 - [ ] Pièges clavier évités (le focus ne doit jamais rester bloqué)
 
 **Formulaires**
+
 - [ ] Chaque `<input>` a un `<label>` associé (via `for`/`id` ou `aria-label`)
 - [ ] Les erreurs sont annoncées avec `aria-describedby` ou `role="alert"`
 
 **Animations**
+
 - [ ] `@media (prefers-reduced-motion: reduce)` appliqué à toutes les animations et transitions
 - [ ] Pas d'animation qui clignote plus de 3 fois par seconde
 
 **Contrastes**
+
 - [ ] Ratio minimum 4,5:1 pour le texte normal
 - [ ] Ratio minimum 3:1 pour le texte large (>= 18px normal ou 14px bold)
 - [ ] Ratio minimum 3:1 pour les composants UI et les focus indicators
 
 **Carrousels et composants dynamiques**
+
 - [ ] `aria-live` ou `aria-atomic` si le contenu change dynamiquement
 - [ ] Contrôles play/pause pour tout contenu animé en boucle
 - [ ] Navigation clavier complète (flèches, Home, End si pertinent)
@@ -83,6 +93,7 @@ L'accessibilité n'est pas une option. Chaque composant, chaque modification de 
 ## Règles d'implémentation
 
 ### Ce que tu fais toujours
+
 1. **Lis le plan en entier** avant d'écrire la moindre ligne de code
 2. **Identifie les ambiguïtés** et liste-les pour les poser en une seule fois à l'utilisateur
 3. **Respecte le code existant** : suis les conventions du projet (nommage, structure de fichiers, patterns CSS)
@@ -91,6 +102,7 @@ L'accessibilité n'est pas une option. Chaque composant, chaque modification de 
 6. **Valide l'accessibilité** pour chaque composant créé ou modifié (checklist ci-dessus)
 
 ### Ce que tu ne fais jamais
+
 - Inférer des informations manquantes (textes, images, couleurs, comportements) sans les demander
 - Ajouter des fonctionnalités non demandées dans le plan
 - Supprimer ou modifier des composants existants non concernés par le plan
@@ -99,7 +111,9 @@ L'accessibilité n'est pas une option. Chaque composant, chaque modification de 
 - Créer des animations sans le bloc `prefers-reduced-motion`
 
 ### Quand poser une question
+
 Tu poses une question dès que :
+
 - Un texte, une image, une donnée concrète est manquante et tu ne peux pas l'inventer
 - Le comportement attendu d'un élément interactif n'est pas précisé
 - Une décision de style n'est pas explicite et pourrait avoir plusieurs interprétations
