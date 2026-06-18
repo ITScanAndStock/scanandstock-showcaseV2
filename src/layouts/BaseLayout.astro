@@ -74,11 +74,23 @@ const noindex = isStaging || isDemo;
 
     <!-- Montserrat auto-hébergée (Fonts API Astro, voir astro.config.mjs) -->
     <Font cssVariable="--font-montserrat" preload />
-    <!-- Calendly badge widget -->
+    <!--
+      CSS Calendly chargé en non bloquant : media="print" évite que la feuille
+      bloque le rendu, puis un script bundlé la repasse en media="all". Le swap
+      est en JS (et non en onload="" inline) pour rester compatible avec la CSP,
+      qui interdit les gestionnaires inline. La feuille n'est utile qu'à
+      l'ouverture du popup Calendly (déclenchée au clic), donc jamais critique.
+    -->
     <link
+      id="calendly-css"
       href="https://assets.calendly.com/assets/external/widget.css"
       rel="stylesheet"
+      media="print"
     />
+    <script>
+      const calendlyCss = document.getElementById("calendly-css");
+      if (calendlyCss) (calendlyCss as HTMLLinkElement).media = "all";
+    </script>
 
     <!-- Données structurées / balises spécifiques à la page -->
     <slot name="head" />
