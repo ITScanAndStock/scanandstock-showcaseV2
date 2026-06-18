@@ -1,11 +1,37 @@
+---
+import { getImage } from "astro:assets";
+import PresentationPoster from "../assets/video/poster/presentation.png";
+
+// Vidéo hébergée sur S3 comme les autres (FeaturesTabs, témoignages).
+// Ré-encodée en H.264 720p (faststart, sans audio) : ~2,4 Mo, compatible
+// partout (l'ancien iframe YouTube apportait ~1 Mo de JS tiers + un traceur
+// + l'overlay « lecteur média » iOS via autoplay).
+const VIDEO_SRC =
+  "https://scanandstock-media.s3.eu-west-3.amazonaws.com/videos/presentation_scanandstock.mp4";
+
+// Poster optimisé via le pipeline Astro (WebP), comme les posters témoignages.
+const poster = await getImage({
+  src: PresentationPoster,
+  format: "webp",
+  width: 1280,
+  height: 720,
+});
+---
+
 <section class="video-section">
   <div class="video-wrapper">
-    <iframe
-      id="yt-player"
-      data-src="https://www.youtube.com/embed/x3FlUQBuKHY?autoplay=1&mute=1&controls=0&loop=1&playlist=x3FlUQBuKHY"
-      title="Présentation Scan&Stock"
-      allow="autoplay; encrypted-media"
-      allowfullscreen></iframe>
+    <video
+      id="presentation-video"
+      class="presentation-video"
+      data-src={VIDEO_SRC}
+      poster={poster.src}
+      width="1280"
+      height="720"
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-label="Vidéo de présentation de Scan & Stock"></video>
   </div>
 
   <div class="separator"></div>
@@ -41,11 +67,14 @@
     position: relative;
     aspect-ratio: 16 / 9;
   }
-  .video-wrapper iframe {
+  .video-wrapper video {
+    display: block;
     width: 100%;
     height: 100%;
     border-radius: 20px;
     border: unset;
+    object-fit: cover;
+    background: #000;
   }
   .paragraphe {
     font-weight: 500;
@@ -80,20 +109,50 @@
 </style>
 
 <script>
-  const ytFrame = document.getElementById("yt-player") as HTMLIFrameElement;
-  const ytWrapper = ytFrame?.closest(".video-wrapper") as HTMLElement | null;
-  if (ytFrame && ytWrapper) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !ytFrame.src) {
-            ytFrame.src = ytFrame.dataset.src!;
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(ytWrapper);
+  const video = document.getElementById(
+    "presentation-video",
+  ) as HTMLVideoElement | null;
+  const wrapper = video?.closest(".video-wrapper") as HTMLElement | null;
+
+  if (video && wrapper) {
+    // Affecte le src (data-src). Avec preload="none", le navigateur ne
+    // télécharge rien tant que la lecture n'est pas demandée.
+    const loadSrc = () => {
+      if (!video.src && video.dataset.src) video.src = video.dataset.src;
+    };
+
+    // Tactile (mobile/tablette) : pas de survol → on s'aligne sur le garde des
+    // vidéos témoignages. Reduced-motion : on respecte la préférence.
+    const isTouch = window.matchMedia(
+      "(hover: none), (pointer: coarse)",
+    ).matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (isTouch || prefersReducedMotion) {
+      // Pas d'autoplay : on évite de décoder une vidéo non sollicitée sur
+      // mobile (cause de jank). Contrôles natifs + poster ; le src est posé
+      // mais preload="none" diffère le téléchargement jusqu'au tap « play ».
+      video.setAttribute("controls", "");
+      loadSrc();
+    } else {
+      // Desktop : autoplay muet en boucle, mais uniquement quand la section
+      // est visible (et pause hors écran) pour ne pas décoder en arrière-plan.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadSrc();
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      observer.observe(wrapper);
+    }
   }
 </script>

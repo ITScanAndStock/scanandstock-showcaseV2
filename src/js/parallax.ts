@@ -3,8 +3,14 @@
 // proportionnelle au scroll, depuis son point neutre (position au repos centrée
 // dans le viewport ; 0 pour les éléments visibles dès le chargement).
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Pas de parallaxe sur appareils tactiles (mobile/tablette) : l'effet est pensé
+// pour le desktop, et le scroll inertiel iOS met à jour la position par à-coups
+// (rendu saccadé). On s'aligne sur le garde tactile des vidéos témoignages
+// (« (hover: none), (pointer: coarse) » dans index.astro). Les éléments gardent
+// leur position au repos via le fallback « var(--parallax-y, 0px) ».
+const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-if (!reduced) {
+if (!reduced && !coarsePointer) {
     interface ParallaxItem {
         el: HTMLElement;
         speed: number;
