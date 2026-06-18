@@ -149,7 +149,6 @@ const videos = [
     /* Fond de marque visible avant chargement (état au repos sur tactile, où
        la 1re vidéo n'autoplay pas — voir garde tactile dans le <script>).
        La vidéo (object-fit: fill) le recouvre entièrement une fois lue. */
-    background: linear-gradient(135deg, #12a19a 0%, #3983a3 100%);
   }
   #features-player {
     position: relative;
@@ -274,9 +273,7 @@ const videos = [
   // lancée qu'au tap d'un onglet (geste utilisateur, autorisé par iOS). Évite
   // de décoder une vidéo non sollicitée au scroll (jank). Cohérent avec le garde
   // des vidéos témoignages et de VideoPresentation.
-  const isTouch = window.matchMedia(
-    "(hover: none), (pointer: coarse)",
-  ).matches;
+  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
   // Desktop : la 1re vidéo est chargée et lancée quand la section devient
   // visible (même pattern que VideoPresentation).

@@ -27,7 +27,11 @@ const legalNotices = `${base}/legal-notices`;
     <div class="footer-contact">
       <h3>Nous contacter</h3>
       <address>
-        <p class="adress">360 Rue Marc Lefrancq, 59300 Valenciennes</p>
+        <p class="adress">
+          <a href="https://maps.app.goo.gl/ZsFYSWUVwzPWyoCQ6" target="_blank"
+            >360 Rue Marc Lefrancq, 59300 Valenciennes</a
+          >
+        </p>
         <p>Tél : <a class="phone" href="tel:+33784078048">07 84 07 80 48</a></p>
         <p>
           Email : <a href="mailto:contact@scanandstock.fr"
@@ -42,8 +46,13 @@ const legalNotices = `${base}/legal-notices`;
       <h3>Liens utiles</h3>
       <ul>
         <li><a href={base || "/"}>La vitrine</a></li>
-        <li><a href="https://shop.myscanandstock.fr/">La boutique</a></li>
-        <li><a href="https://myscanandstock.fr/">Le logiciel</a></li>
+        <li>
+          <a href="https://shop.myscanandstock.fr/" target="_blank"
+            >La boutique</a>
+        </li>
+        <li>
+          <a href="https://myscanandstock.fr/" target="_blank">Le logiciel</a>
+        </li>
         <li><a href={legalNotices}>Mentions légales</a></li>
       </ul>
     </nav>

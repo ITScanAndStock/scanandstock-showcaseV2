@@ -1,425 +1,432 @@
 ---
-import {Image} from "astro:assets";
+import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
 import computerIcon from "../assets/computer.svg";
 import calendarIcon from "../assets/calendar.png";
 import Icon from "./ui/Icon.astro";
 
-const {pathname} = Astro.url;
+const { pathname } = Astro.url;
 // Préfixe de base : "" en prod (scanandstock.fr), "/scanandstock-showcaseV2" sur GitHub Pages.
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const links = [
-    {href: `${base}/`, label: "Accueil", internal: true},
-    {
-        href: "https://shop.myscanandstock.fr/",
-        label: "Nos offres",
-        internal: false,
-    },
-    {href: `${base}/about`, label: "À propos", internal: true},
-    {href: `${base}/blogs`, label: "Blog", internal: true},
-    {
-        href: "https://myscanandstock.fr/",
-        label: "Mon logiciel",
-        internal: false,
-    },
+  { href: `${base}/`, label: "Accueil", internal: true },
+  {
+    href: "https://shop.myscanandstock.fr/",
+    label: "Nos offres",
+    internal: false,
+  },
+  { href: `${base}/about`, label: "À propos", internal: true },
+  { href: `${base}/blogs`, label: "Blog", internal: true },
+  {
+    href: "https://myscanandstock.fr/",
+    label: "Mon logiciel",
+    internal: false,
+  },
 ];
 ---
 
 <!-- MOBILE navigation bar -->
 <div class="mobile-nav" data-mobile-nav>
-    <nav class="navigation" aria-label="Navigation principale">
-        <Image src={logo} height={50} quality={100} alt="Logo Scan&Stock"/>
-        <button
-                type="button"
-                class="burger__btn"
-                aria-label="Ouvrir le menu"
-                aria-expanded="false"
-                aria-controls="mobile-drawer"
-                data-nav-open
-        >
-            <Icon name="bars" />
-        </button>
-    </nav>
+  <nav class="navigation" aria-label="Navigation principale">
+    <a href={links[0].href}>
+      <Image src={logo} height={50} quality={100} alt="Logo Scan&Stock" />
+    </a>
+    <button
+      type="button"
+      class="burger__btn"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-drawer"
+      data-nav-open
+    >
+      <Icon name="bars" />
+    </button>
+  </nav>
 
-    <div class="nav__overlay" data-nav-close></div>
+  <div class="nav__overlay" data-nav-close></div>
 
-    <div class="navigation__drawer" id="mobile-drawer">
-        <button type="button" class="drawer__close" aria-label="Fermer le menu" data-nav-close>
-            <Icon name="x" />
-        </button>
-        <ul class="navigation__list">
-            {
-                links.map((link) => (
-                        <li>
-                            <a
-                                    href={link.href}
-                                    class:list={[{active: link.internal && pathname === link.href}]}
-                                    target={link.internal ? undefined : "_blank"}
-                            >
-                                {link.label}
-                            </a>
-                        </li>
-                ))
-            }
-        </ul>
-        <button
-                class="navigation__calendly"
-                type="button"
-                onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})"
-        >
-            Prendre un RDV
-        </button>
-    </div>
+  <div class="navigation__drawer" id="mobile-drawer">
+    <button
+      type="button"
+      class="drawer__close"
+      aria-label="Fermer le menu"
+      data-nav-close
+    >
+      <Icon name="x" />
+    </button>
+    <ul class="navigation__list">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[{ active: link.internal && pathname === link.href }]}
+              target={link.internal ? undefined : "_blank"}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <button
+      class="navigation__calendly"
+      type="button"
+      onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})"
+    >
+      Prendre un RDV
+    </button>
+  </div>
 </div>
 
 <!-- DESKTOP navigation bar -->
 <nav class="desktop-nav">
-    <Image src={logo} height={60} quality={100} alt="Logo Scan&Stock"/>
+  <a href={links[0].href} class="home-link">
+    <Image src={logo} height={60} quality={100} alt="Logo Scan&Stock" />
+  </a>
 
-    <ul class="navigation__list desktop-nav__list">
-        {
-            links.map((link) => (
-                    <>
-                        <li>
-                            <a
-                                    href={link.href}
-                                    class:list={[{active: link.internal && pathname === link.href}]}
-                                    target={link.internal ? undefined : "_blank"}
-                            >
-                                {link.label === "Mon logiciel" ? (
-                                        <Image src={computerIcon} alt="icone d'ordinateur"/>
-                                ) : (
-                                    ""
-                                )}
-                                {link.label}
-                            </a>
-                        </li>
-                        {link.label !== "Mon logiciel" ?
-                                <div class="separator"/> : ""}
-                    </>
-            ))
-        }
-    </ul>
+  <ul class="navigation__list desktop-nav__list">
+    {
+      links.map((link) => (
+        <>
+          <li>
+            <a
+              href={link.href}
+              class:list={[{ active: link.internal && pathname === link.href }]}
+              target={link.internal ? undefined : "_blank"}
+            >
+              {link.label === "Mon logiciel" ? (
+                <Image src={computerIcon} alt="icone d'ordinateur" />
+              ) : (
+                ""
+              )}
+              {link.label}
+            </a>
+          </li>
+          {link.label !== "Mon logiciel" ? <div class="separator" /> : ""}
+        </>
+      ))
+    }
+  </ul>
 
-    <button
-            class="desktop-nav__calendly"
-            type="button"
-            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
-    >
-        <Image src={calendarIcon} alt="icone de calendrier"/>
-        Prendre un RDV
-    </button>
+  <button
+    class="desktop-nav__calendly"
+    type="button"
+    onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock'})"
+  >
+    <Image src={calendarIcon} alt="icone de calendrier" />
+    Prendre un RDV
+  </button>
 </nav>
 
 <style>
-    /* ─── SHARED ───────────────────────────────────────────  */
-    .mobile-nav,
-    .desktop-nav {
-        position: sticky;
-        top: 0.5rem;
-        z-index: 5;
+  /* ─── SHARED ───────────────────────────────────────────  */
+  .mobile-nav,
+  .desktop-nav {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 5;
+  }
+
+  .navigation,
+  .desktop-nav {
+    justify-content: space-between;
+    align-items: center;
+    background:
+      linear-gradient(0deg, #41778cf3, #41778cf3),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    border-radius: 20px;
+    color: white;
+    box-shadow: #41778c 0 0 2px 1px;
+  }
+
+  .navigation__list {
+    display: flex;
+  }
+
+  .separator {
+    height: 2rem;
+    border-right: 1px solid white;
+    margin: 0 15px;
+  }
+
+  /* ─── MOBILE ───────────────────────────────────────────  */
+  .desktop-nav {
+    display: none;
+  }
+
+  .navigation {
+    display: flex;
+    padding: 13px 11px 15px 11px;
+  }
+
+  .mobile-nav.is-open .nav__overlay {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-nav.is-open .navigation__drawer {
+    transform: translateX(0);
+  }
+
+  .burger__btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    color: inherit;
+    font-size: 22px;
+  }
+
+  .burger__btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .burger__btn span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: all ease 0.3s;
+  }
+
+  .nav__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity ease 0.3s;
+    cursor: pointer;
+  }
+
+  .navigation__drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 215px;
+    height: 100vh;
+    background: #41778c;
+    z-index: 300;
+    transform: translateX(100%);
+    transition: transform ease 0.3s;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .navigation__list {
+    flex-direction: column;
+  }
+
+  .navigation__list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.349);
+  }
+
+  .navigation__list a {
+    display: block;
+    padding: 1rem 0.5rem;
+    font-size: 18px;
+    font-weight: 500;
+    color: #f0f6fe;
+    text-decoration: none;
+    transition: all ease 0.2s;
+    text-align: center;
+  }
+
+  .navigation__list a.active {
+    font-weight: 700;
+    position: relative;
+  }
+
+  .navigation__list a.active::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.25) 0%,
+      transparent 55%
+    );
+    filter: blur(6px);
+    z-index: -1;
+  }
+
+  .drawer__close {
+    align-self: flex-end;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity ease 0.2s;
+  }
+
+  .drawer__close:hover {
+    opacity: 1;
+  }
+
+  .navigation__calendly {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: white 0 0 2px 2px;
+    color: #496f7f;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    margin-top: 2rem;
+    transition: all ease 0.3s;
+  }
+
+  .navigation__calendly:hover {
+    transform: scale(0.95);
+  }
+
+  /* ─── DESKTOP ───────────────────────────────────────────  */
+  @media screen and (min-width: 1024px) {
+    .mobile-nav {
+      display: none;
     }
 
-    .navigation,
     .desktop-nav {
-        justify-content: space-between;
-        align-items: center;
-        background: linear-gradient(0deg, #41778cf3, #41778cf3),
-        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-        border-radius: 20px;
-        color: white;
-        box-shadow: #41778c 0 0 2px 1px;
+      display: flex;
+      padding: 13px 20px;
     }
 
     .navigation__list {
-        display: flex;
+      flex-direction: row;
+      align-items: center;
     }
 
+    .desktop-nav__list li {
+      border-bottom: unset;
+    }
+
+    .desktop-nav__list a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1rem;
+      padding: unset;
+    }
+
+    .desktop-nav__list a img {
+      width: 25px;
+      height: 15px;
+    }
+
+    .desktop-nav__list a:hover {
+      text-shadow: 0 0 15px #ffffff96;
+      transform: translateY(-5px);
+    }
+
+    .desktop-nav__calendly {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.9rem 1.1rem;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: white 0 0 2px 2px;
+      color: #496f7f;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: transform ease 0.3s;
+    }
+
+    .desktop-nav__calendly img {
+      height: 20px;
+      width: auto;
+    }
+
+    .desktop-nav__calendly:hover {
+      transform: scale(0.95);
+    }
+  }
+
+  /* ─── WIDE DESKTOP ───────────────────────────────────────────  */
+
+  @media screen and (min-width: 1240px) {
     .separator {
-        height: 2rem;
-        border-right: 1px solid white;
-        margin: 0 15px;
+      height: 2rem;
+      margin: 0 30px;
     }
-
-    /* ─── MOBILE ───────────────────────────────────────────  */
-    .desktop-nav {
-        display: none;
-    }
-
-    .navigation {
-        display: flex;
-        padding: 13px 11px 15px 11px;
-    }
-
-    .mobile-nav.is-open .nav__overlay {
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .mobile-nav.is-open .navigation__drawer {
-        transform: translateX(0);
-    }
-
-    .burger__btn {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
-        cursor: pointer;
-        padding: 8px;
-        color: inherit;
-        font-size: 22px;
-    }
-
-    .burger__btn:focus-visible {
-        outline: 2px solid white;
-        outline-offset: 2px;
-        border-radius: 6px;
-    }
-
-    .burger__btn span {
-        display: block;
-        width: 28px;
-        height: 3px;
-        background-color: white;
-        border-radius: 3px;
-        transition: all ease 0.3s;
-    }
-
-    .nav__overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 200;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity ease 0.3s;
-        cursor: pointer;
-    }
-
-    .navigation__drawer {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 215px;
-        height: 100vh;
-        background: #41778c;
-        z-index: 300;
-        transform: translateX(100%);
-        transition: transform ease 0.3s;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 1.5rem;
-        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .navigation__list {
-        flex-direction: column;
-    }
-
-    .navigation__list li {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.349);
-    }
-
-    .navigation__list a {
-        display: block;
-        padding: 1rem 0.5rem;
-        font-size: 18px;
-        font-weight: 500;
-        color: #f0f6fe;
-        text-decoration: none;
-        transition: all ease 0.2s;
-        text-align: center;
-    }
-
-    .navigation__list a.active {
-        font-weight: 700;
-        position: relative;
-    }
-
-    .navigation__list a.active::before {
-        content: "";
-        position: absolute;
-        inset: -4px;
-        border-radius: 12px;
-        background: radial-gradient(
-                ellipse at center,
-                rgba(255, 255, 255, 0.25) 0%,
-                transparent 55%
-        );
-        filter: blur(6px);
-        z-index: -1;
-    }
-
-    .drawer__close {
-        align-self: flex-end;
-        font-size: 22px;
-        color: white;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: opacity ease 0.2s;
-    }
-
-    .drawer__close:hover {
-        opacity: 1;
-    }
-
-    .navigation__calendly {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        padding: 1rem;
-        background-color: white;
-        border-radius: 20px;
-        box-shadow: white 0 0 2px 2px;
-        color: #496f7f;
-        font-weight: 700;
-        font-size: 15px;
-        cursor: pointer;
-        border: none;
-        margin-top: 2rem;
-        transition: all ease 0.3s;
-    }
-
-    .navigation__calendly:hover {
-        transform: scale(0.95);
-    }
-
-    /* ─── DESKTOP ───────────────────────────────────────────  */
-    @media screen and (min-width: 1024px) {
-        .mobile-nav {
-            display: none;
-        }
-
-        .desktop-nav {
-            display: flex;
-            padding: 13px 20px;
-        }
-
-        .navigation__list {
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .desktop-nav__list li {
-            border-bottom: unset;
-        }
-
-        .desktop-nav__list a {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 1rem;
-            padding: unset;
-        }
-
-        .desktop-nav__list a img {
-            width: 25px;
-            height: 15px;
-        }
-
-        .desktop-nav__list a:hover {
-            text-shadow: 0 0 15px #ffffff96;
-            transform: translateY(-5px);
-        }
-
-        .desktop-nav__calendly {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.9rem 1.1rem;
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: white 0 0 2px 2px;
-            color: #496f7f;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            transition: transform ease 0.3s;
-        }
-
-        .desktop-nav__calendly img {
-            height: 20px;
-            width: auto;
-        }
-
-        .desktop-nav__calendly:hover {
-            transform: scale(0.95);
-        }
-    }
-
-    /* ─── WIDE DESKTOP ───────────────────────────────────────────  */
-
-    @media screen and (min-width: 1240px) {
-        .separator {
-            height: 2rem;
-            margin: 0 30px;
-        }
-    }
+  }
 </style>
 
 <script>
-    // Menu mobile accessible : ouverture/fermeture au clavier et à la souris,
-    // aria-expanded synchronisé, fermeture via Escape / clic overlay / clic lien,
-    // gestion du focus + piège à focus léger pendant que le tiroir est ouvert.
-    const nav = document.querySelector<HTMLElement>("[data-mobile-nav]");
-    const openBtn = nav?.querySelector<HTMLButtonElement>("[data-nav-open]");
-    const drawer = nav?.querySelector<HTMLElement>(".navigation__drawer");
-    const closeEls = nav?.querySelectorAll<HTMLElement>("[data-nav-close]");
+  // Menu mobile accessible : ouverture/fermeture au clavier et à la souris,
+  // aria-expanded synchronisé, fermeture via Escape / clic overlay / clic lien,
+  // gestion du focus + piège à focus léger pendant que le tiroir est ouvert.
+  const nav = document.querySelector<HTMLElement>("[data-mobile-nav]");
+  const openBtn = nav?.querySelector<HTMLButtonElement>("[data-nav-open]");
+  const drawer = nav?.querySelector<HTMLElement>(".navigation__drawer");
+  const closeEls = nav?.querySelectorAll<HTMLElement>("[data-nav-close]");
 
-    if (nav && openBtn && drawer && closeEls) {
-        const focusable = () =>
-            Array.from(
-                drawer.querySelectorAll<HTMLElement>(
-                    'a[href], button:not([disabled])',
-                ),
-            );
+  if (nav && openBtn && drawer && closeEls) {
+    const focusable = () =>
+      Array.from(
+        drawer.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+      );
 
-        const open = () => {
-            nav.classList.add("is-open");
-            openBtn.setAttribute("aria-expanded", "true");
-            document.body.style.overflow = "hidden";
-            focusable()[0]?.focus();
-        };
+    const open = () => {
+      nav.classList.add("is-open");
+      openBtn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+      focusable()[0]?.focus();
+    };
 
-        const close = () => {
-            nav.classList.remove("is-open");
-            openBtn.setAttribute("aria-expanded", "false");
-            document.body.style.overflow = "";
-            openBtn.focus();
-        };
+    const close = () => {
+      nav.classList.remove("is-open");
+      openBtn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+      openBtn.focus();
+    };
 
-        openBtn.addEventListener("click", open);
-        closeEls.forEach((el) => el.addEventListener("click", close));
-        // Fermer après navigation vers un lien du menu
-        drawer
-            .querySelectorAll("a[href]")
-            .forEach((a) => a.addEventListener("click", close));
+    openBtn.addEventListener("click", open);
+    closeEls.forEach((el) => el.addEventListener("click", close));
+    // Fermer après navigation vers un lien du menu
+    drawer
+      .querySelectorAll("a[href]")
+      .forEach((a) => a.addEventListener("click", close));
 
-        document.addEventListener("keydown", (e) => {
-            if (!nav.classList.contains("is-open")) return;
+    document.addEventListener("keydown", (e) => {
+      if (!nav.classList.contains("is-open")) return;
 
-            if (e.key === "Escape") {
-                close();
-                return;
-            }
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
 
-            // Piège à focus : maintient la tabulation dans le tiroir ouvert
-            if (e.key === "Tab") {
-                const items = focusable();
-                if (items.length === 0) return;
-                const first = items[0];
-                const last = items[items.length - 1];
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
-                } else if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault();
-                    first.focus();
-                }
-            }
-        });
-    }
+      // Piège à focus : maintient la tabulation dans le tiroir ouvert
+      if (e.key === "Tab") {
+        const items = focusable();
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
 </script>
