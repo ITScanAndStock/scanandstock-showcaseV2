@@ -20,7 +20,8 @@ import sendIcon from "../assets/icones/send.svg";
         avec l’un de nos experts :
       </p>
       <button
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})"
+        type="button"
+        data-calendly-url="https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio"
       >
         <img src={calendarIcon.src} alt="icône de calendrier" />
         Prendre rendez-vous
@@ -57,7 +58,7 @@ import sendIcon from "../assets/icones/send.svg";
         tabindex="-1"
         autocomplete="off"
         aria-hidden="true"
-        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"
+        class="honeypot"
       />
       <ul class="form__list">
         <li class="list__item firstname">
@@ -107,6 +108,16 @@ import sendIcon from "../assets/icones/send.svg";
   </section>
 </div>
 <style>
+  /* Honeypot anti-spam : hors écran (était un style="" inline, déplacé ici
+     pour rester compatible avec la CSP qui interdit les styles inline). */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   h3 {
     font-size: 1.375rem;
     line-height: normal;

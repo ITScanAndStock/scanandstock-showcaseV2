@@ -8,7 +8,7 @@ const {class: className} = Astro.props;
 
 <button
         class:list={["booking", className]}
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio'})"
+        data-calendly-url="https://calendly.com/arthurscanandstock/decouvrez-scan-stock-en-visio"
 >
     Réserver une démo
 </button>
