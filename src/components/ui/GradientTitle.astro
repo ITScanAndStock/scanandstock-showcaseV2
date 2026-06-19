@@ -1,8 +1,8 @@
 ---
-interface Props {
+type Props = {
   as?: "h1" | "h2" | "h3" | "h4";
   class?: string;
-}
+};
 
 const { as: Tag = "h2", class: className } = Astro.props;
 ---
