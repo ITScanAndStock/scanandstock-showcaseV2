@@ -37,11 +37,38 @@ const ogImageURL = new URL(ogImageSrc, Astro.site).href;
 const isStaging = import.meta.env.SYNC_TARGET === "staging";
 const isDemo = import.meta.env.GITHUB_PAGES === "true";
 const noindex = isStaging || isDemo;
+
+// Content Security Policy (livrée via <meta>, cf. astro.config.mjs). Approche
+// pragmatique : 'unsafe-inline' toléré pour script/style (requis par Tawk.to,
+// Calendly et les handlers onclick), mais les origines tierces sont en
+// allowlist stricte (connect/frame/form/media). Durcir plus tard en
+// réécrivant les onclick en addEventListener (voir AUDIT.md § CSP).
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://assets.calendly.com https://www.googletagmanager.com https://*.tawk.to",
+  "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://*.tawk.to",
+  "img-src 'self' data: https:",
+  "font-src 'self' data: https://*.tawk.to",
+  "media-src 'self' https://scanandstock-media.s3.eu-west-3.amazonaws.com",
+  "frame-src https://calendly.com https://*.calendly.com https://*.tawk.to https://www.youtube.com",
+  "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://calendly.com https://*.calendly.com https://*.tawk.to wss://*.tawk.to https://formspree.io",
+  "form-action 'self' https://formspree.io",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "worker-src 'self' blob:",
+].join("; ");
 ---
 
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
+    {
+      /* CSP en production seulement : en dev, elle casserait le HMR de Vite
+         (eval + websocket). Tester via `pnpm build` + `pnpm preview`. */
+      import.meta.env.PROD && (
+        <meta http-equiv="Content-Security-Policy" content={csp} />
+      )
+    }
     <link
       rel="icon"
       href={`${import.meta.env.BASE_URL}favicon.ico`}
